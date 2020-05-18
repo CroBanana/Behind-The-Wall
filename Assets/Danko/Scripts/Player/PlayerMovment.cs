@@ -148,7 +148,7 @@ public class PlayerMovment : MonoBehaviour
         {
             anim.SetFloat("Speed", runSpeed);
         }
-        Debug.Log(runSpeed);
+        //Debug.Log(runSpeed);
     }
 
     public void EndConversation()
@@ -241,9 +241,37 @@ public class PlayerMovment : MonoBehaviour
         else
         {
             Vector3 angle = rotatePLayerFirstPerson.transform.eulerAngles;
-            transform.rotation= Quaternion.Euler (transform.rotation.x,
-                              angle.y,
-                              transform.rotation.z);
+            int rotAmount = 0;
+            if(vertical!=0 && horizontal == 0)
+            {
+                rotAmount = 0;
+            }
+            else if(horizontal != 0 && vertical == 0)
+            {
+                rotAmount = 90 * horizontal.CompareTo(0);
+            }
+            else if(vertical>0 && horizontal > 0)
+            {
+                rotAmount = 45;
+            }
+            else if(vertical<0 && horizontal < 0)
+            {
+                rotAmount = 45;
+            }
+            else if (vertical > 0)
+            {
+                rotAmount = -45;
+            }
+            else if(vertical < 0)
+            {
+                rotAmount = -45;
+            }
+            Vector3 rotateTo = new Vector3(transform.rotation.x,
+                           angle.y + rotAmount,
+                           transform.rotation.z);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation,
+                                                         Quaternion.Euler(rotateTo.x, rotateTo.y, rotateTo.z),
+                                                         Time.deltaTime * rotateSpeed);
 
         }
 
