@@ -4,33 +4,47 @@ using UnityEngine;
 
 public class PlayerMovment : MonoBehaviour
 {
-
-    float horizontal, vertical;
-    public float mouseSensetivity;
-    private Animator anim;
+    //objects
+    public GameObject cameraObject;
+    public Camera camera;
     public Transform alwaysFacingPoint;
-    public Vector3 rotation;
-    public float rotateSpeed;
-    public bool isGrounded = false;
-    private Rigidbody rig;
-    private float runSpeed = 0;
-    private bool firstPerson;
-    private GameObject cameraObject;
-    private Camera camera;
-    public float zDistanceFromPlayer = -1f;
-    public GameObject interactCanvas;
-    public GameObject lockCanvas;
-    public GameObject characterDialog;
-    public bool isDoingSometing = false;
-    public bool canInteract = false;
-    public bool ePressed = false;
     public GameObject focusedObject;
     public GameObject rotateViaMouse;
-    public float distanceFromObject;
+    public GameObject rotatePLayerFirstPerson;
+        //UI canvases
+    private GameObject interactCanvas;
+    private GameObject lockCanvas;
+    private GameObject characterDialog;
+
+    //components
+    private Animator anim;
+    private Rigidbody rig;
+
+
+    //Movment and rotation variables
+    float horizontal, vertical;
+    public float mouseSensetivity;
+    public float rotateSpeed;
+    private Vector3 rotation;
+    public float runSpeed = 0;
+    public float runlimitMAX, runlimitMIN;
+    public float accelerationSpeed;
+    public bool runBackwards=false;
+
+
+    //camera variables
+    private bool firstPerson;
+    public float zDistanceFromPlayer = -1f;
     public LayerMask cameraLayers, cameraLayersOriginal;
-    private Vector3 camPositionOriginal;
+    public float distanceFromObject;
+
+
+    //bools lol
+    public bool canInteract = false;
+    public bool ePressed = false;
     private bool reset = false;
-    public Transform parent;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,17 +59,17 @@ public class PlayerMovment : MonoBehaviour
         characterDialog = GameObject.Find("CharacterDialoge");
         characterDialog.SetActive(false);
         camera.cullingMask = cameraLayersOriginal;
-        camPositionOriginal = camera.transform.localPosition;
-        parent = cameraObject.GetComponentInParent<Transform>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        HandleInputs();
+        InteractButton();
+        
 
         if (ePressed == false)
         {
+            HandleInputs();
             camera.cullingMask = cameraLayersOriginal;
             if (reset)
             {
@@ -64,8 +78,7 @@ public class PlayerMovment : MonoBehaviour
             }
             
             rotateViaMouse.GetComponent<RotateViaMouse>().enabled = true;
-            horizontal = Input.GetAxis("Horizontal");
-            vertical = Input.GetAxis("Vertical");
+            
             SetAnimations();
             LookDirection();
         }
@@ -77,6 +90,65 @@ public class PlayerMovment : MonoBehaviour
             reset = true;
         }
 
+    }
+
+    void InteractButton()
+    {
+        if (canInteract && Input.GetKeyDown(KeyCode.E))
+        {
+            ePressed = !ePressed;
+
+        }
+    }
+
+    void HandleInputs()
+    {
+        horizontal = Input.GetAxis("Horizontal");
+        vertical = Input.GetAxis("Vertical");
+        if (ePressed == false)
+        {
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                runlimitMAX = 2f;
+            }
+            else if (Input.GetKeyUp(KeyCode.LeftShift)){
+                runlimitMAX = 1f;
+            }
+
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                SetCamera();
+            }
+        }
+    }
+
+    void SetAnimations()
+    {
+        if (vertical != 0 || horizontal != 0)
+        {
+            if (runSpeed > runlimitMAX)
+            {
+                runSpeed = Mathf.Clamp(runSpeed -= accelerationSpeed * Time.deltaTime, runlimitMIN, 2);
+            }
+            else
+            {
+                runSpeed = Mathf.Clamp(runSpeed += accelerationSpeed * Time.deltaTime, runlimitMIN, runlimitMAX);
+            }
+        }
+        else
+        {
+            runSpeed = Mathf.Clamp(runSpeed -= accelerationSpeed * Time.deltaTime, runlimitMIN, runlimitMAX);
+        }
+
+        if (vertical < 0)
+        {
+            anim.SetFloat("Speed", -(runSpeed*1.5f));
+        }
+        else
+        {
+            anim.SetFloat("Speed", runSpeed);
+        }
+        Debug.Log(runSpeed);
     }
 
     public void EndConversation()
@@ -125,27 +197,7 @@ public class PlayerMovment : MonoBehaviour
         }
     }
 
-    void HandleInputs()
-    {
-        if (ePressed == false)
-        {
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                runSpeed = 1f;
-            }
-            else runSpeed = 0f;
-
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                SetCamera();
-            }
-        }
-        if (canInteract && Input.GetKeyDown(KeyCode.E))
-        {
-            ePressed = !ePressed;
-            
-        }
-    }
+    
 
     void SetCamera()
     {
@@ -163,26 +215,6 @@ public class PlayerMovment : MonoBehaviour
             }
     }
 
-    void SetAnimations()
-    {
-        if (vertical < 0)
-        {
-            anim.SetFloat("Speed", vertical * 1.5f - (runSpeed / 2));
-        }
-        else if (vertical == 1 || Mathf.Abs(horizontal) == 1)
-        {
-            anim.SetFloat("Speed", 1f + runSpeed);
-        }
-        else if (Mathf.Abs(horizontal) > 0)
-        {
-            anim.SetFloat("Speed", Mathf.Abs(horizontal) + runSpeed);
-        }
-        else if (vertical >= 0)
-        {
-            anim.SetFloat("Speed", vertical + runSpeed);
-        }
-
-    }
 
     void LookDirection()
     {
@@ -208,9 +240,10 @@ public class PlayerMovment : MonoBehaviour
         }
         else
         {
-            rotation.x = 0;
-            rotation.z = 0;
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, alwaysFacingPoint.rotation, Time.deltaTime * rotateSpeed);
+            Vector3 angle = rotatePLayerFirstPerson.transform.eulerAngles;
+            transform.rotation= Quaternion.Euler (transform.rotation.x,
+                              angle.y,
+                              transform.rotation.z);
 
         }
 
