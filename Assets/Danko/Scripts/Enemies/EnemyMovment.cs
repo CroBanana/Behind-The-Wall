@@ -6,9 +6,10 @@ using UnityEngine.UI;
 
 public class EnemyMovment : MonoBehaviour
 {
+    //path movment related
     public GameObject target;
     public GameObject player;
-    public NavMeshAgent agent;
+    //public NavMeshAgent agent;
     public Animator anim;
     public NavMeshPath path;
     public bool createdOnce=false;
@@ -19,11 +20,16 @@ public class EnemyMovment : MonoBehaviour
     public bool isTalking=false;
     public bool didOnce = false;
     public GameObject chatCanvas;
+    public bool pathCalculated=false;
+    public bool patroling = true;
+    public bool needsPlayer = false;
+    public bool findingPlayer = false;
+    float stuckCheck;
 
     // Start is called before the first frame update
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
+        //agent = GetComponent<NavMeshAgent>();
         anim=GetComponent<Animator>();
         path = new NavMeshPath();
         player = GameObject.FindGameObjectWithTag("Player");
@@ -32,34 +38,32 @@ public class EnemyMovment : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        if (isTalking == false)
+        if(needsPlayer==false){
+            StopCoroutine(FollowPlayer());
+        }
+        if(isTalking == false && needsPlayer)
         {
+            if(findingPlayer==false){
+                StartCoroutine(FollowPlayer());
+                findingPlayer=true;
+            }
+            DrawPath();
+            RotateToTarget();
+            NeedsToTalkToPlayer();
+        }
+        else if (isTalking == false && patroling)
+        {
+            findingPlayer=false;
             didOnce = false;
             chatCanvas.SetActive(false);
-            if (target == null)
-            {
-                target = patrolPoints[0];
-            }
-            NavMesh.CalculatePath(transform.position, target.transform.position, NavMesh.AllAreas, path);
+            
+            CheckDistanceToTarget_AndSwitchTarget();
 
-            for (int i = 0; i < path.corners.Length - 1; i++)
-            {
-
-                Debug.DrawLine(path.corners[i], path.corners[i + 1], Color.red);
+            if(Vector3.Distance (path.corners[1],transform.position)==stuckCheck){
+                pathCalculated=false;
+                Debug.Log("HowManyTimes");
             }
-            //Debug.Log(Vector3.Distance(transform.position, target.transform.position));
-
-            if (Vector3.Distance(transform.position, target.transform.position) > 2f)
-            {
-                anim.SetFloat("Speed", 1f);
-                RotateToTarget();
-            }
-            else
-            {
-                FindNewTarget();
-                anim.SetFloat("Speed", 0f);
-            }
+            DrawPath();
         }
         else
         {
@@ -69,7 +73,55 @@ public class EnemyMovment : MonoBehaviour
                 TalkingToTarget();
             }
         }
+    }
+
+    void DrawPath(){
+        for (int i = 0; i < path.corners.Length - 1; i++)
+            {
+
+                Debug.DrawLine(path.corners[i], path.corners[i + 1], Color.red);
+            }
+    }
+    IEnumerator FollowPlayer(){
+        while (true){
+            //agent.enabled=true;
+            NavMesh.CalculatePath(transform.position, player.transform.position, NavMesh.AllAreas, path);
+            //agent.enabled=false;
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
+
+
+    void CheckDistanceToTarget_AndSwitchTarget()
+    {
+        if (target == null)
+        {
+            target = patrolPoints[0];
+        }
+
+        if (pathCalculated == false)
+        {
+            NavMesh.CalculatePath(transform.position, target.transform.position, NavMesh.AllAreas, path);
+            pathCalculated=true;
+            Debug.Log("test");
+        }
         
+        if (Vector3.Distance(transform.position, target.transform.position) > 2f)
+        {
+            anim.SetFloat("Speed", 1f);
+            RotateToTarget();
+        }
+        else
+        {
+            FindNewTarget();
+            anim.SetFloat("Speed", 0f);
+        }
+    }
+
+    void NeedsToTalkToPlayer(){
+        if(Vector3.Distance(player.transform.position,transform.position)<=1f){
+            player.GetComponent<PlayerMovment>().ePressed=true;
+        }
     }
 
     void TalkingToTarget()
@@ -83,9 +135,18 @@ public class EnemyMovment : MonoBehaviour
 
     void RotateToTarget()
     {
+        stuckCheck=Vector3.Distance (path.corners[1],transform.position);
+        Debug.Log(stuckCheck);
+        if(stuckCheck<0.2f){
+            pathCalculated=false;
+        }
         quar = Quaternion.LookRotation(path.corners[1] - transform.position);
+        Vector3 cornerPosition= new Vector3(path.corners[1].x-transform.position.x,
+                                            0,
+                                            path.corners[1].z-transform.position.z);
         //Debug.Log(target.name);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, quar, rotateSpeed * Time.deltaTime);
+        Vector3 newDirection = Vector3.RotateTowards(transform.forward, cornerPosition, rotateSpeed * Time.deltaTime,0f);
+        transform.rotation= Quaternion.LookRotation(newDirection);
     }
 
     void FindNewTarget()
@@ -100,5 +161,6 @@ public class EnemyMovment : MonoBehaviour
             objectInList = 0;
             target = patrolPoints[objectInList];
         }
+        pathCalculated = false;
     }
 }

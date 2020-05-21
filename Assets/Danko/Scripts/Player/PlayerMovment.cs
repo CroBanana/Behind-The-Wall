@@ -76,17 +76,14 @@ public class PlayerMovment : MonoBehaviour
                 ResetCameraPosition();
                 reset = false;
             }
-            
             rotateViaMouse.GetComponent<RotateViaMouse>().enabled = true;
-            
+
             SetAnimations();
             LookDirection();
         }
         else
         {
             FocusOnAnObject();
-         
-            
             reset = true;
         }
 
@@ -154,6 +151,7 @@ public class PlayerMovment : MonoBehaviour
     public void EndConversation()
     {
         focusedObject.GetComponent<EnemyMovment>().isTalking = false;
+        focusedObject.GetComponent<EnemyMovment>().needsPlayer = false;
         ePressed = false;
     }
 
@@ -218,7 +216,6 @@ public class PlayerMovment : MonoBehaviour
 
     void LookDirection()
     {
-        
         rotation = alwaysFacingPoint.transform.rotation.eulerAngles;
         if (!firstPerson)
         {
@@ -287,7 +284,6 @@ public class PlayerMovment : MonoBehaviour
             interactCanvas.SetActive(true);
             canInteract = true;
         }
-        
     }
 
     private void OnTriggerStay(Collider other)
