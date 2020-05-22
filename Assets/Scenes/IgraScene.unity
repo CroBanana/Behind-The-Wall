@@ -8040,17 +8040,17 @@ PrefabInstance:
     - target: {fileID: 8697016509903310762, guid: e38f04ab42c1708459d9d78d1cbf58fe,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 98.643
+      value: 75.29
       objectReference: {fileID: 0}
     - target: {fileID: 8697016509903310762, guid: e38f04ab42c1708459d9d78d1cbf58fe,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.38
+      value: 0.773
       objectReference: {fileID: 0}
     - target: {fileID: 8697016509903310762, guid: e38f04ab42c1708459d9d78d1cbf58fe,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 108.586
+      value: 117.22
       objectReference: {fileID: 0}
     - target: {fileID: 8697016509903310762, guid: e38f04ab42c1708459d9d78d1cbf58fe,
         type: 3}
