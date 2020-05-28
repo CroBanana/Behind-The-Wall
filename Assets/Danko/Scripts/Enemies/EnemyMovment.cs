@@ -25,6 +25,9 @@ public class EnemyMovment : MonoBehaviour
     public bool needsPlayer = false;
     public bool findingPlayer = false;
     float stuckCheck;
+    float distanceOld;
+    float distanceNew;
+    bool stuckDistanceCorutine;
 
     // Start is called before the first frame update
     void Start()
@@ -44,25 +47,27 @@ public class EnemyMovment : MonoBehaviour
         if(isTalking == false && needsPlayer)
         {
             if(findingPlayer==false){
+                StopAllCoroutines();
                 StartCoroutine(FollowPlayer());
                 findingPlayer=true;
             }
             DrawPath();
             RotateToTarget();
             NeedsToTalkToPlayer();
+            stuckDistanceCorutine=true;
         }
         else if (isTalking == false && patroling)
         {
             findingPlayer=false;
+            if(stuckDistanceCorutine==true){
+                StopAllCoroutines();
+                StartCoroutine(CheckIfStuck());
+                stuckDistanceCorutine=false;
+            }
             didOnce = false;
             chatCanvas.SetActive(false);
             
             CheckDistanceToTarget_AndSwitchTarget();
-
-            if(Vector3.Distance (path.corners[1],transform.position)==stuckCheck){
-                pathCalculated=false;
-                Debug.Log("HowManyTimes");
-            }
             DrawPath();
         }
         else
@@ -91,6 +96,19 @@ public class EnemyMovment : MonoBehaviour
         }
     }
 
+    IEnumerator CheckIfStuck(){
+        while(patroling){
+            Debug.Log("Cheching if stuck");
+            distanceOld=Vector3.Distance(path.corners[1],transform.position);
+            yield return new WaitForSeconds(3);
+            distanceNew=Vector3.Distance(path.corners[1],transform.position);
+            if(distanceNew == distanceOld){
+                Debug.Log("        Yes he is stuck");
+                pathCalculated=false;
+            }
+            Debug.Log(distanceNew+ "   "      +distanceOld);
+        }
+    }
 
     void CheckDistanceToTarget_AndSwitchTarget()
     {
@@ -135,9 +153,7 @@ public class EnemyMovment : MonoBehaviour
 
     void RotateToTarget()
     {
-        stuckCheck=Vector3.Distance (path.corners[1],transform.position);
-        Debug.Log(stuckCheck);
-        if(stuckCheck<0.2f){
+        if(Vector3.Distance (path.corners[1],transform.position)<0.2f){
             pathCalculated=false;
         }
         quar = Quaternion.LookRotation(path.corners[1] - transform.position);

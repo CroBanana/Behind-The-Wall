@@ -7640,6 +7640,10 @@ PrefabInstance:
       propertyPath: rotationSpeed
       value: 150
       objectReference: {fileID: 0}
+    - target: {fileID: 682653559, guid: 34b8698e4da18064491145378e22305a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 687572240, guid: 34b8698e4da18064491145378e22305a, type: 3}
       propertyPath: m_Camera
       value: 
@@ -41173,7 +41177,7 @@ PrefabInstance:
       objectReference: {fileID: 1267504867}
     - target: {fileID: 981995217, guid: 17284ea1424e711468081d4db3e8c7a4, type: 3}
       propertyPath: needsPlayer
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 981995217, guid: 17284ea1424e711468081d4db3e8c7a4, type: 3}
       propertyPath: createdOnce
@@ -41293,6 +41297,10 @@ PrefabInstance:
       propertyPath: rotatePLayerFirstPerson
       value: 
       objectReference: {fileID: 414918738}
+    - target: {fileID: 1369996153, guid: e38f04ab42c1708459d9d78d1cbf58fe, type: 3}
+      propertyPath: cameraLayers.m_Bits
+      value: 7479
+      objectReference: {fileID: 0}
     - target: {fileID: 5686176846906424761, guid: e38f04ab42c1708459d9d78d1cbf58fe,
         type: 3}
       propertyPath: m_Name
