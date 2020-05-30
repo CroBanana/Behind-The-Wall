@@ -166,6 +166,13 @@ public class PlayerMovment : MonoBehaviour
             camera.transform.position = focusedObject.transform.position - focusedObject.transform.right * distanceFromObject;
 
             cameraObject.transform.LookAt(focusedObject.transform);
+            if(focusedObject.GetComponentInChildren<LockNumbers>().unlocked){
+                interactCanvas.SetActive(false);
+                lockCanvas.SetActive(false);
+                reset=true;
+                ePressed=false;
+                focusedObject=null;
+            }
         }
         else if(focusedObject.CompareTag("NPC"))
         {

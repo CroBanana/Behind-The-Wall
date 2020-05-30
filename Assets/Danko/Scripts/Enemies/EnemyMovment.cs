@@ -98,7 +98,7 @@ public class EnemyMovment : MonoBehaviour
 
     IEnumerator CheckIfStuck(){
         while(patroling){
-            Debug.Log("Cheching if stuck");
+            //Debug.Log("Cheching if stuck");
             distanceOld=Vector3.Distance(path.corners[1],transform.position);
             yield return new WaitForSeconds(3);
             distanceNew=Vector3.Distance(path.corners[1],transform.position);
@@ -106,7 +106,7 @@ public class EnemyMovment : MonoBehaviour
                 Debug.Log("        Yes he is stuck");
                 pathCalculated=false;
             }
-            Debug.Log(distanceNew+ "   "      +distanceOld);
+            //Debug.Log(distanceNew+ "   "      +distanceOld);
         }
     }
 
@@ -121,7 +121,7 @@ public class EnemyMovment : MonoBehaviour
         {
             NavMesh.CalculatePath(transform.position, target.transform.position, NavMesh.AllAreas, path);
             pathCalculated=true;
-            Debug.Log("test");
+            //Debug.Log("test");
         }
         
         if (Vector3.Distance(transform.position, target.transform.position) > 2f)

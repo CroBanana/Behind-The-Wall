@@ -5,12 +5,14 @@ using UnityEngine.UI;
 
 public class LockNumbers : MonoBehaviour
 {
+    public bool unlocked=false;
     public string correctCode = "221";
     int numberSelected;
     string code="";
     public float rotationSpeed;
     public Text number;
     public bool check = false;
+    public List<Transform> gates;
     // Start is called before the first frame update
     void Start()
     {
@@ -41,9 +43,7 @@ public class LockNumbers : MonoBehaviour
                                                           rotation.y,
                                                           rotation.z + Time.deltaTime * mouseX * rotationSpeed);
             }
-        } 
-        
-        
+        }
     }
 
     void SubmitCode()
@@ -64,7 +64,8 @@ public class LockNumbers : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         if (correctCode == code)
         {
-            number.text = "Its Correct";
+            number.text = "Its Correct, unlocking";
+            StartCoroutine(Unlock());
         }
         else
         {
@@ -72,6 +73,17 @@ public class LockNumbers : MonoBehaviour
             number.text = "Code Incorrect try again";
         }
         check = false;
+    }
+    IEnumerator Unlock(){
+        unlocked=true;
+        yield return new WaitForSeconds(1f);
+        if(gates!=null){
+            foreach(Transform gate in gates){
+                gate.GetComponent<DoorUnlocked>().rotateTo=true;
+                Debug.Log("Unlocked");
+            }
+        }
+        transform.parent.gameObject.SetActive(false);
     }
 
 }
