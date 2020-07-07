@@ -11,13 +11,10 @@ public class PlayerMovment : MonoBehaviour
     public GameObject focusedObject;
     public GameObject rotateViaMouse;
     public GameObject rotatePLayerFirstPerson;
-        //UI canvases
-    private GameObject interactCanvas;
-    private GameObject lockCanvas;
-    private GameObject characterDialog;
+    public Canvas_interact canvas_Interact;
 
     //components
-    private Animator anim;
+    public Animator anim;
     private Rigidbody rig;
 
 
@@ -43,8 +40,15 @@ public class PlayerMovment : MonoBehaviour
     public bool canInteract = false;
     public bool ePressed = false;
     private bool reset = false;
+    public bool talkTriggerd = false;
+    public bool disableRaycast = false;
 
+    // raycast detection
+    RaycastHit hit;
+    Ray ray;
+    public LayerMask selected_mask;
 
+    GameObject test ;
     // Start is called before the first frame update
     void Start()
     {
@@ -52,21 +56,66 @@ public class PlayerMovment : MonoBehaviour
         rig = GetComponent<Rigidbody>();
         camera = Camera.main;
         cameraObject = GameObject.Find("Main Camera");
-        interactCanvas = GameObject.Find("InteractCanvas");
-        interactCanvas.SetActive(false);
-        lockCanvas = GameObject.Find("LockCanvas");
-        lockCanvas.SetActive(false);
-        characterDialog = GameObject.Find("CharacterDialoge");
-        characterDialog.SetActive(false);
         camera.cullingMask = cameraLayersOriginal;
+        canvas_Interact= GameObject.Find("Canvas").GetComponent<Canvas_interact>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        InteractButton();
-        
+        CheckIfLokingAtObject();
+        InteractAndMove();
+    }
 
+    // uses ray to check if the player is looking at an objet that cen be interacted with then changes the canvas
+    void CheckIfLokingAtObject(){
+        if(disableRaycast==false){
+                    //position of mouse on screen
+            ray = camera.ScreenPointToRay(Input.mousePosition);
+
+            if(Physics.Raycast(ray,out hit,5,selected_mask)){
+                if(hit.collider.CompareTag("Lock") && ePressed==false){
+                    hit.collider.GetComponentInChildren<LockNumbers>().enabled = true;
+                    canInteract = true;
+                    focusedObject = hit.collider.gameObject;
+                    canvas_Interact.Set_Canvas(true,false,false);
+                    Debug.Log(hit.collider.name);
+                }
+                else if(hit.collider.CompareTag("NPC")&& ePressed==false){
+                    canInteract=true;
+                    focusedObject = hit.collider.gameObject;
+                    canvas_Interact.Set_Canvas(true,false,false);
+                    Debug.Log(hit.collider.name);
+                }
+            }
+            else if(focusedObject !=null && ePressed==false){
+                canvas_Interact.Set_Canvas(false,false,false);
+                if(focusedObject.CompareTag("Lock")){
+                    Debug.Log("am here!!!");
+                    focusedObject.GetComponentInChildren<LockNumbers>().enabled=false;
+                    focusedObject=null;
+                }
+                Debug.Log("Nema canvasa valjda");
+            }
+        }
+    }
+
+    // checks interaction and movment when e is pressed or not changes canInteract and then changes everything else
+    void InteractAndMove()
+    {
+        if (canInteract && Input.GetKeyDown(KeyCode.E))
+        {
+            ePressed = !ePressed;
+            if(ePressed){
+                if(focusedObject.CompareTag("Lock")){
+                    canvas_Interact.Set_Canvas(false,true,false);
+                }else if(focusedObject.CompareTag("NPC")){
+                    talkTriggerd = true;
+                }
+            }
+        }
+
+        // check if E is pressed if it is disables movment of player and sets camera on the object that was pressed E
         if (ePressed == false)
         {
             HandleInputs();
@@ -86,24 +135,16 @@ public class PlayerMovment : MonoBehaviour
             FocusOnAnObject();
             reset = true;
         }
-
     }
 
-    void InteractButton()
-    {
-        if (canInteract && Input.GetKeyDown(KeyCode.E))
-        {
-            ePressed = !ePressed;
-
-        }
-    }
-
+    // handles inputs for movment and camera
     void HandleInputs()
     {
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
         if (ePressed == false)
         {
+            // if shift is pressed can run
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
                 runlimitMAX = 2f;
@@ -112,6 +153,7 @@ public class PlayerMovment : MonoBehaviour
                 runlimitMAX = 1f;
             }
 
+            // sets camera to first person or third person
             if (Input.GetKeyDown(KeyCode.R))
             {
                 SetCamera();
@@ -119,6 +161,7 @@ public class PlayerMovment : MonoBehaviour
         }
     }
 
+    // since it uses root animations the speed of the player depends on the animation speed
     void SetAnimations()
     {
         if (vertical != 0 || horizontal != 0)
@@ -148,13 +191,16 @@ public class PlayerMovment : MonoBehaviour
         //Debug.Log(runSpeed);
     }
 
+    // if an conversation has ended sets everything back to normal
     public void EndConversation()
     {
         focusedObject.GetComponent<EnemyMovment>().isTalking = false;
         focusedObject.GetComponent<EnemyMovment>().needsPlayer = false;
         ePressed = false;
+        disableRaycast=false;
     }
 
+    // depending on the object that the player is loking at sets the camera in a position that is looking at that object
     void FocusOnAnObject()
     {
         anim.SetFloat("Speed", 0);
@@ -167,8 +213,8 @@ public class PlayerMovment : MonoBehaviour
 
             cameraObject.transform.LookAt(focusedObject.transform);
             if(focusedObject.GetComponentInChildren<LockNumbers>().unlocked){
-                interactCanvas.SetActive(false);
-                lockCanvas.SetActive(false);
+                Debug.Log("HERE!!!!");
+                canvas_Interact.Set_Canvas(false, true,false);
                 reset=true;
                 ePressed=false;
                 focusedObject=null;
@@ -178,20 +224,22 @@ public class PlayerMovment : MonoBehaviour
         {
             Transform head = focusedObject.transform.Find("Head");
             camera.transform.position = head.position + head.forward * distanceFromObject;
-
             cameraObject.transform.LookAt(head);
-            focusedObject.GetComponent<EnemyMovment>().isTalking = true;
+            if(talkTriggerd){
+                focusedObject.GetComponent<EnemyMovment>().isTalking = true;
+                talkTriggerd=false;
+                
+            }
         }
 
-        
 
     }
 
+    // resets the camera so it looks at the player depending if the player is in first person or third
     void ResetCameraPosition()
     {
         camera.transform.localPosition = new Vector3(0, 0, 0);
         camera.transform.localRotation = Quaternion.Euler(0, 0, 0);
-        
         if (!firstPerson)
         {
             cameraObject.transform.localPosition = new Vector3(cameraObject.transform.localPosition.x, cameraObject.transform.localPosition.y, zDistanceFromPlayer);
@@ -202,8 +250,7 @@ public class PlayerMovment : MonoBehaviour
         }
     }
 
-    
-
+    // sets camera when R is pressed
     void SetCamera()
     {
             if (firstPerson)
@@ -220,7 +267,7 @@ public class PlayerMovment : MonoBehaviour
             }
     }
 
-
+    // rotates the object to look at the direction it sould move
     void LookDirection()
     {
         rotation = alwaysFacingPoint.transform.rotation.eulerAngles;
@@ -281,6 +328,12 @@ public class PlayerMovment : MonoBehaviour
 
     }
 
+
+
+
+
+/*
+
     private void OnTriggerEnter(Collider other)
     {
 
@@ -288,7 +341,7 @@ public class PlayerMovment : MonoBehaviour
         if (other.CompareTag("Lock") || other.CompareTag("NPC"))
         {
             focusedObject = other.gameObject;
-            interactCanvas.SetActive(true);
+            canvas_Interact.Set_Canvas(true,false,false);
             canInteract = true;
         }
     }
@@ -300,13 +353,11 @@ public class PlayerMovment : MonoBehaviour
             if (ePressed)
             {
                 other.GetComponentInChildren<LockNumbers>().enabled = true;
-                interactCanvas.SetActive(false);
-                lockCanvas.SetActive(true);
+                canvas_Interact.Set_Canvas(false,true,false);
             }
             else
             {
-                interactCanvas.SetActive(true);
-                lockCanvas.SetActive(false);
+                canvas_Interact.Set_Canvas(true,false,false);
                 other.GetComponentInChildren<LockNumbers>().enabled = false;
             }
         }
@@ -314,15 +365,14 @@ public class PlayerMovment : MonoBehaviour
         {
             if (ePressed)
             {
-                interactCanvas.SetActive(false);
+                canvas_Interact.Set_Canvas(false,false,true);
             }
             else
             {
-                interactCanvas.SetActive(true);
+                canvas_Interact.Set_Canvas(true,false,false);
             }
         }
 
-        
     }
 
 
@@ -333,11 +383,10 @@ public class PlayerMovment : MonoBehaviour
         if (other.CompareTag("Lock") || other.CompareTag("NPC"))
         {
             focusedObject = null;
-            interactCanvas.SetActive(false);
-            lockCanvas.SetActive(false);
+            canvas_Interact.Set_Canvas(false,false,false);
             canInteract = false;
         }
         //Debug.Log("am here!!!");
     }
-
+*/
 }

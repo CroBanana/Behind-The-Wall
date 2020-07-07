@@ -13,10 +13,12 @@ public class LockNumbers : MonoBehaviour
     public Text number;
     public bool check = false;
     public List<Transform> gates;
+
+    public PlayerInteract playerInteract;
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerInteract = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInteract>();
     }
 
     // Update is called once per frame
@@ -83,7 +85,9 @@ public class LockNumbers : MonoBehaviour
                 Debug.Log("Unlocked");
             }
         }
-        transform.parent.gameObject.SetActive(false);
+        yield return new WaitForSeconds (1f);
+        playerInteract.canvas_Interact.Set_Canvas(false,false,false);
+        Destroy( transform.parent.gameObject);
     }
 
 }

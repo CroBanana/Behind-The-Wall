@@ -9,7 +9,8 @@ public class EnemyMovment : MonoBehaviour
     //path movment related
     public GameObject target;
     public GameObject player;
-    //public NavMeshAgent agent;
+    private PlayerMovment playerScript;
+
     public Animator anim;
     public NavMeshPath path;
     public bool createdOnce=false;
@@ -19,15 +20,16 @@ public class EnemyMovment : MonoBehaviour
     int objectInList = 0;
     public bool isTalking=false;
     public bool didOnce = false;
-    public GameObject chatCanvas;
     public bool pathCalculated=false;
     public bool patroling = true;
     public bool needsPlayer = false;
     public bool findingPlayer = false;
     float stuckCheck;
-    float distanceOld;
-    float distanceNew;
+    public float distanceOld;
+    public float distanceNew;
     bool stuckDistanceCorutine;
+
+    public Canvas_interact canvas_Interact;
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +38,8 @@ public class EnemyMovment : MonoBehaviour
         anim=GetComponent<Animator>();
         path = new NavMeshPath();
         player = GameObject.FindGameObjectWithTag("Player");
+        canvas_Interact=GameObject.Find("Canvas").GetComponent<Canvas_interact>();
+        playerScript =player.GetComponent<PlayerMovment>();
     }
 
     // Update is called once per frame
@@ -65,8 +69,7 @@ public class EnemyMovment : MonoBehaviour
                 stuckDistanceCorutine=false;
             }
             didOnce = false;
-            chatCanvas.SetActive(false);
-            
+            canvas_Interact.Set_Canvas_Bot(false,false,false);
             CheckDistanceToTarget_AndSwitchTarget();
             DrawPath();
         }
@@ -138,13 +141,17 @@ public class EnemyMovment : MonoBehaviour
 
     void NeedsToTalkToPlayer(){
         if(Vector3.Distance(player.transform.position,transform.position)<=1f){
-            player.GetComponent<PlayerMovment>().ePressed=true;
+            playerScript.disableRaycast = true;
+            playerScript.talkTriggerd=true;
+            playerScript.ePressed=true;
         }
     }
 
     void TalkingToTarget()
     {
-        chatCanvas.SetActive(true);
+        playerScript.disableRaycast = true;
+        playerScript.focusedObject = gameObject;
+        canvas_Interact.Set_Canvas_Bot(false,false,true);
         gameObject.GetComponent<DialogTrigger>().TriggerDialog();
         anim.SetFloat("Speed", 0f);
         transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));

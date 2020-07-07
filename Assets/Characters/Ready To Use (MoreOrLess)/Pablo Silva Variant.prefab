@@ -88,10 +88,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   player: {fileID: 0}
-  agent: {fileID: 0}
   anim: {fileID: 0}
   createdOnce: 0
-  rotateSpeed: 150
+  rotateSpeed: 4
   patrolPoints:
   - {fileID: 0}
   - {fileID: 0}
@@ -101,28 +100,10 @@ MonoBehaviour:
   isTalking: 0
   didOnce: 0
   chatCanvas: {fileID: 0}
---- !u!195 &981995218
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4721265252746600372}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 0
-  m_Acceleration: 0
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 0
-  m_AutoBraking: 0
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: -0.05
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  pathCalculated: 0
+  patroling: 1
+  needsPlayer: 1
+  findingPlayer: 0
 --- !u!114 &1698098018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,17 +150,17 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 1d6395f9ebb3bd34b9f7651807e33c77,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 19.900501
+      value: 68.27
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 1d6395f9ebb3bd34b9f7651807e33c77,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.44
+      value: 1.294
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 1d6395f9ebb3bd34b9f7651807e33c77,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.3537507
+      value: 92.12
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 1d6395f9ebb3bd34b9f7651807e33c77,
         type: 3}
@@ -189,17 +170,17 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 1d6395f9ebb3bd34b9f7651807e33c77,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: 0.7730659
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 1d6395f9ebb3bd34b9f7651807e33c77,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 1d6395f9ebb3bd34b9f7651807e33c77,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: -0.6343257
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 1d6395f9ebb3bd34b9f7651807e33c77,
         type: 3}
@@ -214,7 +195,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 1d6395f9ebb3bd34b9f7651807e33c77,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
+      value: 258.74
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 1d6395f9ebb3bd34b9f7651807e33c77,
         type: 3}
@@ -239,7 +220,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 1d6395f9ebb3bd34b9f7651807e33c77,
         type: 3}
       propertyPath: m_Name
-      value: Pablo Silva Variant
+      value: Pablo Silva
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 1d6395f9ebb3bd34b9f7651807e33c77,
         type: 3}

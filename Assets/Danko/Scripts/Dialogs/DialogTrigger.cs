@@ -8,6 +8,6 @@ public class DialogTrigger : MonoBehaviour
 
     public void TriggerDialog()
     {
-        GameObject.Find("CharacterDialoge").GetComponent<DialogManager>().StartDialoge(dialoge);
+        GameObject.Find("Dialoge panel").GetComponent<DialogManager>().StartDialoge(dialoge);
     }
 }

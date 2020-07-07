@@ -1,0 +1,197 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerInteract : MonoBehaviour
+{
+    public PlayerMovment2 playerMovment2;
+    public GameObject focusedObject;
+    public Camera camera;
+    public GameObject cameraObject;
+    public Canvas_interact canvas_Interact;
+    public RotateViaMouse rotateViaMouse;
+
+    // maska koja vidi sve
+    public LayerMask cameraLayersOriginal;
+
+    //maska kada interacta s necim
+    public LayerMask cameraLayers;
+
+    public bool ePressed;
+    public bool canInteract;
+    public bool talkTriggerd;
+    public bool reset;
+
+    public bool firstPerson;
+
+    public float distanceFromObject;
+    public float zDistanceFromPlayer;
+
+
+    //raycast
+    // maska za raycast da se vidi s cime igrac moze interactati
+    public LayerMask selected_mask;
+    private RaycastHit hit;
+    private Ray ray;
+
+    void Start()
+    {
+        camera= Camera.main;
+        camera.cullingMask=cameraLayersOriginal;
+        canvas_Interact= GameObject.Find("Canvas").GetComponent<Canvas_interact>();
+        rotateViaMouse = GameObject.Find("RotateObjects").GetComponent<RotateViaMouse>();
+        cameraObject = GameObject.Find("Main Camera");
+        playerMovment2 = gameObject.GetComponent<PlayerMovment2>();
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        CheckIfLokingAtObject();
+        ResetIf();
+    }
+
+    void CheckIfLokingAtObject(){
+        ray = camera.ScreenPointToRay(Input.mousePosition);
+
+        if(Physics.Raycast(ray,out hit,5,selected_mask)){
+            focusedObject=hit.collider.gameObject;
+            if(ePressed==false){
+                canvas_Interact.Set_Canvas(true,false,false);
+                Debug.Log(hit.collider.name);
+                canInteract=true;
+            }
+            E();
+        }
+        else if(focusedObject !=null && ePressed==false){
+            canvas_Interact.Set_Canvas(false,false,false);
+            canInteract=false;
+            if(focusedObject.CompareTag("Lock")){
+                Debug.Log("am here!!!");
+                focusedObject.GetComponentInChildren<LockNumbers>().enabled=false;
+            }
+            focusedObject=null;
+            Debug.Log("Nema canvasa valjda");
+        }
+        if(ePressed == false){
+            R();
+        }
+    }
+
+    void R(){
+        if(Input.GetKeyDown(KeyCode.R)){
+            SetCamera();
+        }
+
+    }
+
+    void E(){
+        Debug.Log("E Pressed");
+        if (canInteract && Input.GetKeyDown(KeyCode.E))
+        {
+            ePressed = !ePressed;
+            if(ePressed){
+                Interact();
+            }
+        }
+
+        else if (ePressed == false && reset)
+        {
+            playerMovment2.enabled=true;
+            camera.cullingMask = cameraLayersOriginal;
+            ResetCameraPosition();
+            reset = false;
+            rotateViaMouse.GetComponent<RotateViaMouse>().enabled = true;
+        }
+    }
+
+    public void Interact(){
+        playerMovment2.anim.SetFloat("Speed", 0);
+        playerMovment2.enabled=false;
+        if(focusedObject.CompareTag("Lock")){
+            canvas_Interact.Set_Canvas(false,true,false);
+            focusedObject.GetComponentInChildren<LockNumbers>().enabled=true;
+        }else if(focusedObject.CompareTag("NPC")){
+            canvas_Interact.Set_Canvas(false,false,true);
+            focusedObject.GetComponent<EnemyInteract2>().DisableScripts();
+            focusedObject.GetComponent<DialogTrigger>().TriggerDialog();
+        }
+        FocusOnAnObject();
+        reset = true;
+    }
+
+    void ResetIf(){
+        if(focusedObject ==null && reset){
+            playerMovment2.enabled=true;
+            camera.cullingMask = cameraLayersOriginal;
+            ResetCameraPosition();
+            reset = false;
+            rotateViaMouse.GetComponent<RotateViaMouse>().enabled = true;
+        }
+    }
+
+    void FocusOnAnObject()
+    {
+        camera.cullingMask = cameraLayers;
+        rotateViaMouse.GetComponent<RotateViaMouse>().enabled = false;
+
+        if (focusedObject.CompareTag("Lock"))
+        {
+            camera.transform.position = focusedObject.transform.position - focusedObject.transform.right * distanceFromObject;
+
+            cameraObject.transform.LookAt(focusedObject.transform);
+            if(focusedObject.GetComponentInChildren<LockNumbers>().unlocked){
+                Debug.Log("HERE!!!!");
+                reset=true;
+                ePressed=false;
+                focusedObject=null;
+            }
+        }
+        else if(focusedObject.CompareTag("NPC"))
+        {
+            Transform head = focusedObject.transform.Find("Head");
+            camera.transform.position = head.position + head.forward * distanceFromObject;
+            cameraObject.transform.LookAt(head);
+        }
+
+
+    }
+
+    void ResetCameraPosition()
+    {
+        camera.transform.localPosition = new Vector3(0, 0, 0);
+        camera.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        if (!firstPerson)
+        {
+            cameraObject.transform.localPosition = new Vector3(cameraObject.transform.localPosition.x, cameraObject.transform.localPosition.y, zDistanceFromPlayer);
+        }
+        else
+        {
+            cameraObject.transform.localPosition = new Vector3(cameraObject.transform.localPosition.x, cameraObject.transform.localPosition.y, 0f);
+        }
+    }
+
+    // sets camera when R is pressed
+    void SetCamera()
+    {
+            if (firstPerson)
+            {
+                cameraObject.transform.localPosition = new Vector3(cameraObject.transform.localPosition.x, cameraObject.transform.localPosition.y, zDistanceFromPlayer);
+                firstPerson = false;
+                playerMovment2.firstPerson=firstPerson;
+            }
+            else
+            {
+                cameraObject.transform.localPosition = new Vector3(cameraObject.transform.localPosition.x, cameraObject.transform.localPosition.y, 0f);
+                firstPerson = true;
+                playerMovment2.firstPerson=firstPerson;
+            }
+    }
+
+    public void EndConversation(){
+        playerMovment2.enabled=true;
+        ePressed=false;
+        focusedObject.GetComponent<EnemyInteract2>().DialogeEnded();
+    }
+}

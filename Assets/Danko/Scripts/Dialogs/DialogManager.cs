@@ -13,8 +13,7 @@ public class DialogManager : MonoBehaviour
     public Text sentenceText;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    private void Awake() {
         names = new Queue<string>();
         sentences = new Queue<string>();
         player = GameObject.FindGameObjectWithTag("Player");
@@ -22,10 +21,11 @@ public class DialogManager : MonoBehaviour
 
     public void StartDialoge(Dialog dialoge)
     {
+        Debug.Log(dialoge.names[1]);
+        Debug.Log(dialoge.sentences[1]);
         Debug.Log("Hello seth here");
         sentences.Clear();
-        nameText = transform.Find("Panel/Name").GetComponent<Text>();
-        sentenceText = transform.Find("Panel/MainText").GetComponent<Text>();
+        names.Clear();
 
         foreach (string name in dialoge.names)
         {
@@ -36,7 +36,6 @@ public class DialogManager : MonoBehaviour
         {
             sentences.Enqueue(sentence);
         }
-        
         DisplayNextSentence();
 
     }
@@ -49,7 +48,6 @@ public class DialogManager : MonoBehaviour
             return;
         }
 
-        
         string sentence= sentences.Dequeue();
         string name= names.Dequeue();
         nameText.text = name;
@@ -58,6 +56,6 @@ public class DialogManager : MonoBehaviour
 
     void EndDialogue()
     {
-        player.GetComponent<PlayerMovment>().EndConversation();
+        player.GetComponent<PlayerInteract>().EndConversation();
     }
 }
