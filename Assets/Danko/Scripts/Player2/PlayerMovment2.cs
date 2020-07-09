@@ -28,7 +28,6 @@ public class PlayerMovment2 : MonoBehaviour
     //provjera je li player u prvom licu
     public bool firstPerson;
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -61,7 +60,8 @@ public class PlayerMovment2 : MonoBehaviour
         {
             runlimitMAX = 2f;
         }
-        else if (Input.GetKeyUp(KeyCode.LeftShift)){
+        else if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
             runlimitMAX = 1f;
         }
 
@@ -93,7 +93,7 @@ public class PlayerMovment2 : MonoBehaviour
 
         if (vertical < 0)
         {
-            anim.SetFloat("Speed", -(runSpeed*1.5f));
+            anim.SetFloat("Speed", -(runSpeed * 1.5f));
         }
         else
         {
@@ -107,58 +107,67 @@ public class PlayerMovment2 : MonoBehaviour
         rotation = alwaysFacingPoint.transform.rotation.eulerAngles;
         if (!firstPerson)
         {
-            if (vertical != 0)
-            {
-                rotation.x = 0;
-                rotation.z = 0;
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, alwaysFacingPoint.rotation, Time.deltaTime * rotateSpeed);
-            }
-            if (horizontal != 0)
-            {
-                transform.rotation = Quaternion.RotateTowards(transform.rotation,
-                                                              new Quaternion(alwaysFacingPoint.rotation.x,
-                                                              alwaysFacingPoint.rotation.y,
-                                                              alwaysFacingPoint.rotation.z,
-                                                              alwaysFacingPoint.rotation.w),
-                                                              Time.deltaTime * rotateSpeed);
-            }
+            RotateWhenFirstPerson();
         }
         else
         {
-            Vector3 angle = rotatePLayerFirstPerson.transform.eulerAngles;
-            int rotAmount = 0;
-            if(vertical!=0 && horizontal == 0)
-            {
-                rotAmount = 0;
-            }
-            else if(horizontal != 0 && vertical == 0)
-            {
-                rotAmount = 90 * horizontal.CompareTo(0);
-            }
-            else if(vertical>0 && horizontal > 0)
-            {
-                rotAmount = 45;
-            }
-            else if(vertical<0 && horizontal < 0)
-            {
-                rotAmount = 45;
-            }
-            else if (vertical > 0)
-            {
-                rotAmount = -45;
-            }
-            else if(vertical < 0)
-            {
-                rotAmount = -45;
-            }
-            Vector3 rotateTo = new Vector3(transform.rotation.x,
-                           angle.y + rotAmount,
-                           transform.rotation.z);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation,
-                                                         Quaternion.Euler(rotateTo.x, rotateTo.y, rotateTo.z),
-                                                         Time.deltaTime * rotateSpeed);
-
+            RotateWhenThirdPerson();
         }
+
+    }
+    void RotateWhenFirstPerson()
+    {
+        if (vertical != 0)
+        {
+            rotation.x = 0;
+            rotation.z = 0;
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, alwaysFacingPoint.rotation, Time.deltaTime * rotateSpeed);
+        }
+        if (horizontal != 0)
+        {
+            transform.rotation = Quaternion.RotateTowards(transform.rotation,
+                                                          new Quaternion(alwaysFacingPoint.rotation.x,
+                                                          alwaysFacingPoint.rotation.y,
+                                                          alwaysFacingPoint.rotation.z,
+                                                          alwaysFacingPoint.rotation.w),
+                                                          Time.deltaTime * rotateSpeed);
+        }
+    }
+
+    void RotateWhenThirdPerson()
+    {
+        Vector3 angle = rotatePLayerFirstPerson.transform.eulerAngles;
+        int rotAmount = 0;
+        if (vertical != 0 && horizontal == 0)
+        {
+            rotAmount = 0;
+        }
+        else if (horizontal != 0 && vertical == 0)
+        {
+            rotAmount = 90 * horizontal.CompareTo(0);
+        }
+        else if (vertical > 0 && horizontal > 0)
+        {
+            rotAmount = 45;
+        }
+        else if (vertical < 0 && horizontal < 0)
+        {
+            rotAmount = 45;
+        }
+        else if (vertical > 0)
+        {
+            rotAmount = -45;
+        }
+        else if (vertical < 0)
+        {
+            rotAmount = -45;
+        }
+        Vector3 rotateTo = new Vector3(transform.rotation.x,
+                       angle.y + rotAmount,
+                       transform.rotation.z);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation,
+                                                     Quaternion.Euler(rotateTo.x, rotateTo.y, rotateTo.z),
+                                                     Time.deltaTime * rotateSpeed);
 
     }
 }

@@ -7,6 +7,10 @@ TagManager:
   - Ground
   - Lock
   - NPC
+  - Kukuruz
+  - Turnip
+  - Mrkva
+  - Patlidzan
   layers:
   - Default
   - TransparentFX
