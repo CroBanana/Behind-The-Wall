@@ -10,6 +10,8 @@ public class EnemyPatrol : MonoBehaviour
     public GameObject target;
     public List<GameObject> patrolPoints;
 
+    // za zastitara mjesta koja mora proći ako je izgubio igraca
+
     public bool stuckDistanceCorutine;
     public bool pathCalculated;
 
@@ -19,25 +21,28 @@ public class EnemyPatrol : MonoBehaviour
     public int objectInList = 0;
 
 
-    Quaternion quar;
-
     public NavMeshPath path;
+
+    [Header ("Izgubio igraca")]
+    public List<GameObject> searchForPlayer;
+    public float secondsMin,secondsMax;
+    public bool waitAFewSeconds;
     // Start is called before the first frame update
     void Start()
     {
         anim=GetComponent<Animator>();
         path = new NavMeshPath();
-        Debug.Log("start");
+        searchForPlayer=null;
+        //Debug.Log("start");
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        CheckDistanceToTarget_AndSwitchTarget();
-        if(stuckDistanceCorutine==false){
-            StopAllCoroutines();
-            StartCoroutine(CheckIfStuck());
-            stuckDistanceCorutine=true;
+        if(!waitAFewSeconds){
+            CheckDistanceToTarget_AndSwitchTarget();
+        }else{
+            transform.Rotate(Vector3.up * rotateSpeed*10f*Time.deltaTime);
         }
         DrawPath();
     }
@@ -46,7 +51,12 @@ public class EnemyPatrol : MonoBehaviour
     {
         if (target == null)
         {
-            target = patrolPoints[0];
+            if(searchForPlayer !=null){
+                
+                target = searchForPlayer[(int) Random.Range(0,searchForPlayer.Count)];
+            }else{
+                target = patrolPoints[0];
+            }
         }
 
         if (pathCalculated == false)
@@ -56,15 +66,16 @@ public class EnemyPatrol : MonoBehaviour
             //Debug.Log("test");
         }
         
-        if (Vector3.Distance(transform.position, target.transform.position) > 2f)
+        if (Vector3.Distance(transform.position, target.transform.position) > 1f)
         {
             anim.SetFloat("Speed", 1f);
             RotateToTarget();
         }
         else
         {
-            FindNewTarget();
+            Debug.Log("SOULD FIND NEW TARGET WHY ISNT IT");
             anim.SetFloat("Speed", 0f);
+            FindNewTarget();
         }
     }
 
@@ -76,26 +87,19 @@ public class EnemyPatrol : MonoBehaviour
             }
     }
 
-    IEnumerator CheckIfStuck(){
-        while(true){
-            //Debug.Log("Cheching if stuck");
-            distanceOld=Vector3.Distance(path.corners[1],transform.position);
-            yield return new WaitForSeconds(2);
-            distanceNew=Vector3.Distance(path.corners[1],transform.position);
-            if(distanceNew == distanceOld){
-                Debug.Log("        Yes he is stuck");
-                pathCalculated=false;
-            }
-            Debug.Log(distanceNew+ "   "      +distanceOld);
-        }
-    }
-
     void FindNewTarget()
     {
-        objectInList++;
         try
         {
-            target = patrolPoints[objectInList];
+            if(searchForPlayer!=null){
+                StartCoroutine(WaitABit());
+                searchForPlayer.Remove(target);
+                target = searchForPlayer[(int) Random.Range(0,searchForPlayer.Count)];
+            }else{
+                Debug.Log("set OtherObject");
+                objectInList++;
+                target = patrolPoints[objectInList];
+            }
         }
         catch
         {
@@ -107,15 +111,28 @@ public class EnemyPatrol : MonoBehaviour
 
     void RotateToTarget()
     {
-        if(Vector3.Distance (path.corners[1],transform.position)<0.2f){
+        Debug.Log(Vector3.Distance (path.corners[1],transform.position));
+        if(Vector3.Distance (path.corners[1],transform.position)<0.3f){
             pathCalculated=false;
         }
-        quar = Quaternion.LookRotation(path.corners[1] - transform.position);
         Vector3 cornerPosition= new Vector3(path.corners[1].x-transform.position.x,
                                             0,
                                             path.corners[1].z-transform.position.z);
         //Debug.Log(target.name);
         Vector3 newDirection = Vector3.RotateTowards(transform.forward, cornerPosition, rotateSpeed * Time.deltaTime,0f);
         transform.rotation= Quaternion.LookRotation(newDirection);
+    }
+
+    IEnumerator WaitABit(){
+        waitAFewSeconds=true;
+        yield return new WaitForSeconds(Random.Range(secondsMin,secondsMin));
+        waitAFewSeconds=false;
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        if(other.CompareTag("House")){
+            pathCalculated=false;
+            Debug.Log("WTF!!!!");
+        }
     }
 }

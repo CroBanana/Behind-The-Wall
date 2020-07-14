@@ -37,7 +37,6 @@ public class Farmer : MonoBehaviour
         foreach(GameObject corn in corns){
             crops.Add(corn);
         }*/
-        Debug.Log("start");
     }
 
     // Update is called once per frame
@@ -107,10 +106,8 @@ public class Farmer : MonoBehaviour
             yield return new WaitForSeconds(10);
             distanceNew=Vector3.Distance(path.corners[1],transform.position);
             if(distanceNew == distanceOld){
-                Debug.Log("        Yes he is stuck");
                 pathCalculated=false;
             }
-            Debug.Log(distanceNew+ "   "      +distanceOld);
         }
     }
 
@@ -134,7 +131,7 @@ public class Farmer : MonoBehaviour
         catch
         {
             picked__seeded++;
-            Debug.Log("is it fully picked?    "+ picked);
+            //Debug.Log("is it fully picked?    "+ picked);
             if(picked__seeded==2){
                 StartCoroutine(RelaxYouHaveDoneYourJob());
             }
@@ -147,11 +144,11 @@ public class Farmer : MonoBehaviour
     }
 
     IEnumerator RelaxYouHaveDoneYourJob(){
-        Debug.Log("relaxing");
+        //Debug.Log("relaxing");
         cropInLIst=0;
         crop=chill;
         yield return new WaitUntil(() => Vector3.Distance(transform.position,crop.transform.position) < distanceToCrop);
-        Debug.Log("Waiting");
+        //Debug.Log("Waiting");
         anim.SetFloat("Speed", 0f);
         yield return new WaitForSeconds(10);
         picked__seeded=0;
