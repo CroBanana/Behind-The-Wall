@@ -111,7 +111,7 @@ public class EnemyPatrol : MonoBehaviour
 
     void RotateToTarget()
     {
-        Debug.Log(Vector3.Distance (path.corners[1],transform.position));
+        //Debug.Log(Vector3.Distance (path.corners[1],transform.position));
         if(Vector3.Distance (path.corners[1],transform.position)<0.3f){
             pathCalculated=false;
         }
