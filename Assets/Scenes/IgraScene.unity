@@ -5205,7 +5205,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: d41b175ee8599cf459d48b61cd1798bb,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 116.868324
+      value: 129.53503
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: d41b175ee8599cf459d48b61cd1798bb,
         type: 3}
@@ -8748,7 +8748,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: ac836a39eacb6424e9d0481576cb7e85,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 112.26
+      value: 124.92672
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: ac836a39eacb6424e9d0481576cb7e85,
         type: 3}
@@ -11006,9 +11006,114 @@ MonoBehaviour:
   firstPerson: 0
   distanceFromObject: 0.6
   zDistanceFromPlayer: -1
+  heightOfNPC: 1.6
   selectedMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8192
+--- !u!82 &526093256
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 526093248}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!81 &526093257
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 526093248}
+  m_Enabled: 1
 --- !u!1 &529065484
 GameObject:
   m_ObjectHideFlags: 0
@@ -14980,7 +15085,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 486d0fe4dfa6efa4a9944f5136b4c395,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 115.28
+      value: 127.94672
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 486d0fe4dfa6efa4a9944f5136b4c395,
         type: 3}
@@ -16883,7 +16988,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: ea53104a0c870ad45995c96fa12e2e20,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 112.5
+      value: 125.16672
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: ea53104a0c870ad45995c96fa12e2e20,
         type: 3}
@@ -19631,7 +19736,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: e91242766e7f30549bc52410986c5c7a,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 116.65043
+      value: 129.31714
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: e91242766e7f30549bc52410986c5c7a,
         type: 3}
@@ -23307,7 +23412,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 08ceccfebfc78674aab3cd2bd0e6a39d,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 116.85473
+      value: 129.52145
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 08ceccfebfc78674aab3cd2bd0e6a39d,
         type: 3}
@@ -25072,6 +25177,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 309369868, guid: 931b8f436d588aa4b81d072e2b609b47, type: 3}
+    - {fileID: 3966887189643868831, guid: 931b8f436d588aa4b81d072e2b609b47, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 931b8f436d588aa4b81d072e2b609b47, type: 3}
 --- !u!1001 &1256654519
 PrefabInstance:
@@ -26606,11 +26712,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 0}
   target: {fileID: 1427160611}
+  target2: {fileID: 0}
   player: {fileID: 0}
   pathCalculated: 0
   rotationSpeed: 4
   distanceToPlayer: 0
   arivedAtPoint: 0
+  talkedToPLayer: 0
+  needsPlayer: 1
 --- !u!114 &1313630093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26626,7 +26735,10 @@ MonoBehaviour:
   playerInteract: {fileID: 0}
   enemyFollowPlayer: {fileID: 0}
   enemyPatrol: {fileID: 0}
+  goToPoint: {fileID: 0}
+  playerInSame: {fileID: 0}
   enemyP: 0
+  gotoP: 1
 --- !u!114 &1313630094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26641,7 +26753,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   anim: {fileID: 0}
-  rotateSpeed: 0
+  rotateSpeed: 3
   enemyInteract2: {fileID: 0}
   pathCalculated: 0
   followPlayer: 0
@@ -26657,13 +26769,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12e04ad1408cbec439c49de8deb9c0df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialoge:
+  firstConversation:
     names:
-    - Nameless Man
+    - Nameless dude
     - Juan Carlos
     sentences:
+    - God bless you. Follow me il lead you to our leader.
+    - Good il follow you.
+  secondConversation:
+    names:
     - 
     - 
+    sentences:
+    - Go strait he is at the end of that hollway.
+    - Ok.
+  howManyTimesTalked: 0
 --- !u!54 &1313630096
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -26680,6 +26800,102 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!82 &1313630097
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1313630087}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &1314995294
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28379,7 +28595,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 07a14c4b5444d6f44b855188649dc8af,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 111.92
+      value: 124.586716
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 07a14c4b5444d6f44b855188649dc8af,
         type: 3}
@@ -29300,7 +29516,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 68e9ae555100bdf46afd7dc32697c1cf,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 114.11
+      value: 126.77672
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 68e9ae555100bdf46afd7dc32697c1cf,
         type: 3}
@@ -29752,7 +29968,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: d89f241ef8fa4d74b95c04304b0f5ec2,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 116.72328
+      value: 129.39
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: d89f241ef8fa4d74b95c04304b0f5ec2,
         type: 3}
@@ -31076,7 +31292,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: d10453c0fb78a084eade1e48d8cdf242,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 116.52
+      value: 129.1867
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: d10453c0fb78a084eade1e48d8cdf242,
         type: 3}
@@ -32795,7 +33011,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 732bd12aaea722743b9bee8362d4e9f7,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 114.82
+      value: 127.48672
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 732bd12aaea722743b9bee8362d4e9f7,
         type: 3}
@@ -41315,7 +41531,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 38f90773d871fa44486e4611257af672,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 113.73
+      value: 126.39672
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 38f90773d871fa44486e4611257af672,
         type: 3}
@@ -42635,7 +42851,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: cc6b9dbc53470864aa4d05db001fd399,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 115.86
+      value: 128.52672
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: cc6b9dbc53470864aa4d05db001fd399,
         type: 3}
@@ -44068,6 +44284,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  follower: {fileID: 1313630087}
+  pointToGo: {fileID: 2115450072}
+  leadPlayerToRoom:
+    names:
+    - namless man
+    sentences:
+    - Follow me
+  finalyEnd:
+    names:
+    - namless man
+    sentences:
+    - wea re here
 --- !u!1001 &2099038311
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45800,6 +46028,22 @@ PrefabInstance:
       value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 1698098018, guid: 17284ea1424e711468081d4db3e8c7a4, type: 3}
+      propertyPath: firstConversation.names.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1698098018, guid: 17284ea1424e711468081d4db3e8c7a4, type: 3}
+      propertyPath: firstConversation.sentences.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1698098018, guid: 17284ea1424e711468081d4db3e8c7a4, type: 3}
+      propertyPath: secondConversation.names.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1698098018, guid: 17284ea1424e711468081d4db3e8c7a4, type: 3}
+      propertyPath: secondConversation.sentences.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1698098018, guid: 17284ea1424e711468081d4db3e8c7a4, type: 3}
       propertyPath: dialoge.sentences.Array.data[0]
       value: God Bless you!
       objectReference: {fileID: 0}
@@ -45942,6 +46186,30 @@ PrefabInstance:
     - target: {fileID: 1698098018, guid: 17284ea1424e711468081d4db3e8c7a4, type: 3}
       propertyPath: dialoge.names.Array.data[17]
       value: Juan Carlos
+      objectReference: {fileID: 0}
+    - target: {fileID: 1698098018, guid: 17284ea1424e711468081d4db3e8c7a4, type: 3}
+      propertyPath: firstConversation.names.Array.data[1]
+      value: juan
+      objectReference: {fileID: 0}
+    - target: {fileID: 1698098018, guid: 17284ea1424e711468081d4db3e8c7a4, type: 3}
+      propertyPath: firstConversation.names.Array.data[0]
+      value: pablo
+      objectReference: {fileID: 0}
+    - target: {fileID: 1698098018, guid: 17284ea1424e711468081d4db3e8c7a4, type: 3}
+      propertyPath: firstConversation.sentences.Array.data[0]
+      value: sick
+      objectReference: {fileID: 0}
+    - target: {fileID: 1698098018, guid: 17284ea1424e711468081d4db3e8c7a4, type: 3}
+      propertyPath: firstConversation.sentences.Array.data[1]
+      value: sick indeed
+      objectReference: {fileID: 0}
+    - target: {fileID: 1698098018, guid: 17284ea1424e711468081d4db3e8c7a4, type: 3}
+      propertyPath: secondConversation.names.Array.data[0]
+      value: pablo
+      objectReference: {fileID: 0}
+    - target: {fileID: 1698098018, guid: 17284ea1424e711468081d4db3e8c7a4, type: 3}
+      propertyPath: secondConversation.sentences.Array.data[0]
+      value: we alredy talked
       objectReference: {fileID: 0}
     - target: {fileID: 4721265252746600372, guid: 17284ea1424e711468081d4db3e8c7a4,
         type: 3}

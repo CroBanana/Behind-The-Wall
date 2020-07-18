@@ -7,33 +7,47 @@ public class GoToPoint : MonoBehaviour
 {
     public Animator anim;
     public GameObject target;
+    public GameObject target2;
     public NavMeshPath path;
     public GameObject player;
     public bool pathCalculated;
     public float rotationSpeed;
     public float distanceToPlayer;
     public bool arivedAtPoint;
+    public bool talkedToPLayer;
+    public bool needsPlayer;
     // Start is called before the first frame update
     void Start()
     {
         anim=GetComponent<Animator>();
         path = new NavMeshPath();
         player= GameObject.FindGameObjectWithTag("Player");
+        target2 = target;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(needsPlayer){
+            target=player;
+        }else{
+            target=target2;
+        }
         if(!arivedAtPoint){
             CheckDistance();
-        RotateToTarget();
-        DrawPath();
+            RotateToTarget();
+            DrawPath();
+            talkedToPLayer=false;
         }else{
-            if(Vector3.Distance(player.transform.position,transform.position)<3){
-                gameObject.GetComponent<EnemyInteract2>().TalkingToPlayer();
+            Debug.Log("ITS HERE!!!!");
+            if(Vector3.Distance(player.transform.position,transform.position)<3 && talkedToPLayer==false){
+                talkedToPLayer=true;
+                GetComponent<EnemyInteract2>().TalkingToPlayer();
+                
+                GetComponent<EnemyInteract2>().DisableScripts();
+                
             }
         }
-        
     }
 
     void CheckDistance()

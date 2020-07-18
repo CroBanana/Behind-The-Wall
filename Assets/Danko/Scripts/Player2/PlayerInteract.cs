@@ -26,6 +26,7 @@ public class PlayerInteract : MonoBehaviour
 
     public float distanceFromObject;
     public float zDistanceFromPlayer;
+    public float heightOfNPC;
 
 
     //raycast
@@ -166,9 +167,17 @@ public class PlayerInteract : MonoBehaviour
         }
         else if (focusedObject.CompareTag("NPC"))
         {
-            Transform head = focusedObject.transform.Find("Head");
-            camera.transform.position = head.position + head.forward * distanceFromObject;
-            cameraObject.transform.LookAt(head);
+            Transform body = focusedObject.transform.Find("Body");
+            camera.transform.position = body.position + body.forward * distanceFromObject;
+            Vector3 lookAtPoint = body.position+Vector3.up*heightOfNPC;
+            camera.transform.position +=Vector3.up*heightOfNPC;
+            camera.transform.LookAt(lookAtPoint);
+            //camera.transform.position = focusedObject.transform.position+ Vector3.up * heightOfNPC;
+            //camera.transform.position+=Vector3.forward*distanceFromObject;
+            //camera.transform.rotation = new Quaternion(0,focusedObject.transform.rotation.y,0,focusedObject.transform.rotation.w);
+            //cameraObject.transform.LookAt(new Vector3(focusedObject.transform.position.x,
+                                                    //focusedObject.transform.position.y,
+                                                    //focusedObject.transform.position.z)+ Vector3.up * heightOfNPC);
         }
 
 

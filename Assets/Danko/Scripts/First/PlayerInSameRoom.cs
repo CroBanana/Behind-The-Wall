@@ -7,6 +7,11 @@ public class PlayerInSameRoom : MonoBehaviour
     RaycastHit hit;
     
     public GameObject player;
+    public GameObject follower;
+    public GameObject pointToGo;
+
+    public Dialog leadPlayerToRoom;
+    public Dialog finalyEnd;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,5 +29,17 @@ public class PlayerInSameRoom : MonoBehaviour
                     enabled=false;
                 }
             }
+    }
+
+    public void UpdateNPC(){
+        follower.GetComponent<GoToPoint>().target= player;
+        follower.GetComponent<GoToPoint>().target2 = pointToGo;
+        follower.GetComponent<GoToPoint>().needsPlayer=true;
+        follower.GetComponent<GoToPoint>().talkedToPLayer=false;
+        follower.GetComponent<GoToPoint>().enabled=true;
+        follower.GetComponent<DialogTrigger>().howManyTimesTalked=0;
+        follower.GetComponent<DialogTrigger>().firstConversation=leadPlayerToRoom;
+        follower.GetComponent<DialogTrigger>().secondConversation=finalyEnd;
+
     }
 }

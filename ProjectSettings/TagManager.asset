@@ -12,6 +12,7 @@ TagManager:
   - Mrkva
   - Patlidzan
   - House
+  - Guard
   layers:
   - Default
   - TransparentFX

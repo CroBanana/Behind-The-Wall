@@ -73,7 +73,7 @@ public class EnemyPatrol : MonoBehaviour
         }
         else
         {
-            Debug.Log("SOULD FIND NEW TARGET WHY ISNT IT");
+            //Debug.Log("SOULD FIND NEW TARGET WHY ISNT IT");
             anim.SetFloat("Speed", 0f);
             FindNewTarget();
         }
@@ -96,7 +96,7 @@ public class EnemyPatrol : MonoBehaviour
                 searchForPlayer.Remove(target);
                 target = searchForPlayer[(int) Random.Range(0,searchForPlayer.Count)];
             }else{
-                Debug.Log("set OtherObject");
+                //Debug.Log("set OtherObject");
                 objectInList++;
                 target = patrolPoints[objectInList];
             }

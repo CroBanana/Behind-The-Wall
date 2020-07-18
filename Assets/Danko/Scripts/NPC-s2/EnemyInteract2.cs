@@ -7,14 +7,18 @@ public class EnemyInteract2 : MonoBehaviour
     public PlayerInteract playerInteract;
     public EnemyFollowPlayer enemyFollowPlayer;
     public EnemyPatrol enemyPatrol;
+    public GoToPoint goToPoint;
+    public PlayerInSameRoom playerInSame;
 
     public bool enemyP;
+    public bool gotoP;
     // Start is called before the first frame update
     void Start()
     {
         playerInteract= GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInteract>();
         enemyFollowPlayer = gameObject.GetComponent<EnemyFollowPlayer>();
         enemyPatrol = gameObject.GetComponent<EnemyPatrol>();
+        goToPoint = gameObject.GetComponent<GoToPoint>();
         enemyP=true;
     }
 
@@ -32,10 +36,12 @@ public class EnemyInteract2 : MonoBehaviour
     }
 
     public void DisableScripts(){
-        if(enemyPatrol.enabled){
+        if(enemyPatrol!=null){
+            if(enemyPatrol.enabled){
             Debug.Log("EnemyPatrol is enabled");
             enemyPatrol.anim.SetFloat("Speed", 0f);
             enemyPatrol.enabled=false;
+        }
         }
 
         if(enemyFollowPlayer.enabled){
@@ -45,7 +51,29 @@ public class EnemyInteract2 : MonoBehaviour
         }
     }
 
+
     public void DialogeEnded(){
-        enemyPatrol.enabled=enemyP;
+        if(enemyPatrol!=null)
+            enemyPatrol.enabled=enemyP;
+        if(goToPoint!=null){
+            Debug.Log("THIS IS SET!!!");
+            if(Vector3.Distance(goToPoint.target2.transform.position,transform.position)<5){
+                goToPoint.enabled=false;
+                goToPoint.arivedAtPoint=false;
+                goToPoint.needsPlayer=false;
+                goToPoint.talkedToPLayer=true;
+            }else{
+                goToPoint.arivedAtPoint=false;
+                goToPoint.needsPlayer=false;
+                goToPoint.talkedToPLayer=true;
+                goToPoint.enabled=gotoP;
+            }
+        }
+        if(playerInSame != null){
+                Debug.Log("AAAAAAAAAAAAAAAAAAAAAAAAA");
+                GetComponent<PlayerInSameRoom>().UpdateNPC();
+                GetComponent<PlayerInSameRoom>().enabled=false;
+        }
+
     }
 }
