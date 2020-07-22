@@ -62,7 +62,7 @@ public class PlayerInteract : MonoBehaviour
             focusedObject = hit.collider.gameObject;
             if (ePressed == false)
             {
-                canvasInteract.Set_Canvas(true, false, false);
+                canvasInteract.Set_Canvas(true, false, false,false);
                 Debug.Log(hit.collider.name);
                 canInteract = true;
             }
@@ -70,12 +70,15 @@ public class PlayerInteract : MonoBehaviour
         }
         else if (focusedObject != null && ePressed == false)
         {
-            canvasInteract.Set_Canvas(false, false, false);
+            canvasInteract.Set_Canvas(false, false, false, false);
             canInteract = false;
             if (focusedObject.CompareTag("Lock"))
             {
                 Debug.Log("am here!!!");
                 focusedObject.GetComponentInChildren<LockNumbers>().enabled = false;
+            }
+            else if(focusedObject.CompareTag("Puzzle")){
+                focusedObject.GetComponentInParent<Puzzle>().enabled = false;
             }
             focusedObject = null;
             Debug.Log("Nema canvasa valjda");
@@ -96,7 +99,7 @@ public class PlayerInteract : MonoBehaviour
 
     void E()
     {
-        Debug.Log("E Pressed");
+        //Debug.Log("E Pressed");
         if (canInteract && Input.GetKeyDown(KeyCode.E))
         {
             ePressed = !ePressed;
@@ -120,16 +123,24 @@ public class PlayerInteract : MonoBehaviour
     {
         playerMovement2.anim.SetFloat("Speed", 0);
         playerMovement2.enabled = false;
+        Debug.Log("HERE!#");
         if (focusedObject.CompareTag("Lock"))
         {
-            canvasInteract.Set_Canvas(false, true, false);
+            Debug.Log("HERE!4");
+            canvasInteract.Set_Canvas(false, true, false, false);
             focusedObject.GetComponentInChildren<LockNumbers>().enabled = true;
         }
         else if (focusedObject.CompareTag("NPC"))
         {
-            canvasInteract.Set_Canvas(false, false, true);
+            Debug.Log("HERE!5");
+            canvasInteract.Set_Canvas(false, false, true, false);
             focusedObject.GetComponent<EnemyInteract2>().DisableScripts();
             focusedObject.GetComponent<DialogTrigger>().TriggerDialog();
+        }
+        else if(focusedObject.CompareTag("Puzzle")){
+            Debug.Log("WHAT!!!");
+            canvasInteract.Set_Canvas(false,false,false, true);
+            focusedObject.GetComponentInParent<Puzzle>().enabled=true;
         }
         FocusOnAnObject();
         reset = true;
@@ -157,6 +168,7 @@ public class PlayerInteract : MonoBehaviour
             camera.transform.position = focusedObject.transform.position - focusedObject.transform.right * distanceFromObject;
 
             cameraObject.transform.LookAt(focusedObject.transform);
+
             if (focusedObject.GetComponentInChildren<LockNumbers>().unlocked)
             {
                 Debug.Log("HERE!!!!");
@@ -164,6 +176,7 @@ public class PlayerInteract : MonoBehaviour
                 ePressed = false;
                 focusedObject = null;
             }
+
         }
         else if (focusedObject.CompareTag("NPC"))
         {
@@ -178,6 +191,12 @@ public class PlayerInteract : MonoBehaviour
             //cameraObject.transform.LookAt(new Vector3(focusedObject.transform.position.x,
                                                     //focusedObject.transform.position.y,
                                                     //focusedObject.transform.position.z)+ Vector3.up * heightOfNPC);
+        }else if(focusedObject.CompareTag("Puzzle")){
+            Debug.Log("HERE!2");
+            Transform puzzleParent=focusedObject.transform.parent;
+            camera.transform.position = puzzleParent.position - puzzleParent.right * distanceFromObject;
+
+            cameraObject.transform.LookAt(puzzleParent);
         }
 
 

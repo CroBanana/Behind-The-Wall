@@ -78,21 +78,32 @@ public class PlayerMovment : MonoBehaviour
                     hit.collider.GetComponentInChildren<LockNumbers>().enabled = true;
                     canInteract = true;
                     focusedObject = hit.collider.gameObject;
-                    canvas_Interact.Set_Canvas(true,false,false);
+                    //canvas_Interact.Set_Canvas(true,false,false);
                     Debug.Log(hit.collider.name);
                 }
-                else if(hit.collider.CompareTag("NPC")&& ePressed==false){
+                else if(hit.collider.CompareTag("NPC") && ePressed==false){
                     canInteract=true;
                     focusedObject = hit.collider.gameObject;
-                    canvas_Interact.Set_Canvas(true,false,false);
+                    //canvas_Interact.Set_Canvas(true,false,false);
+                    Debug.Log(hit.collider.name);
+                }
+                else if(hit.collider.CompareTag("Puzzle") && ePressed==false){
+                    hit.collider.GetComponentInChildren<Puzzle>().enabled = true;
+                    canInteract = true;
+                    focusedObject = hit.collider.gameObject;
+                    //canvas_Interact.Set_Canvas(true,false,false);
                     Debug.Log(hit.collider.name);
                 }
             }
             else if(focusedObject !=null && ePressed==false){
-                canvas_Interact.Set_Canvas(false,false,false);
+                //canvas_Interact.Set_Canvas(false,false,false);
                 if(focusedObject.CompareTag("Lock")){
                     Debug.Log("am here!!!");
                     focusedObject.GetComponentInChildren<LockNumbers>().enabled=false;
+                    focusedObject=null;
+                }
+                else if(focusedObject.CompareTag("Puzzle")){
+                    focusedObject.GetComponentInChildren<Puzzle>().enabled=false;
                     focusedObject=null;
                 }
                 Debug.Log("Nema canvasa valjda");
@@ -108,9 +119,11 @@ public class PlayerMovment : MonoBehaviour
             ePressed = !ePressed;
             if(ePressed){
                 if(focusedObject.CompareTag("Lock")){
-                    canvas_Interact.Set_Canvas(false,true,false);
+                    //canvas_Interact.Set_Canvas(false,true,false);
                 }else if(focusedObject.CompareTag("NPC")){
                     talkTriggerd = true;
+                }else if(focusedObject.CompareTag("Puzzle")){
+                    //canvas_Interact.Set_Canvas(false,true,false);
                 }
             }
         }
@@ -207,17 +220,21 @@ public class PlayerMovment : MonoBehaviour
         camera.cullingMask = cameraLayers;
         rotateViaMouse.GetComponent<RotateViaMouse>().enabled = false;
 
-        if (focusedObject.CompareTag("Lock"))
+        if (focusedObject.CompareTag("Lock") || focusedObject.CompareTag("Puzzle"))
         {
             camera.transform.position = focusedObject.transform.position - focusedObject.transform.right * distanceFromObject;
 
             cameraObject.transform.LookAt(focusedObject.transform);
-            if(focusedObject.GetComponentInChildren<LockNumbers>().unlocked){
-                Debug.Log("HERE!!!!");
-                canvas_Interact.Set_Canvas(false, true,false);
-                reset=true;
-                ePressed=false;
-                focusedObject=null;
+            try{
+                if(focusedObject.GetComponentInChildren<LockNumbers>().unlocked){
+                    Debug.Log("HERE!!!!");
+                    canvas_Interact.Set_Canvas(false, true, false, false);
+                    reset=true;
+                    ePressed=false;
+                    focusedObject=null;
+                }
+            }catch{
+                Debug.Log("works");
             }
         }
         else if(focusedObject.CompareTag("NPC"))

@@ -42,8 +42,8 @@ public class LockNumbers : MonoBehaviour
             {
                 var rotation = transform.localEulerAngles;
                 transform.localRotation = Quaternion.Euler(rotation.x,
-                                                          rotation.y,
-                                                          rotation.z + Time.deltaTime * mouseX * rotationSpeed);
+                                                           rotation.y,
+                                                           rotation.z + Time.deltaTime * mouseX * rotationSpeed);
             }
         }
     }
@@ -86,7 +86,7 @@ public class LockNumbers : MonoBehaviour
             }
         }
         yield return new WaitForSeconds (1f);
-        playerInteract.canvasInteract.Set_Canvas(false,false,false);
+        playerInteract.canvasInteract.Set_Canvas(false,false,false,false);
         Destroy( transform.parent.gameObject);
     }
 
