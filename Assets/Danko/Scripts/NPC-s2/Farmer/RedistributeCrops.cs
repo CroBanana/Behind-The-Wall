@@ -11,46 +11,53 @@ public class RedistributeCrops : MonoBehaviour
     public GameObject corn;
     public int cropPerFarmer;
     // Start is called before the first frame update
-    private void Awake() {
+    private void Awake()
+    {
 
         foreach (Transform child in corn.transform)
         {
             crops.Add(child.gameObject);
         }
 
-        temp=GameObject.FindGameObjectsWithTag("Farmer");
-        for(int c=0; c<temp.Length;c++){
+        temp = GameObject.FindGameObjectsWithTag("Farmer");
+        for (int c = 0; c < temp.Length; c++)
+        {
             farmers.Add(temp[c]);
         }
-        temp=null;
-        Debug.Log("Crops: "+ crops.Count);
-        Debug.Log("Farmers: "+ farmers.Count);
-        cropPerFarmer=crops.Count/farmers.Count;
+        temp = null;
+        Debug.Log("Crops: " + crops.Count);
+        Debug.Log("Farmers: " + farmers.Count);
+        cropPerFarmer = crops.Count / farmers.Count;
         Debug.Log(cropPerFarmer);
 
-        /*
+
         foreach (var farmer in farmers)
         {
+            List<GameObject> cropsToFarmer2 =  new List<GameObject>();
             cropsToFarmer.Clear();
-            for(int i =0;i<cropPerFarmer;i++){
+            for (int i = 0; i < cropPerFarmer; i++)
+            {
                 cropsToFarmer.Add(crops[0]);
-                Debug.Log(crops[0]);
+                cropsToFarmer2.Add(crops[0]);
+                //Debug.Log(crops[0]);
                 crops.Remove(crops[0]);
             }
             Debug.Log("Current size of crops:" + crops.Count);
-            farmer.GetComponent<Farmer>().crops = cropsToFarmer;
+            farmer.GetComponent<Farmer>().crops = cropsToFarmer2;
 
             continue;
-        }*/
-        int f=0;
+        }
+        /*
+        int f = 0;
         foreach (var crop in crops)
         {
             farmers[f].GetComponent<Farmer>().crops.Add(crop);
             f++;
-            if(f==15){
-                f=0;
+            if (f == 15)
+            {
+                f = 0;
             }
-        }
+        }*/
 
     }
 

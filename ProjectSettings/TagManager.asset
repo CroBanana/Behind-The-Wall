@@ -15,6 +15,7 @@ TagManager:
   - Guard
   - Puzzle
   - Farmer
+  - Riddle
   layers:
   - Default
   - TransparentFX

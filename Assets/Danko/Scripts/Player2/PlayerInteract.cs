@@ -7,7 +7,6 @@ public class PlayerInteract : MonoBehaviour
     public PlayerMovment2 playerMovement2;
     public GameObject focusedObject;
     public Camera camera;
-    public GameObject cameraObject;
     public Canvas_interact canvasInteract;
     public RotateViaMouse rotateViaMouse;
 
@@ -39,9 +38,8 @@ public class PlayerInteract : MonoBehaviour
     {
         camera = Camera.main;
         camera.cullingMask = cameraLayersOriginal;
-        canvasInteract = GameObject.Find("Canvas").GetComponent<Canvas_interact>();
+        canvasInteract = GameObject.Find("AllUI").GetComponent<Canvas_interact>();
         rotateViaMouse = GameObject.Find("RotateObjects").GetComponent<RotateViaMouse>();
-        cameraObject = GameObject.Find("Main Camera");
         playerMovement2 = gameObject.GetComponent<PlayerMovment2>();
 
     }
@@ -79,6 +77,8 @@ public class PlayerInteract : MonoBehaviour
             }
             else if(focusedObject.CompareTag("Puzzle")){
                 focusedObject.GetComponentInParent<Puzzle>().enabled = false;
+            }else if(focusedObject.CompareTag("Riddle")){
+                focusedObject.GetComponent<PuzzleNumbers>().isSolving = false;
             }
             focusedObject = null;
             Debug.Log("Nema canvasa valjda");
@@ -141,6 +141,9 @@ public class PlayerInteract : MonoBehaviour
             Debug.Log("WHAT!!!");
             canvasInteract.Set_Canvas(false,false,false, true);
             focusedObject.GetComponentInParent<Puzzle>().enabled=true;
+        }else if(focusedObject.CompareTag("Riddle")){
+            canvasInteract.Set_Canvas(false,false,false, false);
+            focusedObject.GetComponentInParent<PuzzleNumbers>().isSolving=true;
         }
         FocusOnAnObject();
         reset = true;
@@ -167,7 +170,7 @@ public class PlayerInteract : MonoBehaviour
         {
             camera.transform.position = focusedObject.transform.position - focusedObject.transform.right * distanceFromObject;
 
-            cameraObject.transform.LookAt(focusedObject.transform);
+            camera.transform.LookAt(focusedObject.transform);
 
             if (focusedObject.GetComponentInChildren<LockNumbers>().unlocked)
             {
@@ -196,7 +199,10 @@ public class PlayerInteract : MonoBehaviour
             Transform puzzleParent=focusedObject.transform.parent;
             camera.transform.position = puzzleParent.position - puzzleParent.right * distanceFromObject;
 
-            cameraObject.transform.LookAt(puzzleParent);
+            camera.transform.LookAt(puzzleParent);
+        }else if(focusedObject.CompareTag("Riddle")){
+            camera.transform.position = focusedObject.transform.position + focusedObject.transform.up *distanceFromObject;
+            camera.transform.LookAt(focusedObject.transform.position);
         }
 
 
@@ -208,11 +214,11 @@ public class PlayerInteract : MonoBehaviour
         camera.transform.localRotation = Quaternion.Euler(0, 0, 0);
         if (!firstPerson)
         {
-            cameraObject.transform.localPosition = new Vector3(cameraObject.transform.localPosition.x, cameraObject.transform.localPosition.y, zDistanceFromPlayer);
+            camera.transform.localPosition = new Vector3(camera.transform.localPosition.x, camera.transform.localPosition.y, zDistanceFromPlayer);
         }
         else
         {
-            cameraObject.transform.localPosition = new Vector3(cameraObject.transform.localPosition.x, cameraObject.transform.localPosition.y, 0f);
+            camera.transform.localPosition = new Vector3(camera.transform.localPosition.x, camera.transform.localPosition.y, 0f);
         }
     }
 
@@ -221,13 +227,13 @@ public class PlayerInteract : MonoBehaviour
     {
         if (firstPerson)
         {
-            cameraObject.transform.localPosition = new Vector3(cameraObject.transform.localPosition.x, cameraObject.transform.localPosition.y, zDistanceFromPlayer);
+            camera.transform.localPosition = new Vector3(camera.transform.localPosition.x, camera.transform.localPosition.y, zDistanceFromPlayer);
             firstPerson = false;
             playerMovement2.firstPerson = firstPerson;
         }
         else
         {
-            cameraObject.transform.localPosition = new Vector3(cameraObject.transform.localPosition.x, cameraObject.transform.localPosition.y, 0f);
+            camera.transform.localPosition = new Vector3(camera.transform.localPosition.x, camera.transform.localPosition.y, 0f);
             firstPerson = true;
             playerMovement2.firstPerson = firstPerson;
         }
