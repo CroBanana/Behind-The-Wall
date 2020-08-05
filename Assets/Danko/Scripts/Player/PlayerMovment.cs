@@ -228,7 +228,7 @@ public class PlayerMovment : MonoBehaviour
             try{
                 if(focusedObject.GetComponentInChildren<LockNumbers>().unlocked){
                     Debug.Log("HERE!!!!");
-                    canvas_Interact.Set_Canvas(false, true, false, false);
+                    canvas_Interact.Set_Canvas(false, true, false, false,false);
                     reset=true;
                     ePressed=false;
                     focusedObject=null;

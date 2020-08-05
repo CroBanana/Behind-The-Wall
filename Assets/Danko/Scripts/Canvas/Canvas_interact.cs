@@ -8,8 +8,9 @@ public class Canvas_interact : MonoBehaviour
     public GameObject lockCanvas;
     public GameObject characterDialog;
     public GameObject puzzleCanvas;
+    public GameObject inventoryCanvas;
     // Start is called before the first frame update
-    private void Awake() {
+    private void Start() {
         interactCanvas = transform.Find("Interact panel").gameObject;
         interactCanvas.SetActive(false);
         lockCanvas = transform.Find("Lock panel").gameObject;
@@ -18,18 +19,21 @@ public class Canvas_interact : MonoBehaviour
         characterDialog.SetActive(false);
         puzzleCanvas = transform.Find("Puzzle Panel").gameObject;
         puzzleCanvas.SetActive(false);
+        inventoryCanvas= transform.Find("Inventory Panel").gameObject;
+        inventoryCanvas.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
 
     }
 
 
-    public void Set_Canvas(bool interact, bool lokot, bool dialoge,bool puzzle){
+    public void Set_Canvas(bool interact, bool lokot, bool dialoge,bool puzzle,bool inventory){
         interactCanvas.SetActive(interact);
         lockCanvas.SetActive(lokot);
         characterDialog.SetActive(dialoge);
         puzzleCanvas.SetActive(puzzle);
+        inventoryCanvas.SetActive(inventory);
 
-        if(lokot || dialoge || puzzle){
+        if(lokot || dialoge || puzzle || inventory){
             Cursor.lockState=CursorLockMode.None;
         }else{
             Cursor.lockState=CursorLockMode.Locked;

@@ -20,6 +20,7 @@ public class PlayerInteract : MonoBehaviour
     public bool canInteract;
     public bool talkTriggered;
     public bool reset;
+    public bool iPressed;
 
     public bool firstPerson;
 
@@ -60,7 +61,7 @@ public class PlayerInteract : MonoBehaviour
             focusedObject = hit.collider.gameObject;
             if (ePressed == false)
             {
-                canvasInteract.Set_Canvas(true, false, false,false);
+                canvasInteract.Set_Canvas(true, false, false,false,false);
                 Debug.Log(hit.collider.name);
                 canInteract = true;
             }
@@ -68,7 +69,7 @@ public class PlayerInteract : MonoBehaviour
         }
         else if (focusedObject != null && ePressed == false)
         {
-            canvasInteract.Set_Canvas(false, false, false, false);
+            canvasInteract.Set_Canvas(false, false, false, false,false);
             canInteract = false;
             if (focusedObject.CompareTag("Lock"))
             {
@@ -86,6 +87,7 @@ public class PlayerInteract : MonoBehaviour
         if (ePressed == false)
         {
             R();
+            I();
         }
     }
 
@@ -95,6 +97,14 @@ public class PlayerInteract : MonoBehaviour
         {
             SetCamera();
         }
+    }
+    void I(){
+        
+        if(Input.GetKeyDown(KeyCode.I)){
+            iPressed=!iPressed;
+            canvasInteract.Set_Canvas(false, false, false,false,iPressed);
+        }
+        
     }
 
     void E()
@@ -127,22 +137,22 @@ public class PlayerInteract : MonoBehaviour
         if (focusedObject.CompareTag("Lock"))
         {
             Debug.Log("HERE!4");
-            canvasInteract.Set_Canvas(false, true, false, false);
+            canvasInteract.Set_Canvas(false, true, false, false,false);
             focusedObject.GetComponentInChildren<LockNumbers>().enabled = true;
         }
         else if (focusedObject.CompareTag("NPC"))
         {
             Debug.Log("HERE!5");
-            canvasInteract.Set_Canvas(false, false, true, false);
+            canvasInteract.Set_Canvas(false, false, true, false,false);
             focusedObject.GetComponent<EnemyInteract2>().DisableScripts();
             focusedObject.GetComponent<DialogTrigger>().TriggerDialog();
         }
         else if(focusedObject.CompareTag("Puzzle")){
             Debug.Log("WHAT!!!");
-            canvasInteract.Set_Canvas(false,false,false, true);
+            canvasInteract.Set_Canvas(false,false,false, true,false);
             focusedObject.GetComponentInParent<Puzzle>().enabled=true;
         }else if(focusedObject.CompareTag("Riddle")){
-            canvasInteract.Set_Canvas(false,false,false, false);
+            canvasInteract.Set_Canvas(false,false,false, false,false);
             focusedObject.GetComponentInParent<PuzzleNumbers>().isSolving=true;
         }
         FocusOnAnObject();
