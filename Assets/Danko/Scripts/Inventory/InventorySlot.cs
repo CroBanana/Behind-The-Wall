@@ -10,13 +10,14 @@ public class InventorySlot : MonoBehaviour
     public TextMeshProUGUI text;
     GameObject item;
 
-    private void Start() {
+    private void Awake() {
         icon=GetComponent<Image>();
         text=gameObject.GetComponentInChildren<TextMeshProUGUI>();
     }
-    public void AddItem(GameObject newItem,Image image){
+    public void AddItem(GameObject newItem,Sprite image){
         item=newItem;
-        icon=image;
+        Debug.Log(image.name);
+        icon.sprite=image;
     }
     public void ShowItem(){
 

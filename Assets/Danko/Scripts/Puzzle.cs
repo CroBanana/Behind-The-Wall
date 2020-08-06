@@ -44,12 +44,12 @@ public class Puzzle : MonoBehaviour
             //Debug.Log(signs[i].name+": "+(int) signs[i].transform.eulerAngles.z);
             //Debug.Log("Rotation"+i+": "+(int) rotations[i]);
             if((int) rotations[i] == (int) signs[i].transform.eulerAngles.z){
-                Debug.Log("waduhek");
+                //Debug.Log("waduhek");
                 countCorrects++;
             }
         }
         if(countCorrects==4){
-            Debug.Log("Its Correct");
+            //Debug.Log("Its Correct");
             StartCoroutine(chest.GetComponent<OpenChest>().Open());
         }
     }

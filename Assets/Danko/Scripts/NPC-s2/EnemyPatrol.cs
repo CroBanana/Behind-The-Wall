@@ -132,7 +132,7 @@ public class EnemyPatrol : MonoBehaviour
     private void OnTriggerEnter(Collider other) {
         if(other.CompareTag("House")){
             pathCalculated=false;
-            Debug.Log("WTF!!!!");
+            //Debug.Log("WTF!!!!");
         }
     }
 }

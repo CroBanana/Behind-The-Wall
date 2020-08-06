@@ -16,6 +16,7 @@ TagManager:
   - Puzzle
   - Farmer
   - Riddle
+  - Item
   layers:
   - Default
   - TransparentFX

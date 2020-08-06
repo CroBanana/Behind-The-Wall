@@ -91,14 +91,14 @@ public class EnemyGuard : MonoBehaviour
     public void DisableScripts(){
         //Debug.Log("Scripts disabled");
         if(enemyPatrol.enabled){
-            Debug.Log("EnemyPatrol is enabled");
+            //Debug.Log("EnemyPatrol is enabled");
             enemyPatrol.StopAllCoroutines();
             enemyPatrol.anim.SetFloat("Speed", 0f);
             enemyPatrol.enabled=false;
         }
 
         if(enemyGuardFoundPlayer.enabled){
-            Debug.Log("EnemyFollowPlayer is enabled");
+            //Debug.Log("EnemyFollowPlayer is enabled");
             enemyGuardFoundPlayer.anim.SetFloat("Speed", 0f);
             enemyGuardFoundPlayer.StopAllCoroutines();
             enemyGuardFoundPlayer.followPlayer=false;

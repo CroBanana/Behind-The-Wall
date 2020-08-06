@@ -47,12 +47,12 @@ public class EnemyGuardFoundPlayer : MonoBehaviour
     IEnumerator FollowPlayer()
     {
         bool suck=true;
-        Debug.Log("FollowPlayer");
+        //Debug.Log("FollowPlayer");
         while (suck)
         {
             //agent.enabled=true;
             if(Vector3.Distance(transform.position,playerLastPosition)<distanceToPlayer/2f){
-                Debug.Log("Last player location was here");
+                //Debug.Log("Last player location was here");
                 gameObject.GetComponent<EnemyGuard>().playerLost=true;
                 suck=false;
             }else{
@@ -65,7 +65,7 @@ public class EnemyGuardFoundPlayer : MonoBehaviour
 
     void RotateToTarget()
     {
-        Debug.Log("Rotate");
+        //Debug.Log("Rotate");
 
         Vector3 cornerPosition = new Vector3(path.corners[1].x - transform.position.x,
                                             0,

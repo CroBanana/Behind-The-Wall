@@ -75,7 +75,7 @@ public class EnemyFollowPlayer : MonoBehaviour
     {
         if (Vector3.Distance(player.transform.position, transform.position) < 1f)
         {
-            Debug.Log("WTF!!");
+            //Debug.Log("WTF!!");
             enemyInteract2.TalkingToPlayer();
             enemyInteract2.DisableScripts();
         }

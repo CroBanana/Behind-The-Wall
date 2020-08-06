@@ -39,7 +39,7 @@ public class GoToPoint : MonoBehaviour
             DrawPath();
             talkedToPLayer=false;
         }else{
-            Debug.Log("ITS HERE!!!!");
+            //Debug.Log("ITS HERE!!!!");
             if(Vector3.Distance(player.transform.position,transform.position)<3 && talkedToPLayer==false){
                 talkedToPLayer=true;
                 GetComponent<EnemyInteract2>().TalkingToPlayer();
@@ -102,7 +102,7 @@ public class GoToPoint : MonoBehaviour
     private void OnTriggerEnter(Collider other) {
         if(other.CompareTag("House")){
             pathCalculated=false;
-            Debug.Log("WTF!!!!");
+            //Debug.Log("WTF!!!!");
         }
     }
 }

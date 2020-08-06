@@ -38,14 +38,14 @@ public class EnemyInteract2 : MonoBehaviour
     public void DisableScripts(){
         if(enemyPatrol!=null){
             if(enemyPatrol.enabled){
-            Debug.Log("EnemyPatrol is enabled");
+            //Debug.Log("EnemyPatrol is enabled");
             enemyPatrol.anim.SetFloat("Speed", 0f);
             enemyPatrol.enabled=false;
         }
         }
 
         if(enemyFollowPlayer.enabled){
-            Debug.Log("EnemyFollowPlayer is enabled");
+            //Debug.Log("EnemyFollowPlayer is enabled");
             enemyFollowPlayer.anim.SetFloat("Speed", 0f);
             enemyFollowPlayer.enabled=false;
         }
@@ -56,7 +56,7 @@ public class EnemyInteract2 : MonoBehaviour
         if(enemyPatrol!=null)
             enemyPatrol.enabled=enemyP;
         if(goToPoint!=null){
-            Debug.Log("THIS IS SET!!!");
+            //Debug.Log("THIS IS SET!!!");
             if(Vector3.Distance(goToPoint.target2.transform.position,transform.position)<5){
                 goToPoint.enabled=false;
                 goToPoint.arivedAtPoint=false;
@@ -70,7 +70,7 @@ public class EnemyInteract2 : MonoBehaviour
             }
         }
         if(playerInSame != null){
-                Debug.Log("AAAAAAAAAAAAAAAAAAAAAAAAA");
+                //Debug.Log("AAAAAAAAAAAAAAAAAAAAAAAAA");
                 GetComponent<PlayerInSameRoom>().UpdateNPC();
                 GetComponent<PlayerInSameRoom>().enabled=false;
         }

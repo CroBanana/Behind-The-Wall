@@ -25,10 +25,10 @@ public class RedistributeCrops : MonoBehaviour
             farmers.Add(temp[c]);
         }
         temp = null;
-        Debug.Log("Crops: " + crops.Count);
-        Debug.Log("Farmers: " + farmers.Count);
+        //Debug.Log("Crops: " + crops.Count);
+        //Debug.Log("Farmers: " + farmers.Count);
         cropPerFarmer = crops.Count / farmers.Count;
-        Debug.Log(cropPerFarmer);
+        //Debug.Log(cropPerFarmer);
 
 
         foreach (var farmer in farmers)
@@ -42,7 +42,7 @@ public class RedistributeCrops : MonoBehaviour
                 //Debug.Log(crops[0]);
                 crops.Remove(crops[0]);
             }
-            Debug.Log("Current size of crops:" + crops.Count);
+            //Debug.Log("Current size of crops:" + crops.Count);
             farmer.GetComponent<Farmer>().crops = cropsToFarmer2;
 
             continue;

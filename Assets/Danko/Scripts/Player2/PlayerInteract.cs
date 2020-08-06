@@ -21,6 +21,8 @@ public class PlayerInteract : MonoBehaviour
     public bool talkTriggered;
     public bool reset;
     public bool iPressed;
+    public bool raycastWorks=true;
+    public bool objectCanBeDestroyed;
 
     public bool firstPerson;
 
@@ -54,35 +56,40 @@ public class PlayerInteract : MonoBehaviour
 
     void CheckIfLookingAtObject()
     {
-        ray = camera.ScreenPointToRay(Input.mousePosition);
+        if(raycastWorks){
+            ray = camera.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out hit, 5, selectedMask))
-        {
-            focusedObject = hit.collider.gameObject;
-            if (ePressed == false)
+            if (Physics.Raycast(ray, out hit, 5, selectedMask))
             {
-                canvasInteract.Set_Canvas(true, false, false,false,false);
-                Debug.Log(hit.collider.name);
-                canInteract = true;
+                focusedObject = hit.collider.gameObject;
+                if (ePressed == false)
+                {
+                    canvasInteract.Set_Canvas(true, false, false,false,false);
+                    Debug.Log(hit.collider.name);
+                    canInteract = true;
+                }
+                E();
             }
-            E();
-        }
-        else if (focusedObject != null && ePressed == false)
-        {
-            canvasInteract.Set_Canvas(false, false, false, false,false);
-            canInteract = false;
-            if (focusedObject.CompareTag("Lock"))
+            else if (focusedObject != null && ePressed == false)
             {
-                Debug.Log("am here!!!");
-                focusedObject.GetComponentInChildren<LockNumbers>().enabled = false;
+                canvasInteract.Set_Canvas(false, false, false, false,false);
+                canInteract = false;
+                if (focusedObject.CompareTag("Lock"))
+                {
+                    Debug.Log("am here!!!");
+                    focusedObject.GetComponentInChildren<LockNumbers>().enabled = false;
+                }
+                else if(focusedObject.CompareTag("Puzzle")){
+                    focusedObject.GetComponentInParent<Puzzle>().enabled = false;
+                }else if(focusedObject.CompareTag("Riddle")){
+                    focusedObject.GetComponent<PuzzleNumbers>().isSolving = false;
+                }else if(focusedObject.CompareTag("Item") && objectCanBeDestroyed){
+                    Debug.Log("Getting destroyed");
+                    Destroy(focusedObject);
+                }
+                focusedObject = null;
+                Debug.Log("Nema canvasa valjda");
             }
-            else if(focusedObject.CompareTag("Puzzle")){
-                focusedObject.GetComponentInParent<Puzzle>().enabled = false;
-            }else if(focusedObject.CompareTag("Riddle")){
-                focusedObject.GetComponent<PuzzleNumbers>().isSolving = false;
-            }
-            focusedObject = null;
-            Debug.Log("Nema canvasa valjda");
         }
         if (ePressed == false)
         {
@@ -103,6 +110,7 @@ public class PlayerInteract : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.I)){
             iPressed=!iPressed;
             canvasInteract.Set_Canvas(false, false, false,false,iPressed);
+            raycastWorks=!iPressed;
         }
         
     }
@@ -154,6 +162,10 @@ public class PlayerInteract : MonoBehaviour
         }else if(focusedObject.CompareTag("Riddle")){
             canvasInteract.Set_Canvas(false,false,false, false,false);
             focusedObject.GetComponentInParent<PuzzleNumbers>().isSolving=true;
+        }else if(focusedObject.CompareTag("Item")){
+            canvasInteract.Set_Canvas(false,false,false, false,false);
+            Inventory.instance.AddItem(focusedObject);
+            objectCanBeDestroyed=true;
         }
         FocusOnAnObject();
         reset = true;
@@ -210,7 +222,7 @@ public class PlayerInteract : MonoBehaviour
             camera.transform.position = puzzleParent.position - puzzleParent.right * distanceFromObject;
 
             camera.transform.LookAt(puzzleParent);
-        }else if(focusedObject.CompareTag("Riddle")){
+        }else if(focusedObject.CompareTag("Riddle") || focusedObject.CompareTag("Item")){
             camera.transform.position = focusedObject.transform.position + focusedObject.transform.up *distanceFromObject;
             camera.transform.LookAt(focusedObject.transform.position);
         }

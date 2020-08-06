@@ -21,9 +21,9 @@ public class DialogManager : MonoBehaviour
 
     public void StartDialoge(Dialog dialoge)
     {
-        Debug.Log(dialoge.names[1]);
-        Debug.Log(dialoge.sentences[1]);
-        Debug.Log("Hello seth here");
+        //Debug.Log(dialoge.names[1]);
+        //Debug.Log(dialoge.sentences[1]);
+        //Debug.Log("Hello seth here");
         sentences.Clear();
         names.Clear();
 

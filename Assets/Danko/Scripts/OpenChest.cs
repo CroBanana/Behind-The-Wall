@@ -22,7 +22,7 @@ public class OpenChest : MonoBehaviour
             yield return new WaitForEndOfFrame();
             //Debug.Log(transform.eulerAngles.z);
         }
-        Debug.Log("stoped opening chest");
+        //Debug.Log("stoped opening chest");
     }
 
     IEnumerator Stop(){
