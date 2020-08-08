@@ -11,6 +11,7 @@ public class Inventory : MonoBehaviour
     }
 
     public List<GameObject> items;
+    public GameObject showItem;
 
     InventorySlot[] slots;
 
@@ -19,7 +20,7 @@ public class Inventory : MonoBehaviour
     }
     public void AddItem(GameObject item){
         items.Add(item);
-        slots[items.Count-1].AddItem(item,item.GetComponent<Item>().image);
+        slots[items.Count-1].AddItem(item,item.GetComponent<Item>().image,showItem);
     }
 
     // Update is called once per frame

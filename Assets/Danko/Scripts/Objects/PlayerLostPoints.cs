@@ -6,14 +6,15 @@ public class PlayerLostPoints : MonoBehaviour
 {
     public List<GameObject> searchPoints;
     // Start is called before the first frame update
+    public EnemyGuard[] test;
     void Start()
     {
         searchPoints.Add(gameObject);
+        test= FindObjectsOfType<EnemyGuard>();
     }
 
     private void OnTriggerEnter(Collider other) {
         if(other.CompareTag("Player")){
-            var test= FindObjectsOfType<EnemyGuard>();
             foreach(var point in test){
                 point.searchForPlayer =searchPoints;
             }
@@ -21,7 +22,6 @@ public class PlayerLostPoints : MonoBehaviour
     }
     private void OnTriggerExit(Collider other) {
         if(other.CompareTag("Player")){
-            var test= FindObjectsOfType<EnemyGuard>();
             foreach(var point in test){
                 point.searchForPlayer =null;
             }

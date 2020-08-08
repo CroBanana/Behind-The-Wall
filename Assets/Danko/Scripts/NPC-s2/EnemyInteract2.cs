@@ -43,12 +43,14 @@ public class EnemyInteract2 : MonoBehaviour
             enemyPatrol.enabled=false;
         }
         }
-
-        if(enemyFollowPlayer.enabled){
+        if(enemyFollowPlayer!=null){
+            if(enemyFollowPlayer.enabled){
             //Debug.Log("EnemyFollowPlayer is enabled");
             enemyFollowPlayer.anim.SetFloat("Speed", 0f);
             enemyFollowPlayer.enabled=false;
         }
+        }
+
     }
 
 

@@ -44,6 +44,7 @@ public class PlayerInteract : MonoBehaviour
         canvasInteract = GameObject.Find("AllUI").GetComponent<Canvas_interact>();
         rotateViaMouse = GameObject.Find("RotateObjects").GetComponent<RotateViaMouse>();
         playerMovement2 = gameObject.GetComponent<PlayerMovment2>();
+        raycastWorks=true;
 
     }
 
@@ -83,9 +84,6 @@ public class PlayerInteract : MonoBehaviour
                     focusedObject.GetComponentInParent<Puzzle>().enabled = false;
                 }else if(focusedObject.CompareTag("Riddle")){
                     focusedObject.GetComponent<PuzzleNumbers>().isSolving = false;
-                }else if(focusedObject.CompareTag("Item") && objectCanBeDestroyed){
-                    Debug.Log("Getting destroyed");
-                    Destroy(focusedObject);
                 }
                 focusedObject = null;
                 Debug.Log("Nema canvasa valjda");
@@ -134,6 +132,11 @@ public class PlayerInteract : MonoBehaviour
             ResetCameraPosition();
             reset = false;
             rotateViaMouse.GetComponent<RotateViaMouse>().enabled = true;
+            if(focusedObject.CompareTag("Item") && objectCanBeDestroyed){
+                    Debug.Log("Getting destroyed");
+                    Destroy(focusedObject);
+                    canvasInteract.Set_Canvas(false, false, false, false,false);
+                }
         }
     }
 
@@ -223,7 +226,7 @@ public class PlayerInteract : MonoBehaviour
 
             camera.transform.LookAt(puzzleParent);
         }else if(focusedObject.CompareTag("Riddle") || focusedObject.CompareTag("Item")){
-            camera.transform.position = focusedObject.transform.position + focusedObject.transform.up *distanceFromObject;
+            camera.transform.position = focusedObject.transform.position + focusedObject.transform.up *(distanceFromObject*2);
             camera.transform.LookAt(focusedObject.transform.position);
         }
 

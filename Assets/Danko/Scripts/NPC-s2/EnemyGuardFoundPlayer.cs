@@ -77,14 +77,14 @@ public class EnemyGuardFoundPlayer : MonoBehaviour
 
     void PlayerInRange()
     {
-        /*
+        
         if (Vector3.Distance(player.transform.position, transform.position) < distanceToPlayer)
         {
             Debug.Log("WTF!!");
             enemyGuard.TalkingToPlayer();
             enemyGuard.DisableScripts();
         }
-        */
+        
     }
 
 }

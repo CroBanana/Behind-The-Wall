@@ -69,7 +69,6 @@ public class EnemyGuard : MonoBehaviour
             if(Physics.Raycast(transform.position+transform.up,playerDirection.normalized,out hit,viewDistance_Set,rayable)){
                 if(hit.collider.gameObject.CompareTag("Player")){
                     PlayerDetected();
-                    
                 }
             }
         }
