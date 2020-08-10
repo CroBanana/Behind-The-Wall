@@ -65,7 +65,7 @@ public class PlayerInteract : MonoBehaviour
                 focusedObject = hit.collider.gameObject;
                 if (ePressed == false)
                 {
-                    canvasInteract.Set_Canvas(true, false, false,false,false);
+                    canvasInteract.Set_Canvas(true, false, false,false,false,true);
                     Debug.Log(hit.collider.name);
                     canInteract = true;
                 }
@@ -73,7 +73,7 @@ public class PlayerInteract : MonoBehaviour
             }
             else if (focusedObject != null && ePressed == false)
             {
-                canvasInteract.Set_Canvas(false, false, false, false,false);
+                canvasInteract.Set_Canvas(false, false, false, false,false,true);
                 canInteract = false;
                 if (focusedObject.CompareTag("Lock"))
                 {
@@ -107,7 +107,7 @@ public class PlayerInteract : MonoBehaviour
         
         if(Input.GetKeyDown(KeyCode.I)){
             iPressed=!iPressed;
-            canvasInteract.Set_Canvas(false, false, false,false,iPressed);
+            canvasInteract.Set_Canvas(false, false, false,false,iPressed,!iPressed);
             raycastWorks=!iPressed;
         }
         
@@ -135,7 +135,7 @@ public class PlayerInteract : MonoBehaviour
             if(focusedObject.CompareTag("Item") && objectCanBeDestroyed){
                     Debug.Log("Getting destroyed");
                     Destroy(focusedObject);
-                    canvasInteract.Set_Canvas(false, false, false, false,false);
+                    canvasInteract.Set_Canvas(false, false, false, false,false,true);
                 }
         }
     }
@@ -148,25 +148,25 @@ public class PlayerInteract : MonoBehaviour
         if (focusedObject.CompareTag("Lock"))
         {
             Debug.Log("HERE!4");
-            canvasInteract.Set_Canvas(false, true, false, false,false);
+            canvasInteract.Set_Canvas(false, true, false, false,false,false);
             focusedObject.GetComponentInChildren<LockNumbers>().enabled = true;
         }
         else if (focusedObject.CompareTag("NPC"))
         {
             Debug.Log("HERE!5");
-            canvasInteract.Set_Canvas(false, false, true, false,false);
+            canvasInteract.Set_Canvas(false, false, true, false,false,false);
             focusedObject.GetComponent<EnemyInteract2>().DisableScripts();
             focusedObject.GetComponent<DialogTrigger>().TriggerDialog();
         }
         else if(focusedObject.CompareTag("Puzzle")){
             Debug.Log("WHAT!!!");
-            canvasInteract.Set_Canvas(false,false,false, true,false);
+            canvasInteract.Set_Canvas(false,false,false, true,false,false);
             focusedObject.GetComponentInParent<Puzzle>().enabled=true;
         }else if(focusedObject.CompareTag("Riddle")){
-            canvasInteract.Set_Canvas(false,false,false, false,false);
+            canvasInteract.Set_Canvas(false,false,false, false,false,false);
             focusedObject.GetComponentInParent<PuzzleNumbers>().isSolving=true;
         }else if(focusedObject.CompareTag("Item")){
-            canvasInteract.Set_Canvas(false,false,false, false,false);
+            canvasInteract.Set_Canvas(false,false,false, false,false,false);
             Inventory.instance.AddItem(focusedObject);
             objectCanBeDestroyed=true;
         }
