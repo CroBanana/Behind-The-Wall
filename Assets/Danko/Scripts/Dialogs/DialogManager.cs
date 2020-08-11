@@ -11,6 +11,7 @@ public class DialogManager : MonoBehaviour
 
     public Text nameText;
     public Text sentenceText;
+    public GameObject talkingTo;
 
     // Start is called before the first frame update
     private void Awake() {
@@ -19,8 +20,9 @@ public class DialogManager : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
-    public void StartDialoge(Dialog dialoge)
+    public void StartDialoge(Dialog dialoge, GameObject talkingToWho)
     {
+        talkingTo=talkingToWho;
         //Debug.Log(dialoge.names[1]);
         //Debug.Log(dialoge.sentences[1]);
         //Debug.Log("Hello seth here");
@@ -57,5 +59,8 @@ public class DialogManager : MonoBehaviour
     void EndDialogue()
     {
         player.GetComponent<PlayerInteract>().EndConversation();
+        if(talkingTo==Quest.instance.targets[Quest.instance.currentObjective]){
+            Quest.instance.SetNextObjective();
+        }
     }
 }

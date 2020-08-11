@@ -171,6 +171,8 @@ public class PlayerInteract : MonoBehaviour
             objectCanBeDestroyed=true;
         }
         FocusOnAnObject();
+
+        
         reset = true;
     }
 

@@ -6,11 +6,11 @@ using UnityEngine.UI;
 [DisallowMultipleComponent]
 public class Waypoint : MonoBehaviour
 {
-    public static Waypoint waypoint = null;
+    public static Waypoint instance = null;
 
     private void Awake()
     {
-        waypoint = this;
+        instance = this;
     }
 
     public Image img;
@@ -31,6 +31,9 @@ public class Waypoint : MonoBehaviour
         if(target!=null){
             GetDistance();
             CheckOnScreen();
+        }else{
+            img.enabled=false;
+            meter.enabled=false;
         }
     }
 
@@ -38,6 +41,8 @@ public class Waypoint : MonoBehaviour
         float dist = (int) Vector3.Distance(player.position,target.position);
         if(dist>closeDist){
             meter.text = dist.ToString()+"m";
+        }else{
+            meter.text="";
         }
     }
 
@@ -47,11 +52,14 @@ public class Waypoint : MonoBehaviour
             ToogleUI(false);
         }else{
             ToogleUI(true);
-            transform.position = cam.WorldToScreenPoint(target.position);
+            img.transform.position = cam.WorldToScreenPoint(target.position);
         }
     }
     private void ToogleUI(bool value){
         img.enabled=value;
         meter.enabled=value;
+    }
+    public void SetWaypoint(Transform nextObjective){
+        target= nextObjective;
     }
 }

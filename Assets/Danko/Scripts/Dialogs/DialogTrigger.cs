@@ -12,9 +12,9 @@ public class DialogTrigger : MonoBehaviour
     {
         if(howManyTimesTalked==0){
             howManyTimesTalked++;
-            GameObject.Find("Dialoge panel").GetComponent<DialogManager>().StartDialoge(firstConversation);
+            GameObject.Find("Dialoge panel").GetComponent<DialogManager>().StartDialoge(firstConversation,gameObject);
         }else{
-            GameObject.Find("Dialoge panel").GetComponent<DialogManager>().StartDialoge(secondConversation);
+            GameObject.Find("Dialoge panel").GetComponent<DialogManager>().StartDialoge(secondConversation,gameObject);
         }
         
     }
