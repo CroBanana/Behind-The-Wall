@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+
 
 public class OptionsScript : MonoBehaviour{
 
@@ -12,8 +14,16 @@ public class OptionsScript : MonoBehaviour{
 
     Resolution[] resolutions;
 
+    public GameObject firstBtnOpt;
+
     private void Start()
+
     {
+        //Btn 
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(firstBtnOpt);
+
+
         resolutions = Screen.resolutions;
 
         resolutionDropdown.ClearOptions();
