@@ -9,6 +9,7 @@ public class EnemyInteract2 : MonoBehaviour
     public EnemyPatrol enemyPatrol;
     public GoToPoint goToPoint;
     public PlayerInSameRoom playerInSame;
+    public Farmer farmer;
 
     public bool enemyP;
     public bool gotoP;
@@ -20,6 +21,7 @@ public class EnemyInteract2 : MonoBehaviour
         enemyPatrol = gameObject.GetComponent<EnemyPatrol>();
         goToPoint = gameObject.GetComponent<GoToPoint>();
         enemyP=true;
+        farmer = gameObject.GetComponent<Farmer>();
     }
 
     // Update is called once per frame
@@ -50,6 +52,10 @@ public class EnemyInteract2 : MonoBehaviour
             enemyFollowPlayer.enabled=false;
         }
         }
+        if(farmer!=null){
+            farmer.anim.SetFloat("Speed",0f);
+            farmer.enabled=false;
+        }
 
     }
 
@@ -75,6 +81,9 @@ public class EnemyInteract2 : MonoBehaviour
                 //Debug.Log("AAAAAAAAAAAAAAAAAAAAAAAAA");
                 GetComponent<PlayerInSameRoom>().UpdateNPC();
                 GetComponent<PlayerInSameRoom>().enabled=false;
+        }
+        if(farmer!=null){
+            farmer.enabled=true;
         }
 
     }

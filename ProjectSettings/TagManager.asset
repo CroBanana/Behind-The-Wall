@@ -17,6 +17,8 @@ TagManager:
   - Farmer
   - Riddle
   - Item
+  - WorkshopPoints
+  - Workers
   layers:
   - Default
   - TransparentFX
