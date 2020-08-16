@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class pausemenu : MonoBehaviour
+
+public class Pausemenu : MonoBehaviour
 {
   
-    public bool isPaused;
+    public static bool isPaused;
     public GameObject pauseMenu, optionsMenu;
     public GameObject pauseFirstBtn, optionsFirstBtn, optionsClosedBtn;
 
@@ -14,16 +15,14 @@ public class pausemenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            isPaused = !isPaused;
-        }
-
-        if (isPaused)
-        {
-            ActivateMenu();
-        }
-        else
-        {
-            DeactivateMenu();
+            if (isPaused)
+            {
+                ActivateMenu();
+            }
+            else
+            {
+                DeactivateMenu();
+            }
         }
     }
 

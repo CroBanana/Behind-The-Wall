@@ -10,6 +10,7 @@ public class Canvas_interact : MonoBehaviour
     public GameObject puzzleCanvas;
     public GameObject inventoryCanvas;
     public GameObject QuestCanvas;
+    
     // Start is called before the first frame update
     private void Start() {
         interactCanvas = transform.Find("Interact panel").gameObject;
