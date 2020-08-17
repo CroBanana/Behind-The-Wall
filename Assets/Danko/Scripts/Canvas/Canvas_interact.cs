@@ -30,7 +30,7 @@ public class Canvas_interact : MonoBehaviour
     }
 
 
-    public void Set_Canvas(bool interact, bool lokot, bool dialoge,bool puzzle,bool inventory,bool quest){
+    public void Set_Canvas(bool interact, bool lokot, bool dialoge,bool puzzle,bool inventory,bool quest,bool menu){
         interactCanvas.SetActive(interact);
         lockCanvas.SetActive(lokot);
         characterDialog.SetActive(dialoge);
@@ -38,7 +38,7 @@ public class Canvas_interact : MonoBehaviour
         inventoryCanvas.SetActive(inventory);
         QuestCanvas.SetActive(quest);
 
-        if(lokot || dialoge || puzzle || inventory){
+        if(lokot || dialoge || puzzle || inventory || menu){
             Cursor.lockState=CursorLockMode.None;
         }else{
             Cursor.lockState=CursorLockMode.Locked;
