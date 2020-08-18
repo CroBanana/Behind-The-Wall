@@ -13,6 +13,7 @@ public class PuzzleNumbers : MonoBehaviour
     public string correctNumbers;
     public int sizeOfNumber;
     public int numberOfSpaces;
+    public GameObject chest;
     // Start is called before the first frame update
     void Start()
     {
@@ -64,6 +65,9 @@ public class PuzzleNumbers : MonoBehaviour
             if(numbers ==correctNumbers){
                 text.color = Color.green;
                 isSolving=false;
+                if(chest != null){
+                    chest.GetComponent<OpenChest>().OpenChestCorutine();
+                }
             }
             else{
                 text.color = Color.red;
@@ -77,6 +81,7 @@ public class PuzzleNumbers : MonoBehaviour
             textNumbers="";
             numbers=null;
             text.color = Color.black;
+            chest.GetComponent<OpenChest>().OpenChestCorutine();
         }
         textNumbers += number;
         for(int i =0; i<numberOfSpaces;i++){

@@ -83,7 +83,22 @@ public class PlayerInteract : MonoBehaviour
                 else if(focusedObject.CompareTag("Puzzle")){
                     focusedObject.GetComponentInParent<Puzzle>().enabled = false;
                 }else if(focusedObject.CompareTag("Riddle")){
-                    focusedObject.GetComponent<PuzzleNumbers>().isSolving = false;
+                    try
+                    {
+                        focusedObject.GetComponentInParent<PuzzleNumbers>().isSolving=false;
+                    }
+                    catch (System.Exception)
+                    {
+                        Debug.Log("No puzzle numbers");
+                    }
+                    try
+                    {
+                        focusedObject.GetComponentInChildren<PuzzleText>().isSolving=false;
+                    }
+                    catch (System.Exception)
+                    {
+                        Debug.Log("No puzzle text");
+                    }
                 }
                 focusedObject = null;
                 Debug.Log("Nema canvasa valjda");
@@ -165,7 +180,22 @@ public class PlayerInteract : MonoBehaviour
             focusedObject.GetComponentInParent<Puzzle>().enabled=true;
         }else if(focusedObject.CompareTag("Riddle")){
             canvasInteract.Set_Canvas(false,false,false, false,false,false,false);
-            focusedObject.GetComponentInParent<PuzzleNumbers>().isSolving=true;
+            try
+            {
+                focusedObject.GetComponentInParent<PuzzleNumbers>().isSolving=true;
+            }
+            catch (System.Exception)
+            {
+                Debug.Log("No puzzle numbers");
+            }
+            try
+            {
+                focusedObject.GetComponentInChildren<PuzzleText>().isSolving=true;
+            }
+            catch (System.Exception)
+            {
+                Debug.Log("No puzzle text");
+            }
         }else if(focusedObject.CompareTag("Item")){
             canvasInteract.Set_Canvas(false,false,false, false,false,false,false);
             Inventory.instance.AddItem(focusedObject);
@@ -186,6 +216,7 @@ public class PlayerInteract : MonoBehaviour
             ResetCameraPosition();
             reset = false;
             rotateViaMouse.GetComponent<RotateViaMouse>().enabled = true;
+            canvasInteract.Set_Canvas(false,false,false,false,false,true,false);
         }
     }
 

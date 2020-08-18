@@ -53,7 +53,7 @@ public class LockNumbers : MonoBehaviour
         code += numberSelected;
         number.text = code;
         Debug.Log(code);
-        if (code.Length == 3)
+        if (code.Length == correctCode.Length)
         {
             Debug.Log(code);
             StartCoroutine(CheckIfCorrect());

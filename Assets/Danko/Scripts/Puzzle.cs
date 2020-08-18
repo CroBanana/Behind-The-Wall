@@ -14,9 +14,11 @@ public class Puzzle : MonoBehaviour
     public LayerMask selectedMask;
 
     public GameObject chest;
+    public PlayerInteract PI; 
     public Camera camera;
     private void Start() {
         camera=Camera.main;
+        PI= GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInteract>();
     }
 
     private void Update() {
@@ -48,9 +50,10 @@ public class Puzzle : MonoBehaviour
                 countCorrects++;
             }
         }
-        if(countCorrects==4){
+        if(countCorrects==signs.Count){
             //Debug.Log("Its Correct");
-            StartCoroutine(chest.GetComponent<OpenChest>().Open());
+            chest.GetComponent<OpenChest>().OpenChestCorutine();
+            Destroy(gameObject);
         }
     }
 }

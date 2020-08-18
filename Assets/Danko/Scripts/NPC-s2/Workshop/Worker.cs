@@ -34,7 +34,7 @@ public class Worker : MonoBehaviour
             StartCoroutine(CheckIfStuck());
             stuckDistanceCorutine=true;
         }
-        Debug.Log(Vector3.Distance(transform.position,workPoint.position));
+        //Debug.Log(Vector3.Distance(transform.position,workPoint.position));
         DrawPath();
     }
 

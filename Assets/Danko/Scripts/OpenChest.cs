@@ -16,13 +16,17 @@ public class OpenChest : MonoBehaviour
 
 
         while (rotation-topChest.eulerAngles.z<=-0.1f || rotation-topChest.eulerAngles.z>=0.1f){
-            topChest.rotation = Quaternion.RotateTowards(topChest.rotation,
+            topChest.localRotation = Quaternion.RotateTowards(topChest.localRotation,
                                             Quaternion.Euler(0,0,rotation),
                                             rotationSpeed * Time.deltaTime);
             yield return new WaitForEndOfFrame();
             //Debug.Log(transform.eulerAngles.z);
         }
         //Debug.Log("stoped opening chest");
+    }
+
+    public void OpenChestCorutine(){
+        StartCoroutine(Open());
     }
 
     IEnumerator Stop(){
