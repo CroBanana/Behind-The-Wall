@@ -10,6 +10,7 @@ public class Canvas_interact : MonoBehaviour
     public GameObject puzzleCanvas;
     public GameObject inventoryCanvas;
     public GameObject QuestCanvas;
+    public GameObject PauseMenu;
     
     // Start is called before the first frame update
     private void Start() {
@@ -25,6 +26,8 @@ public class Canvas_interact : MonoBehaviour
         inventoryCanvas.SetActive(false);
         QuestCanvas = transform.Find("Quest Panel").gameObject;
         QuestCanvas.SetActive(true);
+        PauseMenu = transform.Find("pauseMenu").gameObject;
+        PauseMenu.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
 
     }
@@ -37,6 +40,7 @@ public class Canvas_interact : MonoBehaviour
         puzzleCanvas.SetActive(puzzle);
         inventoryCanvas.SetActive(inventory);
         QuestCanvas.SetActive(quest);
+        PauseMenu.SetActive(menu);
 
         if(lokot || dialoge || puzzle || inventory || menu){
             Cursor.lockState=CursorLockMode.None;
