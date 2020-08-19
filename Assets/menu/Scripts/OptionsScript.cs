@@ -14,14 +14,10 @@ public class OptionsScript : MonoBehaviour{
 
     Resolution[] resolutions;
 
-    public GameObject firstBtnOpt;
-
     private void Start()
 
     {
-        //Btn 
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(firstBtnOpt);
+       
 
 
         resolutions = Screen.resolutions;
