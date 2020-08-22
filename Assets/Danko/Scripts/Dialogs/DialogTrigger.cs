@@ -7,6 +7,7 @@ public class DialogTrigger : MonoBehaviour
     public Dialog firstConversation;
     public Dialog secondConversation;
     public int howManyTimesTalked =0;
+    static public int whatDay;
 
     public void TriggerDialog()
     {

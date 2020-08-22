@@ -59,8 +59,8 @@ public class DialogManager : MonoBehaviour
     void EndDialogue()
     {
         player.GetComponent<PlayerInteract>().EndConversation();
-        if(talkingTo==Quest.instance.targets[Quest.instance.currentObjective]){
-            Quest.instance.SetNextObjective();
+        if(talkingTo==Quest.targetss[Quest.currentObjective]){
+            Quest.SetNextObjective();
         }
     }
 }

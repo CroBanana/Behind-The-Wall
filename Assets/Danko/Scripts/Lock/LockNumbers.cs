@@ -13,6 +13,7 @@ public class LockNumbers : MonoBehaviour
     public Text number;
     public bool check = false;
     public List<Transform> gates;
+    public GameObject chest;
 
     public PlayerInteract playerInteract;
     // Start is called before the first frame update
@@ -87,6 +88,9 @@ public class LockNumbers : MonoBehaviour
         }
         yield return new WaitForSeconds (1f);
         playerInteract.canvasInteract.Set_Canvas(false,false,false,false,false,true,false);
+        if(chest != null){
+            chest.GetComponent<OpenChest>().OpenChestCorutine();
+        }
         Destroy( transform.parent.gameObject);
     }
 

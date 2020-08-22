@@ -38,8 +38,6 @@ public class PlayerInSameRoom : MonoBehaviour
         follower.GetComponent<GoToPoint>().talkedToPLayer=false;
         follower.GetComponent<GoToPoint>().enabled=true;
         follower.GetComponent<DialogTrigger>().howManyTimesTalked=0;
-        follower.GetComponent<DialogTrigger>().firstConversation=leadPlayerToRoom;
-        follower.GetComponent<DialogTrigger>().secondConversation=finalyEnd;
 
     }
 }

@@ -10,6 +10,7 @@ public class PlayerInteract : MonoBehaviour
     public Camera camera;
     public Canvas_interact canvasInteract;
     public RotateViaMouse rotateViaMouse;
+    public GameObject noDestroy;
 
     // maska koja vidi sve
     public LayerMask cameraLayersOriginal;
@@ -45,6 +46,7 @@ public class PlayerInteract : MonoBehaviour
 
     void Start()
     {
+        noDestroy = GameObject.Find("Items");
         camera = Camera.main;
         camera.cullingMask = cameraLayersOriginal;
         canvasInteract = GameObject.Find("AllUI").GetComponent<Canvas_interact>();
@@ -140,13 +142,11 @@ public class PlayerInteract : MonoBehaviour
         }
     }
     void I(){
-        
         if(Input.GetKeyDown(KeyCode.I)){
             iPressed=!iPressed;
             canvasInteract.Set_Canvas(false, false, false,false,iPressed,!iPressed,false);
             raycastWorks=!iPressed;
         }
-        
     }
 
     void E()
@@ -170,7 +170,10 @@ public class PlayerInteract : MonoBehaviour
             rotateViaMouse.GetComponent<RotateViaMouse>().enabled = true;
             if(focusedObject.CompareTag("Item") && objectCanBeDestroyed){
                     Debug.Log("Getting destroyed");
-                    Destroy(focusedObject);
+                    var bla= focusedObject;
+                    Debug.Log(Inventory.instance.name);
+                    Inventory.instance.AddItem(bla);
+                    focusedObject.SetActive(false);
                     canvasInteract.Set_Canvas(false, false, false, false,false,true,false);
                 }
         }
@@ -232,7 +235,12 @@ public class PlayerInteract : MonoBehaviour
             Debug.Log("HERE!5");
             canvasInteract.Set_Canvas(false, false, true, false,false,false,false);
             focusedObject.GetComponent<EnemyInteract2>().DisableScripts();
-            focusedObject.GetComponent<DialogTrigger>().TriggerDialog();
+            if(focusedObject.name=="Miguel"){
+                focusedObject.GetComponent<DialogTriggerMiguel>().TriggerDialog();
+            }else if (focusedObject.name=="Pablo Silva"){
+                focusedObject.GetComponent<DialogTriggerPablo>().TriggerDialog();
+            }else
+                focusedObject.GetComponent<DialogTrigger>().TriggerDialog();
         }
         else if(focusedObject.CompareTag("Puzzle")){
             Debug.Log("WHAT!!!");
@@ -258,8 +266,9 @@ public class PlayerInteract : MonoBehaviour
             }
         }else if(focusedObject.CompareTag("Item")){
             canvasInteract.Set_Canvas(false,false,false, false,false,false,false);
-            Inventory.instance.AddItem(focusedObject);
             objectCanBeDestroyed=true;
+        }else if (focusedObject.CompareTag("Bed")){
+            focusedObject.GetComponent<LoadNextScene>().NextScene();
         }
         FocusOnAnObject();
 

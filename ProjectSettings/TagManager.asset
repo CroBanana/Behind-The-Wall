@@ -19,6 +19,7 @@ TagManager:
   - Item
   - WorkshopPoints
   - Workers
+  - Bed
   layers:
   - Default
   - TransparentFX
