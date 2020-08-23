@@ -7,7 +7,6 @@ public class DialogManager : MonoBehaviour
 {
     private Queue<string> names;
     private Queue<string> sentences;
-    private GameObject player;
 
     public Text nameText;
     public Text sentenceText;
@@ -17,7 +16,6 @@ public class DialogManager : MonoBehaviour
     private void Awake() {
         names = new Queue<string>();
         sentences = new Queue<string>();
-        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     public void StartDialoge(Dialog dialoge, GameObject talkingToWho)
@@ -58,9 +56,6 @@ public class DialogManager : MonoBehaviour
 
     void EndDialogue()
     {
-        player.GetComponent<PlayerInteract>().EndConversation();
-        if(talkingTo==Quest.targetss[Quest.currentObjective]){
-            Quest.SetNextObjective();
-        }
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInteract>().EndConversation();
     }
 }

@@ -8,8 +8,9 @@ public class Diary : MonoBehaviour
     public GameObject picture;
 
     private void Update() {
-        if(key==null && picture == null){
+        if(key.transform.parent!=transform && picture.transform.parent!= transform){
             Quest.SetNextObjective();
+            this.enabled=false;
         }
     }
 }

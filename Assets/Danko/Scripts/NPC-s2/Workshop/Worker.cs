@@ -93,10 +93,10 @@ public class Worker : MonoBehaviour
 
 
     IEnumerator DoJob(){
-        Debug.Log("Doing job");
+        //Debug.Log("Doing job");
         anim.SetFloat("Speed", 0f);
         yield return new WaitForSeconds(10);
-        Debug.Log("Job Ended");
+        //Debug.Log("Job Ended");
         workInt++;
         if(workInt>workPoints.Count-1){
             workInt=0;

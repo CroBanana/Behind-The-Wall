@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class NoDestroy : MonoBehaviour
 {
+    static NoDestroy instance;
     // Start is called before the first frame update
     private void Awake() {
-        DontDestroyOnLoad(this.gameObject);
+        if(instance== null){
+            instance=this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else if(instance !=this){
+            Destroy(gameObject);
+        }
     }
 }

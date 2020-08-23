@@ -88,6 +88,8 @@ public class LockNumbers : MonoBehaviour
         }
         yield return new WaitForSeconds (1f);
         playerInteract.canvasInteract.Set_Canvas(false,false,false,false,false,true,false);
+        playerInteract.ePressed=false;
+        playerInteract.reset=true;
         if(chest != null){
             chest.GetComponent<OpenChest>().OpenChestCorutine();
         }

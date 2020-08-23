@@ -46,13 +46,16 @@ public class PlayerInteract : MonoBehaviour
 
     void Start()
     {
-        noDestroy = GameObject.Find("Items");
+        noDestroy = GameObject.Find("ItemsPickedUp");
         camera = Camera.main;
         camera.cullingMask = cameraLayersOriginal;
         canvasInteract = GameObject.Find("AllUI").GetComponent<Canvas_interact>();
         rotateViaMouse = GameObject.Find("RotateObjects").GetComponent<RotateViaMouse>();
         playerMovement2 = gameObject.GetComponent<PlayerMovment2>();
         raycastWorks=true;
+        if(Quest.playerSpawn){
+            transform.position=GameObject.Find("PlayerSpawnPoint").transform.position;
+        }
 
     }
 
@@ -87,7 +90,7 @@ public class PlayerInteract : MonoBehaviour
                 if (ePressed == false)
                 {
                     canvasInteract.Set_Canvas(true, false, false,false,false,true,false);
-                    Debug.Log(hit.collider.name);
+                    //Debug.Log(hit.collider.name);
                     canInteract = true;
                 }
                 E();
@@ -122,7 +125,7 @@ public class PlayerInteract : MonoBehaviour
                     }
                 }
                 focusedObject = null;
-                Debug.Log("Nema canvasa valjda");
+                //Debug.Log("Nema canvasa valjda");
             }
         }
         if (ePressed == false)
@@ -170,10 +173,9 @@ public class PlayerInteract : MonoBehaviour
             rotateViaMouse.GetComponent<RotateViaMouse>().enabled = true;
             if(focusedObject.CompareTag("Item") && objectCanBeDestroyed){
                     Debug.Log("Getting destroyed");
-                    var bla= focusedObject;
-                    Debug.Log(Inventory.instance.name);
-                    Inventory.instance.AddItem(bla);
-                    focusedObject.SetActive(false);
+                    Inventory.instance.AddItem(focusedObject);
+                    focusedObject.transform.parent= noDestroy.transform;
+                    focusedObject.transform.position= noDestroy.transform.position;
                     canvasInteract.Set_Canvas(false, false, false, false,false,true,false);
                 }
         }
@@ -223,16 +225,16 @@ public class PlayerInteract : MonoBehaviour
     {
         playerMovement2.anim.SetFloat("Speed", 0);
         playerMovement2.enabled = false;
-        Debug.Log("HERE!#");
+        //Debug.Log("HERE!#");
         if (focusedObject.CompareTag("Lock"))
         {
-            Debug.Log("HERE!4");
+            //Debug.Log("HERE!4");
             canvasInteract.Set_Canvas(false, true, false, false,false,false,false);
             focusedObject.GetComponentInChildren<LockNumbers>().enabled = true;
         }
         else if (focusedObject.CompareTag("NPC") || focusedObject.CompareTag("Farmer"))
         {
-            Debug.Log("HERE!5");
+            //Debug.Log("HERE!5");
             canvasInteract.Set_Canvas(false, false, true, false,false,false,false);
             focusedObject.GetComponent<EnemyInteract2>().DisableScripts();
             if(focusedObject.name=="Miguel"){
@@ -243,7 +245,7 @@ public class PlayerInteract : MonoBehaviour
                 focusedObject.GetComponent<DialogTrigger>().TriggerDialog();
         }
         else if(focusedObject.CompareTag("Puzzle")){
-            Debug.Log("WHAT!!!");
+            //Debug.Log("WHAT!!!");
             canvasInteract.Set_Canvas(false,false,false, true,false,false,false);
             focusedObject.GetComponentInParent<Puzzle>().enabled=true;
         }else if(focusedObject.CompareTag("Riddle")){
@@ -371,6 +373,10 @@ public class PlayerInteract : MonoBehaviour
     {
         playerMovement2.enabled = true;
         ePressed = false;
+        Debug.Log("FOCUSED: "+focusedObject.name+"  QUEST TARGET: "+Quest.targetss[Quest.currentObjective]);
         focusedObject.GetComponent<EnemyInteract2>().DialogeEnded();
+        if(focusedObject==Quest.targetss[Quest.currentObjective]){
+            Quest.SetNextObjective();
+        }
     }
 }

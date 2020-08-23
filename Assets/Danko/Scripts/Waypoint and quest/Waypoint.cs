@@ -3,18 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[DisallowMultipleComponent]
 public class Waypoint : MonoBehaviour
 {
-    public static Waypoint instance = null;
-
-    private void Awake()
-    {
-        instance = this;
-    }
 
     public Image img;
-    public Transform target;
+    static public Transform target;
     public Transform player;
     public Text meter;
     public Camera cam;
@@ -23,11 +16,15 @@ public class Waypoint : MonoBehaviour
     private void Start() {
         player=  GameObject.FindGameObjectWithTag("Player").transform;
         cam=Camera.main;
+        img= GameObject.Find("Image").GetComponent<Image>();
+        meter= GameObject.Find("WaypointText").GetComponent<Text>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         if(target!=null){
             GetDistance();
             CheckOnScreen();
@@ -38,6 +35,12 @@ public class Waypoint : MonoBehaviour
     }
 
     private void GetDistance(){
+        if(player==null){
+            player=GameObject.FindGameObjectWithTag("Player").transform;
+        }
+        if(cam==null){
+            cam=Camera.main;
+        }
         float dist = (int) Vector3.Distance(player.position,target.position);
         if(dist>closeDist){
             meter.text = dist.ToString()+"m";
@@ -59,7 +62,7 @@ public class Waypoint : MonoBehaviour
         img.enabled=value;
         meter.enabled=value;
     }
-    public void SetWaypoint(Transform nextObjective){
+    static public void SetWaypoint(Transform nextObjective){
         target= nextObjective;
     }
 }

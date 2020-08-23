@@ -18,42 +18,49 @@ public class Quest : MonoBehaviour
     public GameObject[] enable;
     static public GameObject[] needsEnabling;
     static public int currentActivatedObject;
+    static public bool miguelRandomSpawn;
+    static public bool playerSpawn;
+    public static bool didOnce;
 
     static public bool isItNight;
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log(currentObjective);
-        questssText=questsText;
-        targetss=targets;
-        text=text2;
-        needsEnabling=enable;
+        if(!didOnce){
+            Debug.Log(currentObjective);
+            questssText=questsText;
+            targetss=targets;
+            text=text2;
+            needsEnabling=enable;
+            didOnce=true;
+        
         text.text=questssText[currentObjective];
         if(targetss[currentObjective]!=null){
-            Waypoint.instance.SetWaypoint(targetss[currentObjective].transform);
+            Waypoint.SetWaypoint(targetss[currentObjective].transform);
             if(targetss[currentObjective].CompareTag("Bed")){
                 targetss[currentObjective].layer=13;
             }
         }else{
-            Waypoint.instance.SetWaypoint(null);
+            Waypoint.SetWaypoint(null);
         }
         if(isItNight){
             Debug.Log("Object Sould Be Enabled: "+ needsEnabling[currentActivatedObject].name);
             needsEnabling[currentActivatedObject].SetActive(true);
         }
+        }
     }
 
     public static void SetNextObjective(){
         currentObjective++;
-        Debug.Log(currentObjective);
+        Debug.Log(currentObjective+"  "+targetss[currentObjective]);
         text.text=questssText[currentObjective];
         if(targetss[currentObjective]!=null){
-            Waypoint.instance.SetWaypoint(targetss[currentObjective].transform);
+            Waypoint.SetWaypoint(targetss[currentObjective].transform);
             if(targetss[currentObjective].CompareTag("Bed")){
                 targetss[currentObjective].layer=13;
             }
         }else{
-            Waypoint.instance.SetWaypoint(null);
+            Waypoint.SetWaypoint(null);
         }
         if(isItNight){
             Debug.Log("Object Sould Be Enabled");

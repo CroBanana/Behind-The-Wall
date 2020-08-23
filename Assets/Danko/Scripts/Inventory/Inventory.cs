@@ -24,14 +24,6 @@ public class Inventory : MonoBehaviour
         if (items == null)
         {
             items = new List<GameObject>();
-        }else if(items.Count>0){
-            int f=0;
-            foreach (var item in items)
-            {
-                Debug.Log("WOW");
-                slots[f].AddItem(item,item.GetComponent<Item>().image,showItem);
-                f++;
-            }
         }
         slots = transform.GetComponentsInChildren<InventorySlot>();
     }
