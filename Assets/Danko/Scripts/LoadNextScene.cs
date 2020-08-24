@@ -19,7 +19,7 @@ public class LoadNextScene : MonoBehaviour
             pablo.SetActive(false);
             Quest.isItNight=true;
             Quest.SetNextObjective();
-            canvas_Interact.Set_Canvas(false,false,false,false,false,true,false);
+            canvas_Interact.Set_Canvas(false,false,false,false,false,true,false,false);
             SceneManager.LoadScene(index+1);
         }
         if(index==2){
@@ -29,7 +29,7 @@ public class LoadNextScene : MonoBehaviour
             Quest.currentActivatedObject++;
             Quest.isItNight=false;
             DialogTriggerMiguel.whatDayMiguel++;
-            canvas_Interact.Set_Canvas(false,false,false,false,false,true,false);
+            canvas_Interact.Set_Canvas(false,false,false,false,false,true,false,false);
             SceneManager.LoadScene(index-1);
             Quest.SetNextObjective();
         }

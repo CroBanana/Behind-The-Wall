@@ -64,21 +64,8 @@ public class PlayerInteract : MonoBehaviour
     {
         CheckIfLookingAtObject();
         ResetIf();
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-           
-            if (isPaused)
-            {
-                ActivateMenu();
-            }
-            else
-            {
-                DeactivateMenu();
-            }
-        }
 
     }
-
     void CheckIfLookingAtObject()
     {
         if(raycastWorks){
@@ -89,7 +76,7 @@ public class PlayerInteract : MonoBehaviour
                 focusedObject = hit.collider.gameObject;
                 if (ePressed == false)
                 {
-                    canvasInteract.Set_Canvas(true, false, false,false,false,true,false);
+                    canvasInteract.Set_Canvas(true, false, false,false,false,true,false, false);
                     //Debug.Log(hit.collider.name);
                     canInteract = true;
                 }
@@ -97,7 +84,7 @@ public class PlayerInteract : MonoBehaviour
             }
             else if (focusedObject != null && ePressed == false)
             {
-                canvasInteract.Set_Canvas(false, false, false, false,false,true,false);
+                canvasInteract.Set_Canvas(false, false, false, false,false,true,false, false);
                 canInteract = false;
                 if (focusedObject.CompareTag("Lock"))
                 {
@@ -133,8 +120,23 @@ public class PlayerInteract : MonoBehaviour
             
             R();
             I();
+            ESC();
         }
+
         
+
+    }
+
+    void ESC()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            ActivateMenu();
+        }
+        else
+        {
+            DeactivateMenu();
+        }
     }
 
     void R()
@@ -147,7 +149,7 @@ public class PlayerInteract : MonoBehaviour
     void I(){
         if(Input.GetKeyDown(KeyCode.I)){
             iPressed=!iPressed;
-            canvasInteract.Set_Canvas(false, false, false,false,iPressed,!iPressed,false);
+            canvasInteract.Set_Canvas(false, false, false,false,iPressed,!iPressed,false, false);
             raycastWorks=!iPressed;
         }
     }
@@ -176,20 +178,17 @@ public class PlayerInteract : MonoBehaviour
                     Inventory.instance.AddItem(focusedObject);
                     focusedObject.transform.parent= noDestroy.transform;
                     focusedObject.transform.position= noDestroy.transform.position;
-                    canvasInteract.Set_Canvas(false, false, false, false,false,true,false);
+                    canvasInteract.Set_Canvas(false, false, false, false,false,true,false,false);
                 }
         }
     }
     //Meni Funkcije
     void ActivateMenu()
-    {
+    { 
+        canvasInteract.Set_Canvas(false, false, false, false, false, false, true, false);
         Time.timeScale = 0;
         AudioListener.pause = true;
-        canvasInteract.PauseMenu.SetActive(true);
-        canvasInteract.QuestCanvas.SetActive(false);
-        pauseMenu.SetActive(true);
-        
-
+        Debug.Log("Pauzirano");
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(pauseFirstBtn);
 
@@ -197,11 +196,10 @@ public class PlayerInteract : MonoBehaviour
 
     void DeactivateMenu()
     {
+        canvasInteract.Set_Canvas(false,false,false,false,false,true,false,false);
         Time.timeScale = 1;
         AudioListener.pause = false;
-        
-        pauseMenu.SetActive(false);
-        optionsMenu.SetActive(false);
+        //Debug.Log("Otpauzirano");
         isPaused = false;
     }
     public void OpenOptions()
@@ -229,13 +227,13 @@ public class PlayerInteract : MonoBehaviour
         if (focusedObject.CompareTag("Lock"))
         {
             //Debug.Log("HERE!4");
-            canvasInteract.Set_Canvas(false, true, false, false,false,false,false);
+            canvasInteract.Set_Canvas(false, true, false, false,false,false,false, false);
             focusedObject.GetComponentInChildren<LockNumbers>().enabled = true;
         }
         else if (focusedObject.CompareTag("NPC") || focusedObject.CompareTag("Farmer"))
         {
             //Debug.Log("HERE!5");
-            canvasInteract.Set_Canvas(false, false, true, false,false,false,false);
+            canvasInteract.Set_Canvas(false, false, true, false,false,false,false,false);
             focusedObject.GetComponent<EnemyInteract2>().DisableScripts();
             if(focusedObject.name=="Miguel"){
                 focusedObject.GetComponent<DialogTriggerMiguel>().TriggerDialog();
@@ -246,10 +244,10 @@ public class PlayerInteract : MonoBehaviour
         }
         else if(focusedObject.CompareTag("Puzzle")){
             //Debug.Log("WHAT!!!");
-            canvasInteract.Set_Canvas(false,false,false, true,false,false,false);
+            canvasInteract.Set_Canvas(false,false,false, true,false,false,false,false);
             focusedObject.GetComponentInParent<Puzzle>().enabled=true;
         }else if(focusedObject.CompareTag("Riddle")){
-            canvasInteract.Set_Canvas(false,false,false, false,false,false,false);
+            canvasInteract.Set_Canvas(false,false,false, false,false,false,false,false);
             try
             {
                 focusedObject.GetComponentInParent<PuzzleNumbers>().isSolving=true;
@@ -267,7 +265,7 @@ public class PlayerInteract : MonoBehaviour
                 Debug.Log("No puzzle text");
             }
         }else if(focusedObject.CompareTag("Item")){
-            canvasInteract.Set_Canvas(false,false,false, false,false,false,false);
+            canvasInteract.Set_Canvas(false,false,false, false,false,false,false,false);
             objectCanBeDestroyed=true;
         }else if (focusedObject.CompareTag("Bed")){
             focusedObject.GetComponent<LoadNextScene>().NextScene();
@@ -287,7 +285,7 @@ public class PlayerInteract : MonoBehaviour
             ResetCameraPosition();
             reset = false;
             rotateViaMouse.GetComponent<RotateViaMouse>().enabled = true;
-            canvasInteract.Set_Canvas(false,false,false,false,false,true,false);
+            canvasInteract.Set_Canvas(false,false,false,false,false,true,false,false);
         }
     }
 
