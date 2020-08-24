@@ -21,6 +21,7 @@ public class Quest : MonoBehaviour
     static public bool miguelRandomSpawn;
     static public bool playerSpawn;
     public static bool didOnce;
+    public static List<GameObject> corn;
 
     static public bool isItNight;
     // Start is called before the first frame update
@@ -33,20 +34,27 @@ public class Quest : MonoBehaviour
             text=text2;
             needsEnabling=enable;
             didOnce=true;
-        
-        text.text=questssText[currentObjective];
-        if(targetss[currentObjective]!=null){
-            Waypoint.SetWaypoint(targetss[currentObjective].transform);
-            if(targetss[currentObjective].CompareTag("Bed")){
-                targetss[currentObjective].layer=13;
+            corn= new List<GameObject>();
+            GameObject[] objets=GameObject.FindGameObjectsWithTag("Mrkva");
+            foreach (var item in objets)
+            {
+                corn.Add(item);
             }
-        }else{
-            Waypoint.SetWaypoint(null);
-        }
-        if(isItNight){
-            Debug.Log("Object Sould Be Enabled: "+ needsEnabling[currentActivatedObject].name);
-            needsEnabling[currentActivatedObject].SetActive(true);
-        }
+            foreach(var cc in corn){
+                Debug.Log(cc.name);
+            }
+            text.text=questssText[currentObjective];
+            if(targetss[currentObjective]!=null){
+                Waypoint.SetWaypoint(targetss[currentObjective].transform);
+                if(targetss[currentObjective].CompareTag("Bed")){
+                    targetss[currentObjective].layer=13;
+                }
+            }else{
+                Waypoint.SetWaypoint(null);
+            }
+            foreach(var item in needsEnabling){
+                item.SetActive(false);
+            }
         }
     }
 
@@ -59,12 +67,24 @@ public class Quest : MonoBehaviour
             if(targetss[currentObjective].CompareTag("Bed")){
                 targetss[currentObjective].layer=13;
             }
+        }else if(currentObjective==12){
+            Debug.Log("it is 12");
+            foreach(var item in corn){
+                item.layer=13;
+                Debug.Log("Layers set");
+            }
+            Debug.Log("WayPoint set maybe");
+            Waypoint.SetWaypoint(corn[0].transform);
         }else{
             Waypoint.SetWaypoint(null);
         }
-        if(isItNight){
-            Debug.Log("Object Sould Be Enabled");
-            needsEnabling[currentActivatedObject].SetActive(true);
-        }
+        
+    }
+    public static void EnablePuzzle(){
+        Debug.Log("Object Sould Be Enabled: "+ needsEnabling[currentActivatedObject].name);
+        needsEnabling[currentActivatedObject].SetActive(true);
+    }
+    public static void DisablePuzzle(){
+        needsEnabling[currentActivatedObject].SetActive(false);
     }
 }

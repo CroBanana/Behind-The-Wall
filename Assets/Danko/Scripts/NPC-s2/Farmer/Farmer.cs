@@ -94,7 +94,7 @@ public class Farmer : MonoBehaviour
     IEnumerator PickCrop(){
         anim.SetFloat("Speed", 0f);
         pickingCrop=true;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(2f);
         Pick__Replant__Scale();
         pickingCrop=false;
     }

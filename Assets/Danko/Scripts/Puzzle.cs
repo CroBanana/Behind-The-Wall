@@ -53,6 +53,7 @@ public class Puzzle : MonoBehaviour
         if(countCorrects==signs.Count){
             //Debug.Log("Its Correct");
             chest.GetComponent<OpenChest>().OpenChestCorutine();
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInteract>().ePressed=false;
             Destroy(gameObject);
         }
     }

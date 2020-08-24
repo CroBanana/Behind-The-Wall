@@ -2,35 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[DisallowMultipleComponent]
 public class Inventory : MonoBehaviour
 {
     public static Inventory instance;
 
-    private void Awake()
-    {
-        instance = this;
-    }
-
     static public List<GameObject> items;
-    public List<GameObject> test;
-    public GameObject showItem;
+    static public GameObject showItem;
 
-    InventorySlot[] slots;
+    static InventorySlot[] slots;
 
     private void Start()
     {
-        test=items;
         if (items == null)
         {
             items = new List<GameObject>();
         }
-        slots = transform.GetComponentsInChildren<InventorySlot>();
+        if(slots==null){
+            slots = transform.GetComponentsInChildren<InventorySlot>();
+        }
+        if(showItem==null){
+            showItem=GameObject.Find("SlotItem");
+            Debug.Log("SHOWITEM "+showItem.name);
+            showItem.SetActive(false);
+        }
     }
-    public void AddItem(GameObject item)
+    public static void AddItem(GameObject item)
     {
         items.Add(item);
-        test=items;
         slots[items.Count - 1].AddItem(item, item.GetComponent<Item>().image, showItem);
     }
 

@@ -17,7 +17,7 @@ public class LoadNextScene : MonoBehaviour
         if(index ==1){
             miguel.SetActive(false);
             pablo.SetActive(false);
-            Quest.isItNight=true;
+            Quest.EnablePuzzle();
             Quest.SetNextObjective();
             canvas_Interact.Set_Canvas(false,false,false,false,false,true,false);
             SceneManager.LoadScene(index+1);
@@ -26,6 +26,7 @@ public class LoadNextScene : MonoBehaviour
             miguel.SetActive(true);
             //pablo.SetActive(true);
             miguel.GetComponent<MiguelSpawn>().teleportTO();
+            Quest.DisablePuzzle();
             Quest.currentActivatedObject++;
             Quest.isItNight=false;
             DialogTriggerMiguel.whatDayMiguel++;

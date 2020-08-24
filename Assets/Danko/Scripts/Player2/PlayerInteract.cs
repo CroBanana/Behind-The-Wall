@@ -25,6 +25,8 @@ public class PlayerInteract : MonoBehaviour
     public bool iPressed;
     public bool raycastWorks=true;
     public bool objectCanBeDestroyed;
+    public bool pickingCrop;
+    public int crop=0;
 
     public bool firstPerson;
 
@@ -62,18 +64,19 @@ public class PlayerInteract : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CheckIfLookingAtObject();
-        ResetIf();
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-           
-            if (isPaused)
+        if(pickingCrop==false){
+            CheckIfLookingAtObject();
+            ResetIf();
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
-                ActivateMenu();
-            }
-            else
-            {
-                DeactivateMenu();
+                if (isPaused)
+                {
+                    ActivateMenu();
+                }
+                else
+                {
+                    DeactivateMenu();
+                }
             }
         }
 
@@ -173,7 +176,7 @@ public class PlayerInteract : MonoBehaviour
             rotateViaMouse.GetComponent<RotateViaMouse>().enabled = true;
             if(focusedObject.CompareTag("Item") && objectCanBeDestroyed){
                     Debug.Log("Getting destroyed");
-                    Inventory.instance.AddItem(focusedObject);
+                    Inventory.AddItem(focusedObject);
                     focusedObject.transform.parent= noDestroy.transform;
                     focusedObject.transform.position= noDestroy.transform.position;
                     canvasInteract.Set_Canvas(false, false, false, false,false,true,false);
@@ -271,6 +274,8 @@ public class PlayerInteract : MonoBehaviour
             objectCanBeDestroyed=true;
         }else if (focusedObject.CompareTag("Bed")){
             focusedObject.GetComponent<LoadNextScene>().NextScene();
+        }else if(focusedObject.CompareTag("Mrkva")){
+            StartCoroutine(PickCrop());
         }
         FocusOnAnObject();
 
@@ -378,5 +383,19 @@ public class PlayerInteract : MonoBehaviour
         if(focusedObject==Quest.targetss[Quest.currentObjective]){
             Quest.SetNextObjective();
         }
+    }
+
+    IEnumerator PickCrop(){
+        pickingCrop=true;
+        yield return new WaitForSeconds(2f);
+        Quest.corn.Remove(focusedObject);
+        Destroy(focusedObject);
+        if(Quest.corn.Count==0){
+            Quest.SetNextObjective();
+        }else{
+            Waypoint.SetWaypoint(Quest.corn[0].transform);
+        }
+        pickingCrop=false;
+        ePressed=false;
     }
 }

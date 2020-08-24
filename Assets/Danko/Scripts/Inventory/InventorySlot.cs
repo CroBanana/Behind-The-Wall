@@ -11,7 +11,7 @@ public class InventorySlot : MonoBehaviour
     GameObject item;
     public GameObject slotItemShow;
 
-    private void Awake() {
+    private void Start() {
         icon=GetComponent<Image>();
         text=gameObject.GetComponentInChildren<TextMeshProUGUI>();
     }
