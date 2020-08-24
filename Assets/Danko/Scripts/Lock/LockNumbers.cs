@@ -87,7 +87,7 @@ public class LockNumbers : MonoBehaviour
             }
         }
         yield return new WaitForSeconds (1f);
-        playerInteract.canvasInteract.Set_Canvas(false,false,false,false,false,true,false);
+        playerInteract.canvasInteract.Set_Canvas(false,false,false,false,false,true,false,false);
         playerInteract.ePressed=false;
         playerInteract.reset=true;
         if(chest != null){
