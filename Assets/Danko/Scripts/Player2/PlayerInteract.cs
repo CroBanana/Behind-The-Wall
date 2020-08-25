@@ -27,6 +27,7 @@ public class PlayerInteract : MonoBehaviour
     public bool objectCanBeDestroyed;
     public bool pickingCrop;
     public int crop=0;
+    public bool canEBePressed=true;
 
     public bool firstPerson;
 
@@ -40,6 +41,7 @@ public class PlayerInteract : MonoBehaviour
     public LayerMask selectedMask;
     private RaycastHit hit;
     private Ray ray;
+
 
     //DanijelMenu
     public static bool isPaused;
@@ -58,7 +60,6 @@ public class PlayerInteract : MonoBehaviour
         if(Quest.playerSpawn){
             transform.position=GameObject.Find("PlayerSpawnPoint").transform.position;
         }
-
     }
 
     // Update is called once per frame
@@ -89,14 +90,16 @@ public class PlayerInteract : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit, 5, selectedMask))
             {
-                focusedObject = hit.collider.gameObject;
-                if (ePressed == false)
-                {
-                    canvasInteract.Set_Canvas(true, false, false,false,false,true,false,false);
-                    //Debug.Log(hit.collider.name);
-                    canInteract = true;
+                if(!hit.collider.gameObject.CompareTag("Untagged")){
+                    focusedObject = hit.collider.gameObject;
+                    if (ePressed == false )
+                    {
+                        canvasInteract.Set_Canvas(true, false, false,false,false,true,false,false);
+                        //Debug.Log(hit.collider.name);
+                        canInteract = true;
+                    }
+                    E();
                 }
-                E();
             }
             else if (focusedObject != null && ePressed == false)
             {
@@ -121,6 +124,14 @@ public class PlayerInteract : MonoBehaviour
                     try
                     {
                         focusedObject.GetComponentInChildren<PuzzleText>().isSolving=false;
+                    }
+                    catch (System.Exception)
+                    {
+                        Debug.Log("No puzzle text");
+                    }
+                    try
+                    {
+                        focusedObject.GetComponentInChildren<FinalGateRiddle>().isSolving=false;
                     }
                     catch (System.Exception)
                     {
@@ -158,30 +169,33 @@ public class PlayerInteract : MonoBehaviour
     void E()
     {
         //Debug.Log("E Pressed");
-        if (canInteract && Input.GetKeyDown(KeyCode.E))
-        {
-            ePressed = !ePressed;
-            if (ePressed)
+        if(canEBePressed){
+            if (canInteract && Input.GetKeyDown(KeyCode.E))
             {
-                Interact();
+                ePressed = !ePressed;
+                if (ePressed)
+                {
+                    Interact();
+                }
             }
-        }
-
-        else if (ePressed == false && reset)
-        {
-            playerMovement2.enabled = true;
-            camera.cullingMask = cameraLayersOriginal;
-            ResetCameraPosition();
-            reset = false;
-            rotateViaMouse.GetComponent<RotateViaMouse>().enabled = true;
-            if(focusedObject.CompareTag("Item") && objectCanBeDestroyed){
+            else if (ePressed == false && reset)
+            {
+                playerMovement2.enabled = true;
+                camera.cullingMask = cameraLayersOriginal;
+                ResetCameraPosition();
+                reset = false;
+                rotateViaMouse.GetComponent<RotateViaMouse>().enabled = true;
+                if(focusedObject.CompareTag("Item") && objectCanBeDestroyed){
                     Debug.Log("Getting destroyed");
                     Inventory.AddItem(focusedObject);
                     focusedObject.transform.parent= noDestroy.transform;
                     focusedObject.transform.position= noDestroy.transform.position;
                     canvasInteract.Set_Canvas(false, false, false, false,false,true,false,false);
                 }
+            }
         }
+
+
     }
     //Meni Funkcije
     void ActivateMenu()
@@ -252,6 +266,7 @@ public class PlayerInteract : MonoBehaviour
             canvasInteract.Set_Canvas(false,false,false, true,false,false,false,false);
             focusedObject.GetComponentInParent<Puzzle>().enabled=true;
         }else if(focusedObject.CompareTag("Riddle")){
+            Debug.Log("after  " +Cursor.lockState);
             canvasInteract.Set_Canvas(false,false,false, false,false,false,false,false);
             try
             {
@@ -259,11 +274,22 @@ public class PlayerInteract : MonoBehaviour
             }
             catch (System.Exception)
             {
-                Debug.Log("No puzzle numbers");
+                //Debug.Log("No puzzle numbers");
             }
             try
             {
                 focusedObject.GetComponentInChildren<PuzzleText>().isSolving=true;
+                canEBePressed=false;
+                Cursor.lockState = CursorLockMode.None;
+            }
+            catch (System.Exception)
+            {
+                //Debug.Log("No puzzle text");
+            }
+            try
+            {
+                Cursor.lockState = CursorLockMode.None;
+                focusedObject.GetComponentInChildren<FinalGateRiddle>().isSolving=true;
             }
             catch (System.Exception)
             {
@@ -279,7 +305,6 @@ public class PlayerInteract : MonoBehaviour
         }
         FocusOnAnObject();
 
-        
         reset = true;
     }
 
@@ -397,5 +422,12 @@ public class PlayerInteract : MonoBehaviour
         }
         pickingCrop=false;
         ePressed=false;
+    }
+
+    public void ResetEPress(){
+        Cursor.lockState = CursorLockMode.Locked;
+        canEBePressed=true;
+        ePressed=false;
+        reset=true;
     }
 }
