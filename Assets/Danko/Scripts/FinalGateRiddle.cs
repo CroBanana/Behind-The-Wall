@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class FinalGateRiddle : MonoBehaviour
 {
@@ -10,19 +11,23 @@ public class FinalGateRiddle : MonoBehaviour
     public List<TextMeshProUGUI> allNumbers;
     public List<string> correctNumbers;
     public TextMeshProUGUI currentlyWriting;
+    public DoorUnlocked door;
     int currentIndex;
     // Start is called before the first frame update
 
     // Update is called once per frame
     void Update()
     {
+        if(correctOnes==6){
+            Debug.Log("OPEN THE GATE!!!!");
+            door.rotateTo=true;
+            correctOnes=7;
+        }
         if(isSolving){
             if(currentlyWriting!=null){
-                if(correctOnes==6){
-
-            }else{
-                EnterNumbers();
-            }
+                
+                    EnterNumbers();
+                
             }
             
         }
@@ -61,26 +66,34 @@ public class FinalGateRiddle : MonoBehaviour
     }
 
     void SetText(int number){
+        Debug.Log("allnumbers"+allNumbers[currentIndex].text.Length);
+        Debug.Log("correct"+correctNumbers[currentIndex].Length);
         currentIndex=allNumbers.IndexOf(currentlyWriting);
-        if(allNumbers[currentIndex].text.Length>correctNumbers[currentIndex].Length){
+        if(allNumbers[currentIndex].text.Length+1>correctNumbers[currentIndex].Length){
+            allNumbers[currentIndex].text="";
+            Debug.Log("ItsHere");
             allNumbers[currentIndex].text = number.ToString();
         }else{
             allNumbers[currentIndex].text +=number.ToString();
         }
-        if(allNumbers[currentIndex].text.Length==correctNumbers[currentIndex].Length){
-            TestIfCorrect();
-        }
+        TestIfCorrect();
 
     }
 
     public void TestIfCorrect(){
+        
         if(allNumbers[currentIndex].text == correctNumbers[currentIndex]){
+            Debug.Log("correct");
             allNumbers[currentIndex].color=Color.green;
-            Destroy(allNumbers[currentIndex].gameObject.transform.GetChild(0));
+            allNumbers[currentIndex].transform.parent.GetComponent<Button>().enabled=false;
             currentlyWriting=null;
             correctOnes++;
         }else{
-            allNumbers[currentIndex].color=Color.red;
+            allNumbers[currentIndex].color=Color.black;
         }
+    }
+
+    public void NotWorking(){
+        currentlyWriting=null;
     }
 }
