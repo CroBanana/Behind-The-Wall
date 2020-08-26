@@ -10,11 +10,11 @@ public class RotatePart : MonoBehaviour
     public bool stillRotating;
 
     private void Start() {
-        rotation = transform.rotation.z;
+        rotation = transform.localEulerAngles.z;
     }
 
     private void Update() {
-        if(rotation == transform.eulerAngles.z){
+        if(rotation == transform.localEulerAngles.z){
                 //Debug.Log("NIGGA WHY YOU NO WORK");
                 stillRotating=false;
             }
@@ -22,8 +22,8 @@ public class RotatePart : MonoBehaviour
     // Start is called before the first frame update
     IEnumerator RotateTowards(){
 
-        while (rotation-transform.eulerAngles.z<=-0.01f || rotation-transform.eulerAngles.z>=0.01f){
-            transform.rotation = Quaternion.RotateTowards(transform.rotation,
+        while (rotation-transform.localEulerAngles.z<=-0.01f || rotation-transform.localEulerAngles.z>=0.01f){
+            transform.localRotation = Quaternion.RotateTowards(transform.localRotation,
                                             Quaternion.Euler(0,0,rotation),
                                             rotationSpeed * Time.deltaTime);
             

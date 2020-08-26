@@ -12,6 +12,7 @@ public class LoadNextScene : MonoBehaviour
         gameObject.layer=0;
         Quest.playerSpawn=true;
         Quest.miguelRandomSpawn=true;
+        AfterFirst.needsTOBeClosed=true;
         miguel.GetComponent<DialogTriggerMiguel>().howManyTimesTalked=0;
         int index = SceneManager.GetActiveScene().buildIndex;
         if(index ==1){
@@ -19,14 +20,12 @@ public class LoadNextScene : MonoBehaviour
             pablo.SetActive(false);
             Quest.EnablePuzzle();
             Quest.SetNextObjective();
-            AfterFirst.needsTOBeClosed=true;
             canvas_Interact.Set_Canvas(false,false,false,false,false,true,false,false);
             SceneManager.LoadScene(index+1);
         }
         if(index==2){
             miguel.SetActive(true);
             //pablo.SetActive(true);
-            AfterFirst.needsTOBeClosed=true;
             miguel.GetComponent<MiguelSpawn>().teleportTO();
             Quest.DisablePuzzle();
             Quest.currentActivatedObject++;
