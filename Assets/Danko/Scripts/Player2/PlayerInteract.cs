@@ -44,7 +44,7 @@ public class PlayerInteract : MonoBehaviour
 
 
     //DanijelMenu
-    public static bool isPaused;
+    public bool isPaused;
     public GameObject pauseMenu, optionsMenu;
      public GameObject pauseFirstBtn, optionsFirstBtn, optionsClosedBtn;
 
@@ -66,19 +66,9 @@ public class PlayerInteract : MonoBehaviour
     void Update()
     {
         if(pickingCrop==false){
+
             CheckIfLookingAtObject();
             ResetIf();
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                if (isPaused)
-                {
-                    ActivateMenu();
-                }
-                else
-                {
-                    DeactivateMenu();
-                }
-            }
         }
 
     }
@@ -147,6 +137,7 @@ public class PlayerInteract : MonoBehaviour
             
             R();
             I();
+            ESC();
         }
         
     }
@@ -197,29 +188,48 @@ public class PlayerInteract : MonoBehaviour
 
 
     }
+
+    void ESC(){
+        if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                isPaused=!isPaused;
+                if (isPaused)
+                {
+                    ActivateMenu();
+                }
+                else
+                {
+                    DeactivateMenu();
+                }
+            }
+    }
     //Meni Funkcije
     void ActivateMenu()
     {
+        Debug.Log("Activate menu");
         Time.timeScale = 0;
         AudioListener.pause = true;
-        canvasInteract.PauseMenu.SetActive(true);
-        canvasInteract.QuestCanvas.SetActive(false);
+        //canvasInteract.PauseMenu.SetActive(true);
+        //canvasInteract.QuestCanvas.SetActive(false);
         pauseMenu.SetActive(true);
-        
+        isPaused=true;
 
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(pauseFirstBtn);
+        canvasInteract.Set_Canvas(false,false,false,false,false,false,true,false);
 
     }
 
     void DeactivateMenu()
     {
+        Debug.Log("deactivate menu");
         Time.timeScale = 1;
         AudioListener.pause = false;
         
-        pauseMenu.SetActive(false);
-        optionsMenu.SetActive(false);
+        //pauseMenu.SetActive(false);
+        //optionsMenu.SetActive(false);
         isPaused = false;
+        canvasInteract.Set_Canvas(false,false,false,false,false,true,false,false);
     }
     public void OpenOptions()
     {
