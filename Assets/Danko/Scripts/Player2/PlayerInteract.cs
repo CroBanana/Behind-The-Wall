@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class PlayerInteract : MonoBehaviour
 {
@@ -204,6 +205,7 @@ public class PlayerInteract : MonoBehaviour
             }
     }
     //Meni Funkcije
+
     public void ActivateMenu()
     {
         Debug.Log("Activate menu");
@@ -231,6 +233,18 @@ public class PlayerInteract : MonoBehaviour
         isPaused = false;
         canvasInteract.Set_Canvas(false,false,false,false,false,true,false,false);
     }
+    public void MainMenuOpen()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(0);
+    }
+
+    public void QuitGame()
+    {
+        Debug.Log("Quit");
+        Application.Quit();
+    }
+
     public void OpenOptions()
     {
         pauseMenu.SetActive(false);
