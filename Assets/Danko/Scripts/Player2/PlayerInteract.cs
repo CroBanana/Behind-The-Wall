@@ -204,7 +204,7 @@ public class PlayerInteract : MonoBehaviour
             }
     }
     //Meni Funkcije
-    void ActivateMenu()
+    public void ActivateMenu()
     {
         Debug.Log("Activate menu");
         Time.timeScale = 0;
@@ -220,7 +220,7 @@ public class PlayerInteract : MonoBehaviour
 
     }
 
-    void DeactivateMenu()
+   public  void DeactivateMenu()
     {
         Debug.Log("deactivate menu");
         Time.timeScale = 1;
@@ -237,6 +237,7 @@ public class PlayerInteract : MonoBehaviour
         optionsMenu.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(optionsFirstBtn);
+        canvasInteract.Set_Canvas(false, false, false, false, false, false, false, true);
     }
 
     public void CloseOptions()
@@ -245,6 +246,7 @@ public class PlayerInteract : MonoBehaviour
         optionsMenu.SetActive(false);
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(optionsClosedBtn);
+        canvasInteract.Set_Canvas(false, false, false, false, false, false, true, false);
     }
 
 
