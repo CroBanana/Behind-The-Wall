@@ -13,12 +13,12 @@ public class DoorCollisionNPC : MonoBehaviour
 
     // Update is called once per frame
     private void OnCollisionEnter(Collision other) {
-        if(other.gameObject.CompareTag("NPC")){
+        if(other.gameObject.CompareTag("NPC") || other.gameObject.CompareTag("Farmer") || other.gameObject.CompareTag("Workers")){
             joint.useLimits=false;
         }
     }
     private void OnCollisionExit(Collision other) {
-        if(other.gameObject.CompareTag("NPC")){
+        if(other.gameObject.CompareTag("NPC") || other.gameObject.CompareTag("Farmer") || other.gameObject.CompareTag("Workers")){
             joint.useLimits=true;
         }
     }
