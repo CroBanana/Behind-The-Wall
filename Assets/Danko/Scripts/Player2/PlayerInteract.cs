@@ -280,6 +280,7 @@ public class PlayerInteract : MonoBehaviour
             //Debug.Log("HERE!5");
             canvasInteract.Set_Canvas(false, false, true, false,false,false,false,false);
             focusedObject.GetComponent<EnemyInteract2>().DisableScripts();
+            canEBePressed=false;
             if(focusedObject.name=="Miguel"){
                 focusedObject.GetComponent<DialogTriggerMiguel>().TriggerDialog();
             }else if (focusedObject.name=="Pablo Silva"){
@@ -386,9 +387,16 @@ public class PlayerInteract : MonoBehaviour
             camera.transform.position = puzzleParent.position - puzzleParent.right * distanceFromObject;
 
             camera.transform.LookAt(puzzleParent);
-        }else if(focusedObject.CompareTag("Riddle") || focusedObject.CompareTag("Item")){
+        }else if(focusedObject.CompareTag("Riddle")){
             camera.transform.position = focusedObject.transform.position + focusedObject.transform.up *(distanceFromObject*2);
             camera.transform.LookAt(focusedObject.transform.position);
+        }else if(focusedObject.CompareTag("Item")){
+            camera.transform.position = focusedObject.transform.position + focusedObject.transform.up *(distanceFromObject);
+
+            Debug.Log(camera.transform.eulerAngles);
+            Debug.Log(focusedObject.transform.eulerAngles);
+            camera.transform.LookAt(focusedObject.transform.position);
+
         }
 
 
@@ -429,6 +437,7 @@ public class PlayerInteract : MonoBehaviour
     {
         playerMovement2.enabled = true;
         ePressed = false;
+        canEBePressed=true;
         Debug.Log("FOCUSED: "+focusedObject.name+"  QUEST TARGET: "+Quest.targetss[Quest.currentObjective]);
         focusedObject.GetComponent<EnemyInteract2>().DialogeEnded();
         if(focusedObject==Quest.targetss[Quest.currentObjective]){
