@@ -61,6 +61,13 @@ public class PlayerInteract : MonoBehaviour
         if(Quest.playerSpawn){
             transform.position=GameObject.Find("PlayerSpawnPoint").transform.position;
         }
+        if(pauseMenu==null){
+            pauseMenu=GameObject.Find("pauseMenu");
+
+        }
+        if(optionsMenu==null){
+            optionsMenu=GameObject.Find("optionsMenu");
+        }
     }
 
     // Update is called once per frame
@@ -167,6 +174,7 @@ public class PlayerInteract : MonoBehaviour
                 ePressed = !ePressed;
                 if (ePressed)
                 {
+                    playerMovement2.enabled = false;
                     Interact();
                 }
             }
@@ -213,6 +221,13 @@ public class PlayerInteract : MonoBehaviour
         AudioListener.pause = true;
         //canvasInteract.PauseMenu.SetActive(true);
         //canvasInteract.QuestCanvas.SetActive(false);
+        if(pauseMenu==null){
+            pauseMenu=GameObject.Find("pauseMenu");
+
+        }
+        if(optionsMenu==null){
+            optionsMenu=GameObject.Find("optionsMenu");
+        }
         pauseMenu.SetActive(true);
         isPaused=true;
 
@@ -275,7 +290,7 @@ public class PlayerInteract : MonoBehaviour
             canvasInteract.Set_Canvas(false, true, false, false,false,false,false,false);
             focusedObject.GetComponentInChildren<LockNumbers>().enabled = true;
         }
-        else if (focusedObject.CompareTag("NPC") || focusedObject.CompareTag("Farmer"))
+        else if (focusedObject.CompareTag("NPC") || focusedObject.CompareTag("Farmer") ||focusedObject.CompareTag("Guard"))
         {
             //Debug.Log("HERE!5");
             canvasInteract.Set_Canvas(false, false, true, false,false,false,false,false);

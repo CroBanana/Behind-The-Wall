@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class DialogManager : MonoBehaviour
 {
@@ -44,6 +45,9 @@ public class DialogManager : MonoBehaviour
     {
         if (sentences.Count == 0)
         {
+            if(talkingTo.CompareTag("Guard")){
+                EndDialogueGuard();
+            }
             EndDialogue();
             return;
         }
@@ -57,5 +61,8 @@ public class DialogManager : MonoBehaviour
     void EndDialogue()
     {
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInteract>().EndConversation();
+    }
+    void EndDialogueGuard(){
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

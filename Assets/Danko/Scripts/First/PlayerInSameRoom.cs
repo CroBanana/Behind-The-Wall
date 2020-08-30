@@ -21,6 +21,9 @@ public class PlayerInSameRoom : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(player==null){
+            player= GameObject.FindGameObjectWithTag("Player");
+        }
         Vector3 playerDirection = player.transform.position-transform.position;
         Debug.DrawRay(transform.position+transform.up,playerDirection*15,Color.green);
         if(Physics.Raycast(transform.position+transform.up,playerDirection.normalized,out hit)){

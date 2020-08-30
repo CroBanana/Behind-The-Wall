@@ -79,9 +79,8 @@ public class PuzzleNumbers : MonoBehaviour
         Debug.Log(numbers.Length);
         if(numbers.Length+1>sizeOfNumber){
             textNumbers="";
-            numbers=null;
+            numbers="";
             text.color = Color.black;
-            chest.GetComponent<OpenChest>().OpenChestCorutine();
         }
         textNumbers += number;
         for(int i =0; i<numberOfSpaces;i++){
