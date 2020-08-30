@@ -329,6 +329,8 @@ public class PlayerInteract : MonoBehaviour
             focusedObject.GetComponent<LoadNextScene>().NextScene();
         }else if(focusedObject.CompareTag("Mrkva")){
             StartCoroutine(PickCrop());
+        }else if(focusedObject.CompareTag("Escape")){
+            focusedObject.GetComponent<LoadFinalScene>().FinalScene();
         }
         FocusOnAnObject();
 
