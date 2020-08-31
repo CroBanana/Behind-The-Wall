@@ -10,6 +10,7 @@ public class EnemyInteract2 : MonoBehaviour
     public GoToPoint goToPoint;
     public PlayerInSameRoom playerInSame;
     public Farmer farmer;
+    public Worker worker;
 
     public bool enemyP;
     public bool gotoP;
@@ -22,6 +23,7 @@ public class EnemyInteract2 : MonoBehaviour
         goToPoint = gameObject.GetComponent<GoToPoint>();
         enemyP=true;
         farmer = gameObject.GetComponent<Farmer>();
+        worker =  gameObject.GetComponent<Worker>();
     }
 
     // Update is called once per frame
@@ -56,6 +58,10 @@ public class EnemyInteract2 : MonoBehaviour
             farmer.anim.SetFloat("Speed",0f);
             farmer.enabled=false;
         }
+        if(worker!= null){
+            worker.anim.SetFloat("Speed",0f);
+            worker.enabled=false;
+        }
 
     }
 
@@ -84,6 +90,9 @@ public class EnemyInteract2 : MonoBehaviour
         }
         if(farmer!=null){
             farmer.enabled=true;
+        }
+        if(worker!=null){
+            worker.enabled=true;
         }
 
     }

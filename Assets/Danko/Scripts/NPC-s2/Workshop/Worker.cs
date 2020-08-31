@@ -29,13 +29,16 @@ public class Worker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CheckIfNearWorkPlace();
-        if(stuckDistanceCorutine==false){
-            StartCoroutine(CheckIfStuck());
-            stuckDistanceCorutine=true;
+        if(!startWork){
+            CheckIfNearWorkPlace();
+            if(stuckDistanceCorutine==false){
+                StartCoroutine(CheckIfStuck());
+                stuckDistanceCorutine=true;
+            }
+            //Debug.Log(Vector3.Distance(transform.position,workPoint.position));
+            DrawPath();
         }
-        //Debug.Log(Vector3.Distance(transform.position,workPoint.position));
-        DrawPath();
+
     }
 
     void CheckIfNearWorkPlace()
@@ -66,6 +69,7 @@ public class Worker : MonoBehaviour
         {
             if(startWork==false){
                 startWork=true;
+                StopAllCoroutines();
                 StartCoroutine(DoJob());
             }
         }
@@ -93,15 +97,16 @@ public class Worker : MonoBehaviour
 
 
     IEnumerator DoJob(){
-        //Debug.Log("Doing job");
+        Debug.Log("Doing job");
         anim.SetFloat("Speed", 0f);
         yield return new WaitForSeconds(10);
-        //Debug.Log("Job Ended");
+        Debug.Log("Job Ended");
         workInt++;
         if(workInt>workPoints.Count-1){
             workInt=0;
         }
         workPoint=workPoints[workInt];
+        startWork=false;
     }
 
 

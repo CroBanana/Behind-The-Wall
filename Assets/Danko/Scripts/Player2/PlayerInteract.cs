@@ -290,7 +290,7 @@ public class PlayerInteract : MonoBehaviour
             canvasInteract.Set_Canvas(false, true, false, false,false,false,false,false);
             focusedObject.GetComponentInChildren<LockNumbers>().enabled = true;
         }
-        else if (focusedObject.CompareTag("NPC") || focusedObject.CompareTag("Farmer") ||focusedObject.CompareTag("Guard"))
+        else if (focusedObject.CompareTag("NPC") || focusedObject.CompareTag("Farmer") ||focusedObject.CompareTag("Guard") || focusedObject.CompareTag("Workers"))
         {
             //Debug.Log("HERE!5");
             canvasInteract.Set_Canvas(false, false, true, false,false,false,false,false);
@@ -385,7 +385,7 @@ public class PlayerInteract : MonoBehaviour
             }
 
         }
-        else if (focusedObject.CompareTag("NPC") || focusedObject.CompareTag("Farmer"))
+        else if (focusedObject.CompareTag("NPC") || focusedObject.CompareTag("Farmer")|| focusedObject.CompareTag("Workers"))
         {
             Transform body = focusedObject.transform.Find("Body");
             camera.transform.position = body.position + body.forward * distanceFromObject;
