@@ -460,8 +460,9 @@ public class PlayerInteract : MonoBehaviour
     {
         playerMovement2.enabled = true;
         ePressed = false;
+        reset=true;
         canEBePressed=true;
-        Debug.Log("FOCUSED: "+focusedObject.name+"  QUEST TARGET: "+Quest.targetss[Quest.currentObjective]);
+        //Debug.Log("FOCUSED: "+focusedObject.name+"  QUEST TARGET: "+Quest.targetss[Quest.currentObjective]);
         focusedObject.GetComponent<EnemyInteract2>().DialogeEnded();
         if(focusedObject==Quest.targetss[Quest.currentObjective]){
             Quest.SetNextObjective();
