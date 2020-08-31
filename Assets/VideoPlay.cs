@@ -13,16 +13,21 @@ public class VideoPlay : MonoBehaviour
     public UnityEngine.Video.VideoClip intro;
     public UnityEngine.Video.VideoClip startGame;
     public UnityEngine.Video.VideoPlayer videoPlayer;
+    public static bool videoPlayed;
     // Start is called before the first frame update
     void Start()
     {
-        texture= rawImage.GetComponent<RawImage>();
-        texture.texture=rend1;
-        videoPlayer=GetComponent<UnityEngine.Video.VideoPlayer>();
-        videoPlayer.targetTexture=rend1;
-        videoPlayer.clip=intro;
-        videoPlayer.isLooping=false;
-        videoPlayer.loopPointReached+=EndReached;
+        if(!videoPlayed){
+            videoPlayed=true;
+            texture= rawImage.GetComponent<RawImage>();
+            texture.texture=rend1;
+            videoPlayer=GetComponent<UnityEngine.Video.VideoPlayer>();
+            videoPlayer.targetTexture=rend1;
+            videoPlayer.clip=intro;
+            videoPlayer.isLooping=false;
+            videoPlayer.loopPointReached+=EndReached;
+        }
+
     }
 
     void EndReached(UnityEngine.Video.VideoPlayer vp){
