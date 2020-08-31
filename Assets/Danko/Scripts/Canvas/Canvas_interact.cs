@@ -31,6 +31,7 @@ public class Canvas_interact : MonoBehaviour
         OptionsMenu = transform.Find("optionsMenu").gameObject;
         OptionsMenu.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible=false;
 
     }
 
@@ -47,8 +48,10 @@ public class Canvas_interact : MonoBehaviour
 
         if(lokot || dialoge || puzzle || inventory || menu || options){
             Cursor.lockState=CursorLockMode.None;
+            Cursor.visible=true;
         }else{
             Cursor.lockState=CursorLockMode.Locked;
+            Cursor.visible=false;
         }
 
     }

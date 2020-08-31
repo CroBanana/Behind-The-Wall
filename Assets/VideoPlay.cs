@@ -18,6 +18,7 @@ public class VideoPlay : MonoBehaviour
     void Start()
     {
         if(!videoPlayed){
+            Cursor.visible=false;
             videoPlayed=true;
             texture= rawImage.GetComponent<RawImage>();
             texture.texture=rend1;
@@ -33,9 +34,11 @@ public class VideoPlay : MonoBehaviour
     void EndReached(UnityEngine.Video.VideoPlayer vp){
         Debug.Log("END!!!");
         rawImage.SetActive(false);
+        Cursor.visible=true;
     }
 
     public void StartGame(){
+        Cursor.visible=false;
         StartCoroutine(SkipVideo());
         videoPlayer.targetTexture=rend2;
         rawImage.SetActive(true);

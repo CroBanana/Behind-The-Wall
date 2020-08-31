@@ -182,6 +182,8 @@ public class PlayerInteract : MonoBehaviour
             {
                 playerMovement2.enabled = true;
                 camera.cullingMask = cameraLayersOriginal;
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible=false;
                 ResetCameraPosition();
                 reset = false;
                 rotateViaMouse.GetComponent<RotateViaMouse>().enabled = true;
@@ -295,6 +297,8 @@ public class PlayerInteract : MonoBehaviour
             //Debug.Log("HERE!5");
             canvasInteract.Set_Canvas(false, false, true, false,false,false,false,false);
             focusedObject.GetComponent<EnemyInteract2>().DisableScripts();
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible=true;
             canEBePressed=false;
             if(focusedObject.name=="Miguel"){
                 focusedObject.GetComponent<DialogTriggerMiguel>().TriggerDialog();
@@ -323,6 +327,7 @@ public class PlayerInteract : MonoBehaviour
                 focusedObject.GetComponentInChildren<PuzzleText>().isSolving=true;
                 canEBePressed=false;
                 Cursor.lockState = CursorLockMode.None;
+                Cursor.visible=true;
             }
             catch (System.Exception)
             {
@@ -331,6 +336,7 @@ public class PlayerInteract : MonoBehaviour
             try
             {
                 Cursor.lockState = CursorLockMode.None;
+                Cursor.visible=true;
                 focusedObject.GetComponentInChildren<FinalGateRiddle>().isSolving=true;
             }
             catch (System.Exception)
@@ -486,6 +492,7 @@ public class PlayerInteract : MonoBehaviour
 
     public void ResetEPress(){
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible=false;
         canEBePressed=true;
         ePressed=false;
         reset=true;
