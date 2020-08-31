@@ -93,6 +93,7 @@ public class LockNumbers : MonoBehaviour
         if(chest != null){
             chest.GetComponent<OpenChest>().OpenChestCorutine();
         }
+        number.text="";
         Destroy( transform.parent.gameObject);
     }
 
