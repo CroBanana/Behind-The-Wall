@@ -40,9 +40,6 @@ public class Quest : MonoBehaviour
             {
                 corn.Add(item);
             }
-            foreach(var cc in corn){
-                Debug.Log(cc.name);
-            }
             text.text=questssText[currentObjective];
             if(targetss[currentObjective]!=null){
                 Waypoint.SetWaypoint(targetss[currentObjective].transform);
