@@ -474,18 +474,13 @@ public class PlayerInteract : MonoBehaviour
         yield return new WaitForSeconds(2f);
         Quest.corn.Remove(focusedObject);
         Destroy(focusedObject);
-        try
-        {
-            if(Quest.corn ==null){
+
+        if(Quest.corn.Count ==null){
             Quest.SetNextObjective();
-            }else{
-                Waypoint.SetWaypoint(Quest.corn[0].transform);
-            }
+        }else{
+            Waypoint.SetWaypoint(Quest.corn[0].transform);
         }
-        catch (System.Exception)
-        {
-            Debug.Log("lel");
-        }
+
 
         pickingCrop=false;
         ePressed=false;
