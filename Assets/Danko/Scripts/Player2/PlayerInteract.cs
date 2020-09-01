@@ -475,7 +475,7 @@ public class PlayerInteract : MonoBehaviour
         Quest.corn.Remove(focusedObject);
         Destroy(focusedObject);
 
-        if(Quest.corn.Count ==null){
+        if(Quest.corn.Count ==0){
             Quest.SetNextObjective();
         }else{
             Waypoint.SetWaypoint(Quest.corn[0].transform);
