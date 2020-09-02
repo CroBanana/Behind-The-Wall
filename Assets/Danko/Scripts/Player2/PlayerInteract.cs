@@ -46,8 +46,8 @@ public class PlayerInteract : MonoBehaviour
 
     //DanijelMenu
     public bool isPaused;
-    public GameObject pauseMenu, optionsMenu;
-     public GameObject pauseFirstBtn, optionsFirstBtn, optionsClosedBtn;
+    public GameObject pauseMenu, optionsMenu, pauseMenuNight , optionsMenuNight;
+     public GameObject pauseFirstBtn, optionsFirstBtn, optionsClosedBtn, pauseNightFirstBtn, optionsNightFirstBtn, optionsNightClosedBtn;
 
     void Start()
     {
@@ -206,15 +206,18 @@ public class PlayerInteract : MonoBehaviour
                 isPaused=!isPaused;
                 if (isPaused)
                 {
-                    ActivateMenu();
+                    //ActivateMenu();
+                    ActivateMenuNight();
                 }
                 else
                 {
-                    DeactivateMenu();
+                
+                    //DeactivateMenu();
+                    DeactivateMenuNight();
                 }
             }
     }
-    //Meni Funkcije
+    //Meni Funkcije (po danu)
 
     public void ActivateMenu()
     {
@@ -278,8 +281,76 @@ public class PlayerInteract : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(optionsClosedBtn);
         canvasInteract.Set_Canvas(false, false, false, false, false, false, true, false);
+
     }
 
+    //meni funkcije (po noci)
+
+    public void ActivateMenuNight()
+    {
+        Debug.Log("Activate menu");
+        Time.timeScale = 0;
+        ///AudioListener.pause = true;
+        //canvasInteract.PauseMenu.SetActive(true);
+        //canvasInteract.QuestCanvas.SetActive(false);
+        if (pauseMenuNight == null)
+        {
+            pauseMenuNight = GameObject.Find("pauseMenuNight");
+
+        }
+        if (optionsMenuNight == null)
+        {
+            optionsMenuNight = GameObject.Find("optionsMenuNight");
+        }
+        pauseMenuNight.SetActive(true);
+        isPaused = true;
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(pauseNightFirstBtn);
+        //canvasInteract.Set_Canvas(false, false, false, false, false, false, true, false);
+
+    }
+
+    public void DeactivateMenuNight()
+    {
+        Debug.Log("deactivate menu");
+        Time.timeScale = 1;
+        //AudioListener.pause = false;
+
+        pauseMenuNight.SetActive(false);
+        optionsMenuNight.SetActive(false);
+        isPaused = false;
+        //canvasInteract.Set_Canvas(false, false, false, false, false, true, false, false);
+    }
+    public void MainMenuOpenNight()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(0);
+    }
+
+    public void QuitGameNight()
+    {
+        Debug.Log("Quit");
+        Application.Quit();
+    }
+
+    public void OpenOptionsNight()
+    {
+        pauseMenuNight.SetActive(false);
+        optionsMenuNight.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(optionsNightFirstBtn);
+        //canvasInteract.Set_Canvas(false, false, false, false, false, false, false, true);
+    }
+
+    public void CloseOptionsNight()
+    {
+        pauseMenuNight.SetActive(true);
+        optionsMenuNight.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(optionsNightClosedBtn);
+        //canvasInteract.Set_Canvas(false, false, false, false, false, false, true, false);
+    }
 
     public void Interact()
     {
