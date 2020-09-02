@@ -220,7 +220,7 @@ public class PlayerInteract : MonoBehaviour
     {
         Debug.Log("Activate menu");
         Time.timeScale = 0;
-        AudioListener.pause = true;
+        ///AudioListener.pause = true;
         //canvasInteract.PauseMenu.SetActive(true);
         //canvasInteract.QuestCanvas.SetActive(false);
         if(pauseMenu==null){
@@ -243,7 +243,7 @@ public class PlayerInteract : MonoBehaviour
     {
         Debug.Log("deactivate menu");
         Time.timeScale = 1;
-        AudioListener.pause = false;
+        //AudioListener.pause = false;
         
         //pauseMenu.SetActive(false);
         //optionsMenu.SetActive(false);
