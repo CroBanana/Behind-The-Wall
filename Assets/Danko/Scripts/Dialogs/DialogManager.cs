@@ -45,9 +45,17 @@ public class DialogManager : MonoBehaviour
     {
         if (sentences.Count == 0)
         {
-            if(talkingTo.CompareTag("Guard")){
+            try
+            {
+                if(talkingTo.CompareTag("Guard")){
                 EndDialogueGuard();
             }
+            }
+            catch (System.Exception)
+            {
+                Debug.Log("not TODAY!!!");
+            }
+
             EndDialogue();
             return;
         }
