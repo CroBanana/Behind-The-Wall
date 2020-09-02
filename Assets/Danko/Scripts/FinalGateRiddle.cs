@@ -21,6 +21,7 @@ public class FinalGateRiddle : MonoBehaviour
         if(correctOnes==6){
             Debug.Log("OPEN THE GATE!!!!");
             door.rotateTo=true;
+            Quest.SetNextObjective();
             correctOnes=7;
         }
         if(isSolving){

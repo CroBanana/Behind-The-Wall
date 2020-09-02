@@ -8,11 +8,12 @@ public class LoadNextScene : MonoBehaviour
     public GameObject miguel;
     public GameObject pablo;
     public Canvas_interact canvas_Interact;
+    public AfterFirst door;
     public void NextScene(){
         gameObject.layer=0;
         Quest.playerSpawn=true;
         Quest.miguelRandomSpawn=true;
-        AfterFirst.needsTOBeClosed=true;
+        door.LockDoor();
         miguel.GetComponent<DialogTriggerMiguel>().howManyTimesTalked=0;
         int index = SceneManager.GetActiveScene().buildIndex;
         if(index ==1){
