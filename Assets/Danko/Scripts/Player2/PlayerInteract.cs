@@ -226,15 +226,6 @@ public class PlayerInteract : MonoBehaviour
         ///AudioListener.pause = true;
         //canvasInteract.PauseMenu.SetActive(true);
         //canvasInteract.QuestCanvas.SetActive(false);
-        if(pauseMenu==null){
-            pauseMenu=GameObject.Find("pauseMenu");
-
-        }
-        if(optionsMenu==null){
-            optionsMenu=GameObject.Find("optionsMenu");
-        }
-        pauseMenu.SetActive(true);
-        isPaused=true;
 
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(pauseFirstBtn);
@@ -267,8 +258,6 @@ public class PlayerInteract : MonoBehaviour
 
     public void OpenOptions()
     {
-        pauseMenu.SetActive(false);
-        optionsMenu.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(optionsFirstBtn);
         canvasInteract.Set_Canvas(false, false, false, false, false, false, false, true);
@@ -276,8 +265,6 @@ public class PlayerInteract : MonoBehaviour
 
     public void CloseOptions()
     {
-        pauseMenu.SetActive(true);
-        optionsMenu.SetActive(false);
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(optionsClosedBtn);
         canvasInteract.Set_Canvas(false, false, false, false, false, false, true, false);
@@ -293,21 +280,12 @@ public class PlayerInteract : MonoBehaviour
         ///AudioListener.pause = true;
         //canvasInteract.PauseMenu.SetActive(true);
         //canvasInteract.QuestCanvas.SetActive(false);
-        if (pauseMenuNight == null)
-        {
-            pauseMenuNight = GameObject.Find("pauseMenuNight");
 
-        }
-        if (optionsMenuNight == null)
-        {
-            optionsMenuNight = GameObject.Find("optionsMenuNight");
-        }
-        pauseMenuNight.SetActive(true);
         isPaused = true;
 
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(pauseNightFirstBtn);
-        //canvasInteract.Set_Canvas(false, false, false, false, false, false, true, false);
+        canvasInteract.Set_Canvas(false, false, false, false, false, false, true, false);
 
     }
 
@@ -316,11 +294,8 @@ public class PlayerInteract : MonoBehaviour
         Debug.Log("deactivate menu");
         Time.timeScale = 1;
         //AudioListener.pause = false;
-
-        pauseMenuNight.SetActive(false);
-        optionsMenuNight.SetActive(false);
         isPaused = false;
-        //canvasInteract.Set_Canvas(false, false, false, false, false, true, false, false);
+        canvasInteract.Set_Canvas(false, false, false, false, false, true, false, false);
     }
     public void MainMenuOpenNight()
     {
