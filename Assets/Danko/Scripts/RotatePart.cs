@@ -30,7 +30,7 @@ public class RotatePart : MonoBehaviour
             yield return new WaitForEndOfFrame();
             //Debug.Log(transform.eulerAngles.z);
         }
-        transform.GetComponentInParent<Puzzle>().CheckIfCorrect();
+        //transform.GetComponentInParent<Puzzle>().CheckIfCorrect();
 
     }
     public void RotateAndWait(){

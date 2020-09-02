@@ -23,6 +23,7 @@ public class Puzzle : MonoBehaviour
 
     private void Update() {
         LeftClick();
+        CheckIfCorrect();
     }
     
     public void LeftClick(){
@@ -43,9 +44,9 @@ public class Puzzle : MonoBehaviour
         Debug.Log("its here");
         
         for (int i=0; i< signs.Count;i++){
-            //Debug.Log(signs[i].name+": "+(int) signs[i].transform.eulerAngles.z);
+            Debug.Log(signs[i].name+": "+(int) signs[i].transform.eulerAngles.z);
             //Debug.Log("Rotation"+i+": "+(int) rotations[i]);
-            if((int) rotations[i] == (int) signs[i].transform.eulerAngles.z){
+            if((int) signs[i].transform.eulerAngles.z > (int) rotations[i]-2 && (int) signs[i].transform.eulerAngles.z < (int) rotations[i]+2){
                 //Debug.Log("waduhek");
                 countCorrects++;
             }
