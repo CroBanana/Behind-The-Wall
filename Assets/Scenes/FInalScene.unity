@@ -289,7 +289,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rawImage: {fileID: 386460196}
   rend: {fileID: 8400000, guid: cb3fa3aa921245f479a511437eefaf23, type: 2}
-  finalVideoClip: {fileID: 32900000, guid: 62a944eddb8ee7c43a0fa5107a894cff, type: 3}
+  finalVideoClip: {fileID: 32900000, guid: 0fcd846ce24139a439e1221e3f7d3bb8, type: 3}
   videoPlayer: {fileID: 0}
 --- !u!328 &525941997
 VideoPlayer:
