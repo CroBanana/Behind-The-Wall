@@ -27,12 +27,29 @@ public class VideoPlay : MonoBehaviour
             videoPlayer.clip=intro;
             videoPlayer.isLooping=false;
             videoPlayer.loopPointReached+=EndReached;
+        }else{
+            videoPlayer=GetComponent<UnityEngine.Video.VideoPlayer>();
+            texture= rawImage.GetComponent<RawImage>();
+            videoPlayer.playOnAwake=false;
+            rawImage.gameObject.SetActive(false);
+            Cursor.visible=true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+        try
+        {
+            Destroy( GameObject.Find("DontDestroy"));
+        }
+        catch (System.Exception)
+        {
+            Debug.Log("Notting to destroy");
         }
 
     }
 
     void EndReached(UnityEngine.Video.VideoPlayer vp){
         Debug.Log("END!!!");
+        Cursor.visible=true;
+        Cursor.lockState = CursorLockMode.None;
         rawImage.SetActive(false);
         Cursor.visible=true;
     }

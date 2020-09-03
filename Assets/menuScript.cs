@@ -14,6 +14,8 @@ public class menuScript : MonoBehaviour
     public void MainMenuOpen()
     {
         Time.timeScale = 1f;
+        Cursor.lockState = CursorLockMode.None;
+        canvasInteract.Set_Canvas(false, false, false, false, false, false, false, false);
         SceneManager.LoadScene(0);
     }
 
