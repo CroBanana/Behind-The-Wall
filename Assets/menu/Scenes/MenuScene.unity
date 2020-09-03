@@ -2844,6 +2844,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: f8e5d238cd4422449bffef9ef6ac50c6, type: 2}
+  audioMixer2: {fileID: 0}
   resolutionDropdown: {fileID: 372711265}
 --- !u!1 &759036965
 GameObject:
@@ -5932,7 +5933,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 342546579}
         m_MethodName: QuitGame
         m_Mode: 1
         m_Arguments:
