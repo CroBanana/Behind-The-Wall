@@ -9,6 +9,7 @@ using UnityEngine.EventSystems;
 public class OptionsScript : MonoBehaviour{
 
     public AudioMixer audioMixer;
+    public AudioMixer audioMixer2;
 
     public Dropdown resolutionDropdown;
 
@@ -45,16 +46,21 @@ public class OptionsScript : MonoBehaviour{
     }
     public void SetResolution (int resolutionIndex)
     {
-        Debug.Log("ResolutionCHange");
+        
         Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }
 
     public void SetVolume (float volume)
     {
-        Debug.Log("Volume setting");
+        
         audioMixer.SetFloat("volume", volume);
     }
+    public void SetVolume2(float volume)
+    { 
+        audioMixer2.SetFloat("volume", volume);
+    }
+
 
     public void SetQuality (int qualityIndex)
     {
