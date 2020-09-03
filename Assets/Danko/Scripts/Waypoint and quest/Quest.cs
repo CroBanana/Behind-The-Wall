@@ -50,7 +50,7 @@ public class Quest : MonoBehaviour
                 Waypoint.SetWaypoint(null);
             }
             foreach(var item in needsEnabling){
-                item.SetActive(false);
+                //item.SetActive(false);
             }
         }
     }
